@@ -53,3 +53,100 @@ formulas %>%
   #pivot_wider(names_from = lang, values_from = top_list) %>% 
   knitr::kable(escape = F)
 ```
+
+### from-to places
+
+```{r}
+formulas %>% 
+  mutate(from_to_pair = paste0(from_placename, " --> ", to_placename)) %>% 
+  count(from_to_pair, sort = T) %>% 
+  head(20)
+```
+
+By language
+
+```{r}
+formulas %>% 
+  mutate(from_to_pair = paste0(from_placename, " --> ", to_placename)) %>% 
+  group_by(lang) %>% 
+  count(from_to_pair, sort = T) %>% 
+  slice_max(order_by = n, n = 5, with_ties = F)
+```
+
+### maps test
+
+```{r}
+library(sf)
+
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(ggrepel)
+```
+
+```{r, include=F, echo=F}
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+europe <- world[which(world$continent == "Europe"),]
+
+ggplot(europe) +
+  geom_sf() +
+  coord_sf(xlim = c(-25, 50), ylim = c(35,70), expand = FALSE)
+
+```
+
+some x to y
+
+```{r}
+f <- formulas %>% 
+  filter(lang == "sl") %>% 
+  #sample_n(10) %>% 
+  mutate(f_id = row_number()) %>% 
+  select(f_id, text,
+         from_placename, to_placename, 
+         from_latitude, to_latitude, 
+         from_longitude, to_longitude
+         ) 
+
+from <- f %>% 
+  select(f_id, text, from_placename, from_latitude, from_longitude) %>% 
+  rename(placename = from_placename,
+         latitude = from_latitude,
+         longitude = from_longitude)
+
+to <- f %>% 
+  select(f_id, text, to_placename, to_latitude, to_longitude) %>% 
+  rename(placename = to_placename,
+         latitude = to_latitude,
+         longitude = to_longitude)
+
+
+# merge in a longer table
+from_to <- rbind(from, to)
+
+
+glimpse(f)
+glimpse(from_to)
+
+# f
+# from_to
+
+err <- f[f$from_latitude == f$to_latitude| f$from_longitude == f$to_longitude, ]
+
+```
+
+```{r}
+ggplot(world) +
+  geom_sf() +
+  coord_sf(xlim = c(-25, 90), ylim = c(-35,70), expand = FALSE) + 
+  geom_point(data = from_to, aes(x = longitude, y = latitude), size = 1, 
+       shape = 23, fill = "darkviolet") + 
+  geom_curve(data = f %>% 
+               filter(!f_id %in% err$f_id), 
+             aes(x = from_longitude, y = from_latitude,
+                           xend = to_longitude, yend = to_latitude),
+             linewidth = 0.5, curvature = 0.2, 
+             colour = "darkviolet", alpha = 0.7) +
+  geom_text_repel(data = from_to, 
+                  aes(x = longitude, y = latitude, label = placename), 
+                  size = 2.5, col = "black", fontface = "bold") 
+```
