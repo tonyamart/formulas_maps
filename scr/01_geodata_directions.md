@@ -1,21 +1,6 @@
-# 01_geodata_directions
+# 01 geodata exploration
 
 ## Explore directions of from_to formula
-
-``` r
-library(tidyverse)
-```
-
-    ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ✔ dplyr     1.1.4     ✔ readr     2.1.4
-    ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ✔ ggplot2   3.5.1     ✔ tibble    3.3.0
-    ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-    ✔ purrr     1.0.4     
-    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ✖ dplyr::filter() masks stats::filter()
-    ✖ dplyr::lag()    masks stats::lag()
-    ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
 Read data as a table
 
@@ -97,14 +82,83 @@ formulas %>%
   ungroup() %>% 
   mutate(type_pair = paste0(type_pair, " (", n, ")")) %>% 
   group_by(lang) %>% 
-  mutate(top_list = paste0(type_pair, collapse = " \n ")) %>% 
+  mutate(top_list = paste0(type_pair, collapse = " <br> ")) %>% 
   select(-n, -type_pair) %>% 
   ungroup() %>% 
   distinct() %>% 
-  pivot_wider(names_from = lang, values_from = top_list)
+  #pivot_wider(names_from = lang, values_from = top_list) %>% 
+  knitr::kable(escape = F)
 ```
 
-    # A tibble: 1 × 7
-      cs                                         de    en    fr    it    ru    sl   
-      <chr>                                      <chr> <chr> <chr> <chr> <chr> <chr>
-    1 "default --> default (128) \n mountain --… "def… "def… "def… "def… "def… "def…
+<table data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">lang</th>
+<th style="text-align: left;"
+data-quarto-table-cell-role="th">top_list</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">cs</td>
+<td style="text-align: left;">default --&gt; default (128)<br />
+mountain --&gt; mountain (50)<br />
+river --&gt; river (25)<br />
+river --&gt; default (20)<br />
+mountain --&gt; default (19)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">de</td>
+<td style="text-align: left;">default --&gt; default (43)<br />
+river --&gt; river (8)<br />
+default --&gt; river (3)<br />
+country --&gt; country (2)<br />
+default --&gt; country (2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">en</td>
+<td style="text-align: left;">default --&gt; default (182)<br />
+default --&gt; country (23)<br />
+default --&gt; river (20)<br />
+river --&gt; river (20)<br />
+country --&gt; country (16)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fr</td>
+<td style="text-align: left;">default --&gt; default (199)<br />
+river --&gt; river (30)<br />
+river --&gt; default (13)<br />
+country --&gt; default (12)<br />
+default --&gt; country (12)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">it</td>
+<td style="text-align: left;">default --&gt; default (12)<br />
+mountain --&gt; default (4)<br />
+default --&gt; river (2)<br />
+river --&gt; default (2)<br />
+river --&gt; river (2)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ru</td>
+<td style="text-align: left;">default --&gt; default (93)<br />
+river --&gt; default (20)<br />
+river --&gt; river (19)<br />
+default --&gt; river (14)<br />
+country --&gt; default (9)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sl</td>
+<td style="text-align: left;">default --&gt; default (16)<br />
+default --&gt; mountain (2)<br />
+mountain --&gt; sea (2)<br />
+river --&gt; default (2)<br />
+default --&gt; river (1)<br />
+river --&gt; river (1)</td>
+</tr>
+</tbody>
+</table>

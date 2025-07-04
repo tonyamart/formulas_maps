@@ -1,13 +1,14 @@
 ---
-title: "01_geodata_directions"
+title: "01 geodata exploration"
 format: md
 editor: visual
 ---
 
 ## Explore directions of from_to formula
 
-```{r, warning=F}
+```{r, warning=F, include=F}
 library(tidyverse)
+library(kableExtra)
 ```
 
 Read data as a table
@@ -15,6 +16,13 @@ Read data as a table
 ```{r}
 formulas <- read.csv("../data/formulas_table.csv")
 glimpse(formulas)
+```
+
+N formulas per language
+
+```{r}
+formulas %>% 
+  count(lang, sort = T)
 ```
 
 ### types
@@ -38,9 +46,10 @@ formulas %>%
   ungroup() %>% 
   mutate(type_pair = paste0(type_pair, " (", n, ")")) %>% 
   group_by(lang) %>% 
-  mutate(top_list = paste0(type_pair, collapse = " \n ")) %>% 
+  mutate(top_list = paste0(type_pair, collapse = " <br> ")) %>% 
   select(-n, -type_pair) %>% 
   ungroup() %>% 
   distinct() %>% 
-  pivot_wider(names_from = lang, values_from = top_list)
+  #pivot_wider(names_from = lang, values_from = top_list) %>% 
+  knitr::kable(escape = F)
 ```
