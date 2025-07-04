@@ -217,24 +217,199 @@ formulas %>%
   mutate(from_to_pair = paste0(from_placename, " --> ", to_placename)) %>% 
   group_by(lang) %>% 
   count(from_to_pair, sort = T) %>% 
-  slice_max(order_by = n, n = 5, with_ties = F)
+  slice_max(order_by = n, n = 5, with_ties = F) %>% 
+  knitr::kable()
 ```
 
-    # A tibble: 35 × 3
-    # Groups:   lang [7]
-       lang  from_to_pair                            n
-       <chr> <chr>                               <int>
-     1 cs    Giant Mountains --> Bohemian Forest     9
-     2 cs    Bohemian Forest --> Tatra Mountains     8
-     3 cs    Baltic Sea --> Adriatic Sea             6
-     4 cs    Moravia --> Prague                      5
-     5 cs    Bohemian Forest --> Ural Mountains      3
-     6 de    Gotha --> Eisenach                      6
-     7 de    Florence --> Altona                     3
-     8 de    Aachen --> Tczew                        1
-     9 de    Adige --> Rhine                         1
-    10 de    Amsterdam --> Lübeck                    1
-    # ℹ 25 more rows
+<table data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">lang</th>
+<th style="text-align: left;"
+data-quarto-table-cell-role="th">from_to_pair</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">cs</td>
+<td style="text-align: left;">Giant Mountains --&gt; Bohemian
+Forest</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cs</td>
+<td style="text-align: left;">Bohemian Forest --&gt; Tatra
+Mountains</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cs</td>
+<td style="text-align: left;">Baltic Sea --&gt; Adriatic Sea</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cs</td>
+<td style="text-align: left;">Moravia --&gt; Prague</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cs</td>
+<td style="text-align: left;">Bohemian Forest --&gt; Ural Mountains</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">de</td>
+<td style="text-align: left;">Gotha --&gt; Eisenach</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">de</td>
+<td style="text-align: left;">Florence --&gt; Altona</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">de</td>
+<td style="text-align: left;">Aachen --&gt; Tczew</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">de</td>
+<td style="text-align: left;">Adige --&gt; Rhine</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">de</td>
+<td style="text-align: left;">Amsterdam --&gt; Lübeck</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">en</td>
+<td style="text-align: left;">Bratton --&gt; Porlock Bay</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">en</td>
+<td style="text-align: left;">Beersheba --&gt; Dan</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">en</td>
+<td style="text-align: left;">Canada --&gt; Georgia</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">en</td>
+<td style="text-align: left;">France --&gt; England</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">en</td>
+<td style="text-align: left;">River Feale --&gt; Kenmare</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fr</td>
+<td style="text-align: left;">Bordeaux --&gt; Narbonne</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fr</td>
+<td style="text-align: left;">Paris --&gt; Rome</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fr</td>
+<td style="text-align: left;">Rome --&gt; Rome</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fr</td>
+<td style="text-align: left;">Alps --&gt; Genoa</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fr</td>
+<td style="text-align: left;">Apennine Mountains --&gt; Cologne</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">it</td>
+<td style="text-align: left;">Alps --&gt; Lilibaeum</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">it</td>
+<td style="text-align: left;">Adria --&gt; Trieste</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">it</td>
+<td style="text-align: left;">Alps --&gt; Giza pyramid complex</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">it</td>
+<td style="text-align: left;">Alps --&gt; Palermo</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">it</td>
+<td style="text-align: left;">Andes --&gt; Lebanon</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ru</td>
+<td style="text-align: left;">Alps --&gt; Pas-de-Calais</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ru</td>
+<td style="text-align: left;">Babylon --&gt; Bethlehem</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ru</td>
+<td style="text-align: left;">Baltic Sea --&gt; Siberia</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ru</td>
+<td style="text-align: left;">Beijing --&gt; Rome</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ru</td>
+<td style="text-align: left;">Dresden --&gt; Berlin</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sl</td>
+<td style="text-align: left;">Drava --&gt; Soča</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sl</td>
+<td style="text-align: left;">Triglav --&gt; Adriatic Sea</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sl</td>
+<td style="text-align: left;">Aquileia --&gt; Triglav</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sl</td>
+<td style="text-align: left;">Aurisina --&gt; Sistiana</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sl</td>
+<td style="text-align: left;">Barcola --&gt; Sistiana</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
 
 ### maps test
 
