@@ -1,19 +1,19 @@
 ---
 title: "01_geodata_directions"
-format: html
+format: md
 editor: visual
 ---
 
 ## Explore directions of from_to formula
 
-```{r}
+```{r, warning=F}
 library(tidyverse)
 ```
 
 Read data as a table
 
 ```{r}
-formulas <- read.csv("formulas_table.csv")
+formulas <- read.csv("../data/formulas_table.csv")
 glimpse(formulas)
 ```
 
