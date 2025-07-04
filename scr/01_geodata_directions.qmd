@@ -1,0 +1,46 @@
+---
+title: "01_geodata_directions"
+format: html
+editor: visual
+---
+
+## Explore directions of from_to formula
+
+```{r}
+library(tidyverse)
+```
+
+Read data as a table
+
+```{r}
+formulas <- read.csv("formulas_table.csv")
+glimpse(formulas)
+```
+
+### types
+
+total
+
+```{r}
+formulas %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  count(type_pair, sort = T)
+```
+
+by language
+
+```{r}
+formulas %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  group_by(lang) %>% 
+  count(type_pair, sort = T) %>% 
+  slice_max(order_by = n, n = 5) %>% 
+  ungroup() %>% 
+  mutate(type_pair = paste0(type_pair, " (", n, ")")) %>% 
+  group_by(lang) %>% 
+  mutate(top_list = paste0(type_pair, collapse = " \n ")) %>% 
+  select(-n, -type_pair) %>% 
+  ungroup() %>% 
+  distinct() %>% 
+  pivot_wider(names_from = lang, values_from = top_list)
+```

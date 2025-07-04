@@ -1,0 +1,192 @@
+---
+title: "01_json_transform"
+format: html
+editor: visual
+---
+
+## json transformation
+
+Make json files to tables for easier work with R graphics etc.
+
+```{r}
+library(jsonlite)
+# library(tidyjson)
+library(tidyverse)
+```
+
+### formulas
+
+```{r}
+x <- jsonlite::fromJSON("formulas-main/formulas.json", simplifyVector = F)
+
+length(x) # number of languages
+
+# str(x[1])
+# str(x[2])
+# str(x[3])
+# str(x[4])
+```
+
+```{r, eval = FALSE}
+# test run with one language
+df <- tibble(
+  doc_key = names(x$cs),
+  triplets = x$cs
+) %>% 
+  unnest_longer(
+    triplets,
+    indices_include = TRUE,
+    names_repair = "minimal"
+  ) %>% 
+  rename(triplet_id = triplets_id) %>% 
+  mutate(
+    source_id = map_chr(triplets, 1),
+    target_id = map_chr(triplets, 2),
+    text = map_chr(triplets, 3)
+  ) %>% 
+  select(doc_key, triplet_id,
+         source_id, 
+         target_id, 
+         text)
+
+df
+```
+
+```{r}
+df_binded <- tibble()
+temp <- NULL # keep extracted language data
+l <- NULL # write language tag
+
+for (i in 1:length(x)) {
+  # select language corpus object
+  temp <- x[i]
+  # store language label
+  l <- names(temp[1])
+  
+  df <- tibble(
+    # extract document title from list name
+    doc_key = names(temp[[1]]),
+    triplets = temp[[1]] # extract the list with 3 el data
+    ) %>% 
+    # unnest list to each element = 1 row
+    unnest_longer(
+      triplets,
+      indices_include = TRUE,
+      names_repair = "minimal"
+    ) %>% # now we have the main array expanded, go inside
+    rename(triplet_id = triplets_id) %>% 
+    mutate(
+      # paste each inner list element to the respective column
+      source_id = map_chr(triplets, 1),
+      target_id = map_chr(triplets, 2),
+      text = map_chr(triplets, 3)
+    ) %>% 
+    mutate(lang = l) %>% # add language column & clean
+    select(lang, doc_key, triplet_id,
+           source_id, 
+           target_id, 
+           text) 
+
+  # attach to the main table
+  df_binded <- rbind(df_binded, df)
+  
+}
+
+df_binded
+```
+
+```{r}
+df_binded %>% 
+  filter(lang == "ru")
+```
+
+```{r}
+df_binded %>% 
+  count(lang)
+```
+
+### wikidata
+
+```{r}
+w <- fromJSON("formulas-main/wikidata.json")
+
+# head(w)
+length(w)
+
+w[[1]][1] # label - england
+w[[1]][2] # type -- country
+#w[[1]][3] # labels -- long list of spellings
+w[[1]][4] # lat -- latitude
+w[[1]][5] # lon longitude
+w[[1]][6] # instances -- not sure
+
+w[[13]][1]
+```
+
+```{r}
+wiki_df <- tibble(
+  entity_id = names(w), # keep id as chr vec, "Q21"
+  json_list = w # add json list with data
+) %>% 
+  mutate(
+    label = map_chr(json_list, 1, .default = NA),
+    type = map_chr(json_list, 2, .default = NA),
+    latitude = map_dbl(json_list, 4, .default = NA),
+    longitude = map_dbl(json_list, 5, .default = NA)
+    ) %>% 
+  select(-json_list)
+```
+
+```{r}
+glimpse(wiki_df)
+
+unique(wiki_df$type) # default -- city ??
+
+wiki_df %>% 
+  filter(type == "default") %>% 
+  sample_n(10)
+```
+
+### merge
+
+```{r}
+glimpse(df_binded) # formulas main table
+glimpse(wiki_df) # wikidata simplified
+```
+
+```{r}
+formulas_df <- df_binded %>% 
+  # attach data for FROM
+  left_join(wiki_df %>% 
+              rename(source_id = entity_id), 
+            by = "source_id") %>% 
+  rename(from_id = source_id,
+         from_placename = label,
+         from_type = type,
+         from_latitude = latitude,
+         from_longitude = longitude) %>% 
+  # attach data for TO
+  left_join(wiki_df %>% rename(target_id = entity_id),
+            by = "target_id") %>% 
+  rename(to_id = target_id,
+         to_placename = label,
+         to_type = type,
+         to_latitude = latitude,
+         to_longitude = longitude)
+
+glimpse(formulas_df)
+```
+
+write
+
+```{r}
+write.csv(formulas_df, "formulas_table.csv", row.names = F)
+```
+
+```{r}
+# check
+
+r <- read.csv("formulas_table.csv")
+
+glimpse(r)
+```
