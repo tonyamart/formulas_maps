@@ -17,7 +17,7 @@ library(tidyverse)
 ### formulas
 
 ```{r}
-x <- jsonlite::fromJSON("formulas-main/formulas.json", simplifyVector = F)
+x <- jsonlite::fromJSON("../data/formulas.json", simplifyVector = F)
 
 length(x) # number of languages
 
@@ -108,17 +108,17 @@ df_binded %>%
 ### wikidata
 
 ```{r}
-w <- fromJSON("formulas-main/wikidata.json")
+w <- fromJSON("../data/wikidata.json")
 
 # head(w)
 length(w)
 
 w[[1]][1] # label - england
 w[[1]][2] # type -- country
-#w[[1]][3] # labels -- long list of spellings
+# w[[1]][3] # labels -- long list of spellings
 w[[1]][4] # lat -- latitude
 w[[1]][5] # lon longitude
-w[[1]][6] # instances -- not sure
+w[[1]][6] # instances 
 
 w[[13]][1]
 ```
@@ -132,9 +132,11 @@ wiki_df <- tibble(
     label = map_chr(json_list, 1, .default = NA),
     type = map_chr(json_list, 2, .default = NA),
     latitude = map_dbl(json_list, 4, .default = NA),
-    longitude = map_dbl(json_list, 5, .default = NA)
+    longitude = map_dbl(json_list, 5, .default = NA),
+    instances = map(json_list, 6, .default = NA) # this is a json array, so turn it to a named list and flatten later
     ) %>% 
-  select(-json_list)
+  select(-json_list) %>% 
+  mutate(instances = map_chr(instances, ~paste(.x, collapse = ", "))) # paste as chr
 ```
 
 ```{r}
@@ -180,13 +182,18 @@ glimpse(formulas_df)
 write
 
 ```{r}
-write.csv(formulas_df, "formulas_table.csv", row.names = F)
+write.csv(formulas_df, "../data/formulas_table.csv", row.names = F)
+```
+
+```{r}
+# write wiki df separately to use for instances later
+write.csv(wiki_df, "../data/wiki_df.csv", row.names = F)
 ```
 
 ```{r}
 # check
 
-r <- read.csv("formulas_table.csv")
+r <- read.csv("../data/formulas_table.csv")
 
 glimpse(r)
 ```
