@@ -1,0 +1,263 @@
+---
+title: "02 compass plots"
+format: html
+editor: visual
+---
+
+## Compass plots 
+
+```{r, warning=F, include=F}
+library(tidyverse)
+library(kableExtra)
+
+theme_set(theme_minimal())
+```
+
+Load data
+
+```{r}
+formulas <- read.csv("../data/formulas_table.csv")
+glimpse(formulas)
+```
+
+### calculate coordinates
+
+#### test sample
+
+```{r}
+fs <- formulas %>% sample_n(10)
+
+fs[,9:14]
+
+ggplot() + 
+  geom_point(data = fs, aes( x = from_longitude, y = from_latitude)) + 
+  geom_point(data = fs, aes( x = to_longitude, y = to_latitude)) + 
+  geom_segment(data = fs, aes(x = from_longitude, xend = to_longitude,
+                           y = from_latitude, yend = to_latitude))
+```
+
+```{r, include=F, eval=F, echo=F}
+
+x1 = fs$from_longitude[1]
+y1 = fs$from_latitude[1]
+
+x2 = fs$to_longitude[1]
+y2 = fs$to_latitude[1]
+
+x1
+y1
+
+x2
+y2
+
+x1_0 <- 0
+y1_0 <- 0
+
+x2_0 <- x2 - x1
+y2_0 <- y2 - y1
+
+x2_0
+y2_0
+```
+
+```{r, eval=F, include=FALSE}
+ggplot() + 
+  geom_point(data = fs, aes( x = from_longitude, y = from_latitude)) + 
+  geom_point(data = fs, aes( x = to_longitude, y = to_latitude)) + 
+  geom_segment(data = fs, aes(x = from_longitude, xend = to_longitude,
+                           y = from_latitude, yend = to_latitude)) + 
+  
+  geom_point(aes(x = x1_0, y = y1_0), colour = "red") + 
+  geom_point(aes(x = x2_0, y = y2_0), colour = "red") + 
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "red")
+
+```
+
+```{r}
+fs %>% 
+  # calculate new coordinates
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  glimpse
+
+
+
+
+fs %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>%
+  ggplot() + 
+  geom_hline(yintercept = 0, lty = 2, linewidth = 0.7, colour = "lightgray") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 0.7, colour = "lightgray") + 
+  geom_point(aes( x = from_longitude, y = from_latitude)) + 
+  geom_point(aes( x = to_longitude, y = to_latitude)) + 
+  geom_segment(aes(x = from_longitude, xend = to_longitude, 
+                   y = from_latitude, yend = to_latitude)) + 
+  
+  geom_point(aes(x = x1_0, y = y1_0), colour = "red") + 
+  geom_point(aes(x = x2_0, y = y2_0), colour = "red") + 
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "red") 
+```
+
+### transform
+
+```{r}
+formulas_nc <- formulas %>% 
+  # calculate new coordinates
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude)
+
+glimpse(formulas_nc)
+```
+
+#### plot — all
+
+```{r}
+#p_main <- 
+  
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = "lightblue", colour = "lightblue") + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "darkslategrey",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-230, 230)) + 
+  scale_y_continuous(limits = c(-140, 120)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+  
+  
+  #theme(axis.text = element_blank(), 
+        #axis.title = element_blank()) 
+
+```
+
+```{r}
+ggsave("../plots/00_compass_main.png", plot = last_plot(), 
+       width = 10, height = 10, bg = "white", dpi = 300)
+```
+
+#### plot – river to river
+
+```{r}
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(from_type == "river" & to_type == "river") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = "lightblue", colour = "lightblue") + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "darkblue",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-230, 230)) + 
+  scale_y_continuous(limits = c(-140, 120)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  labs(title = "River to river") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
+
+#### compass – 1 lang
+
+```{r}
+x <- formulas_nc %>% 
+  filter(lang == "ru") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  count(loc_type, sort = T) %>% 
+  filter(n > 5) %>% 
+  pull(loc_type)
+  
+  
+
+formulas_nc %>% 
+  filter(lang == "ru") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  filter(loc_type %in% x) %>% 
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = "lightgrey", colour = "lightgrey") + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0,
+                   colour = loc_type
+                   ),
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~loc_type, ncol = 3) + 
+  scale_x_continuous(limits = c(-230, 230)) + 
+  scale_y_continuous(limits = c(-140, 120)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  # labs(title = "River to river") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
