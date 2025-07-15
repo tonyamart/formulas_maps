@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Compass plots 
+## Compass plots
 
 ```{r, warning=F, include=F}
 library(tidyverse)

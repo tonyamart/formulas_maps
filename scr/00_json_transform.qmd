@@ -22,16 +22,15 @@ x <- jsonlite::fromJSON("../data/formulas.json", simplifyVector = F)
 length(x) # number of languages
 
 # str(x[1])
-# str(x[2])
-# str(x[3])
-# str(x[4])
+str(x[[2]][1])
 ```
 
 ```{r, eval = FALSE}
 # test run with one language
-df <- tibble(
-  doc_key = names(x$cs),
-  triplets = x$cs
+#df <- 
+tibble(
+  doc_key = names(x$de),
+  triplets = x$de
 ) %>% 
   unnest_longer(
     triplets,
@@ -42,12 +41,17 @@ df <- tibble(
   mutate(
     source_id = map_chr(triplets, 1),
     target_id = map_chr(triplets, 2),
-    text = map_chr(triplets, 3)
+    text = map_chr(triplets, 3),
+    author_name = map_chr(triplets, 4),
+    year_birth = map_dbl(triplets, 5, .default = NA), # need to deal with NULL
+    year_death = map_dbl(triplets, 6, .default = NA)
   ) %>% 
   select(doc_key, triplet_id,
          source_id, 
          target_id, 
-         text)
+         text, 
+         author_name, 
+         year_birth, year_death)
 
 df
 ```
@@ -79,25 +83,32 @@ for (i in 1:length(x)) {
       # paste each inner list element to the respective column
       source_id = map_chr(triplets, 1),
       target_id = map_chr(triplets, 2),
-      text = map_chr(triplets, 3)
+      text = map_chr(triplets, 3),
+      author_name = map_chr(triplets, 4),
+      year_birth = map_dbl(triplets, 5, .default = NA),
+      year_death = map_dbl(triplets, 6, .default = NA)
     ) %>% 
     mutate(lang = l) %>% # add language column & clean
     select(lang, doc_key, triplet_id,
            source_id, 
            target_id, 
-           text) 
+           text, 
+           author_name,
+           year_birth, year_death) 
 
   # attach to the main table
   df_binded <- rbind(df_binded, df)
   
 }
 
-df_binded
+df_binded %>% 
+  sample_n(10)
 ```
 
 ```{r}
 df_binded %>% 
-  filter(lang == "ru")
+  filter(lang == "ru") %>% 
+  head(20)
 ```
 
 ```{r}
@@ -160,7 +171,8 @@ glimpse(wiki_df) # wikidata simplified
 formulas_df <- df_binded %>% 
   # attach data for FROM
   left_join(wiki_df %>% 
-              rename(source_id = entity_id), 
+              rename(source_id = entity_id) %>% 
+              select(-instances), 
             by = "source_id") %>% 
   rename(from_id = source_id,
          from_placename = label,
@@ -168,13 +180,16 @@ formulas_df <- df_binded %>%
          from_latitude = latitude,
          from_longitude = longitude) %>% 
   # attach data for TO
-  left_join(wiki_df %>% rename(target_id = entity_id),
+  left_join(wiki_df %>% 
+              rename(target_id = entity_id) %>% 
+              select(-instances),
             by = "target_id") %>% 
   rename(to_id = target_id,
          to_placename = label,
          to_type = type,
          to_latitude = latitude,
-         to_longitude = longitude)
+         to_longitude = longitude) %>% 
+  select(-triplet_id)
 
 glimpse(formulas_df)
 ```
