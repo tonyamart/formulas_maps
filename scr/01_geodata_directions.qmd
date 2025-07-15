@@ -8,7 +8,11 @@ editor: visual
 
 ```{r, warning=F, include=F}
 library(tidyverse)
+
 library(kableExtra)
+theme_set(theme_minimal())
+
+library(geosphere) # distHavestine()
 ```
 
 Read data as a table
@@ -150,4 +154,187 @@ ggplot(world) +
   geom_text_repel(data = from_to, 
                   aes(x = longitude, y = latitude, label = placename), 
                   size = 2.5, col = "black", fontface = "bold") 
+```
+
+## distances
+
+-   how short & long distances are distributed
+
+-   temporal distribution
+
+-   imperial/non-imperial distribution?
+
+### calculation
+
+```{r}
+t <- formulas[1:2,]
+t
+```
+
+```{r}
+# geosphare library demo:
+
+lat_london <- 51.5074
+lon_london <- -0.1278
+lat_paris <- 48.8566
+lon_paris <- 2.3522
+
+distHaversine(c(lon_london, lat_london), c(lon_paris, lat_paris)) / 1000 # div1000 gives km
+
+# same for two first row from formulas
+distHaversine(c(t$from_longitude[1], t$from_latitude[1]), 
+              c(t$to_longitude[1], t$to_latitude[1])) / 1000
+```
+
+```{r}
+t %>% 
+  rowwise() %>% 
+  mutate(dist_haversine = distHaversine(c(from_longitude, from_latitude),
+                                        c(to_longitude, to_latitude)) / 1000) %>% 
+  ungroup()
+```
+
+Calculate distances for the whole table
+
+```{r}
+formulas_d <- formulas %>% 
+  rowwise() %>% 
+  mutate(dist_haversine = distHaversine(
+    c(from_longitude, from_latitude),
+    c(to_longitude, to_latitude)) 
+      / 1000) %>% 
+  ungroup() %>% 
+  # make numbers human-readable
+  mutate(dist_haversine = round(dist_haversine, digits = 3)) 
+
+glimpse(formulas_d)
+```
+
+### analysis
+
+#### overall
+
+```{r}
+formulas_d %>% 
+  #filter(lang == "sl") %>% 
+  ggplot(aes(x = lang, y = dist_haversine)) + 
+  geom_boxplot(fill = "lightseagreen")
+```
+
+```{r}
+formulas_d %>% 
+  #filter(lang == "sl") %>% 
+  ggplot(aes(x = dist_haversine, group = lang)) + 
+  geom_density(fill = "lightseagreen") + 
+  facet_wrap(~lang)
+```
+
+```{r}
+dist_summary <- formulas_d %>% 
+  group_by(lang) %>% 
+  summarise(dist_mean = mean(dist_haversine),
+            dist_median = median(dist_haversine),
+            third_quant = quantile(dist_haversine, 0.75)) %>% 
+  ungroup()
+
+dist_summary
+```
+
+```{r}
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_longer_median = ifelse(dist_haversine > dist_median, "yes", "no")
+         #dist_longer_3qu = ifelse(dist_haversine > third_quant, 1, 0)
+         ) %>% 
+  select(lang, dist_haversine, dist_longer_median) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = lang, y = dist_haversine, fill = dist_longer_median)) + 
+  geom_boxplot()
+```
+
+```{r}
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_longer_3qu = ifelse(dist_haversine > third_quant, "yes", "no")
+         ) %>% 
+  select(lang, dist_haversine, dist_longer_3qu) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = lang, y = dist_haversine, fill = dist_longer_3qu)) + 
+  geom_boxplot()
+```
+
+#### temporal
+
+Check how much data is missing (almost none)
+
+```{r}
+
+totals <- formulas %>% 
+  count(lang) %>% 
+  rename(total_n = n)
+
+formulas_d %>% 
+  select(lang, year_birth, dist_haversine) %>% 
+  filter(!is.na(year_birth)) %>% 
+  count(lang) %>% 
+  left_join(totals, by = "lang")
+```
+
+```{r}
+formulas %>% 
+  select(lang, year_birth) %>% 
+  ggplot(aes(x = year_birth)) + 
+  geom_density(fill = "lightseagreen") + 
+  facet_wrap(~lang) + 
+  geom_vline(xintercept = seq(1600, 1900, 50), 
+             lty = 2, colour = "darkblue")
+```
+
+add time period column & recalculate summary dist metrics
+
+```{r}
+dist_t_summary <- formulas_d %>% 
+  filter(!is.na(year_birth)) %>% 
+  mutate(period_birth = floor(year_birth/50)*50,
+         period_end = period_birth + 49,
+         period = paste0(period_birth, "—", period_end),
+         lang_t = paste0(lang, " ", period)) %>% 
+  group_by(lang_t) %>% 
+  summarise(dist_mean = mean(dist_haversine),
+            dist_median = median(dist_haversine),
+            third_quant = quantile(dist_haversine, 0.75),
+            number_formulas = n()) %>% 
+  ungroup() 
+
+dist_t_summary
+```
+
+```{r}
+dist_t_summary %>% 
+  select(-number_formulas) %>% 
+  pivot_longer(!lang_t) %>% 
+  left_join(dist_t_summary %>% select(lang_t, number_formulas)) %>% 
+  mutate(lang = str_extract(lang_t, "^.."), 
+         lang_t = str_remove(lang_t, "^..."),
+         lang_t = str_remove(lang_t, "—....$")) %>% 
+  
+  #filter(lang == "cs") %>% 
+  ggplot(aes(x = lang_t, y = value, group = name, colour = name)) +
+  geom_line(aes(linewidth = number_formulas)) + 
+  facet_wrap(~lang, scales = "free") 
+```
+
+```{r}
+dist_t_summary %>% 
+  select(-third_quant) %>% 
+  pivot_longer(!c(lang_t, number_formulas),
+               names_to = "type", values_to = "dist_km") %>% 
+  mutate(lang = str_extract(lang_t, "^.."), 
+         lang_t = str_remove(lang_t, "^..."),
+         author_birth_halfdecade = str_remove(lang_t, "—....$")) %>% 
+  filter(type != "dist_mean") %>% 
+  ggplot(aes(x = time, y = dist_km, 
+             group = lang, 
+             colour = lang)) + 
+  geom_line(aes(linewidth = number_formulas))
 ```
