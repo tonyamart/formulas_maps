@@ -2,7 +2,7 @@
 
 ## Explore directions of from_to formula
 
-Read data as a table
+Read data as a table (flatted & merged json-s)
 
 ``` r
 formulas <- read.csv("../data/formulas_table.csv")
@@ -34,6 +34,30 @@ N formulas per language
 
 Look if most most freq locations also appear in from_to formula
 
+    Rows: 16,158
+    Columns: 6
+    $ corpus <chr> "cs", "cs", "cs", "cs", "cs", "cs", "cs", "cs", "cs", "cs", "cs…
+    $ qid    <chr> "Q1085", "Q213", "Q220", "Q46", "Q142", "Q131574", "Q90", "Q174…
+    $ label  <chr> "Prague", "Czech Republic", "Rome", "Europe", "France", "Vltava…
+    $ count  <int> 2698, 1732, 1366, 781, 612, 588, 537, 500, 463, 436, 369, 341, …
+    $ lat    <dbl> 50.08750, 50.00000, 41.89306, 48.69096, 47.00000, 50.34769, 48.…
+    $ lon    <dbl> 14.421389, 15.000000, 12.482778, 9.140620, 2.000000, 14.474382,…
+
+    # A tibble: 140 × 8
+       id         qid     lang  label   rank_ft rank_total from_to_count total_count
+       <chr>      <chr>   <chr> <chr>     <int>      <int>         <int>       <int>
+     1 cs_Q157290 Q157290 cs    Bohemi…       1         14            54         300
+     2 cs_Q1085   Q1085   cs    Prague        2          1            28        2698
+     3 cs_Q194263 Q194263 cs    Tatra …       3         12            23         341
+     4 cs_Q13924  Q13924  cs    Adriat…       4        107            20          37
+     5 cs_Q1653   Q1653   cs    Danube        5         11            19         369
+     6 cs_Q43266  Q43266  cs    Moravia       6         10            19         436
+     7 cs_Q545    Q545    cs    Baltic…       7         62            17          74
+     8 cs_Q214644 Q214644 cs    Giant …       8         42            14         119
+     9 cs_Q131574 Q131574 cs    Vltava        9          6            12         588
+    10 cs_Q35600  Q35600  cs    Ural M…      10         99            10          41
+    # ℹ 130 more rows
+
 It’s a long table, just some observations:
 
 -   Czech:
@@ -42,13 +66,13 @@ It’s a long table, just some observations:
         mountains, Danube, Moravia, Vltava, ROME (!) , Czechia, Elbe,
         Vienna;
 
-    -   many mountains which is strange
+    -   many mountains which is not the case for other corpora
 
 -   DE:
 
-    -   Vienna, Rhine, Paris, Berlin
+    -   top-20 loc in both: Vienna, Rhine, Paris, Berlin
 
-    -   all other locs are quite rare if not in from_to + top from_to
+    -   all other locs are quite rare if not in from_to; top from_to
         ranks are weird?? (Gotha, Eisenach, ALtona.. mb they come from
         some refrains, need to check that)
 
@@ -67,43 +91,41 @@ It’s a long table, just some observations:
 
     -   top-3 locs are very highly cor within lists, overall cor is also
         not that bad; meaning from-to locs are important locs in general
-        (eg Bordeau, Nice, Louvre Palace); some long-distance things
-        also – Volga, Tiber
+        (eg Bordeau, Nice, Louvre Palace); some long-distance things in
+        from-to also – Volga, Tiber
 
 -   IT:
 
     -   Alps, Apennninne Mountaints, Tiber (?)
 
-    -   the rest are strange places, mb Rhine & Seine are obvious but
-        the rest are strange
+    -   the rest from-to are strange places, mb Rhine & Seine are
+        obvious but the rest are strange
 
 -   RU:
 
     -   Neva, Moscow, Rome (!), SPb, Crimea, Msc Kremlin, Siberia (21
         total rank), Caucasus, Kyiv, Nile (lol), Volga
 
-    -   very obvious places mostly withing Russia, China is exception,
-        not than much west expansion visible from here
+    -   very obvious places mostly within Russia, China is an exception,
+        not than much west expansion visible in from-to from here
 
 -   SL:
 
     -   Triglav, Soča, Ardiatic sea, Ljubljana, Trieste, Sava
 
-    -   most locs are some within Sl + mostly single counts in from_to
+    -   most locs are some within Sl I guess + mostly single counts in
+        from_to
 
 ## distances
 
--   how short & long distances are distributed
-
--   temporal distribution
-
--   imperial/non-imperial distribution?
+I calculated Haversine (bird/plane flight) distance between the
+from-\>to coordinates, the distance is in km.
 
 ### calculation
 
-Calculate haversine distances between from_to points
-
 ``` r
+# calculate haversine distances between from_to points in current table
+
 formulas_d <- formulas %>% 
   rowwise() %>% 
   mutate(dist_haversine = distHaversine(
@@ -131,6 +153,13 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
 
 #### overall
 
+Poet’s mind is often flying not that far away? (the line is trochee-2
+btw)
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+
 What I see here: most of the distances are actually very small; but for
 some traditions there are quite a portion of longer ones.
 
@@ -155,7 +184,10 @@ Calculate mean & median dist for each corpus + 3rd quantile
     6 ru        2408.      1145.        3536.
     7 sl        1232.        90.9        419.
 
-Plot based on the groups long / short distances
+Plot based on the groups long / short distances:
+
+I just wanted to see how these values are distributed, should we divide
+them in two groups
 
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
@@ -168,15 +200,15 @@ Same grouping method for all: dist is short is \< 1000km, long if
 
 #### Time: distances based on author birth year
 
-    Warning: Removed 6 rows containing non-finite outside the scale range
-    (`stat_density()`).
+This is how author’s birth years are distributed, if we’re only looking
+in our formulas subset
 
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png)
 
-Add time period column & recalculate summary dist metrics: summarize
+Add time period column & recalculate summary dist metrics: I aggregated
 based on the half-century periods the author was born. The question here
-is: do authors born in quite distant times uses different distances when
-from_to appears?
+was: do authors born in quite distant times uses different distances
+when from_to formula appears?
 
     # A tibble: 30 × 5
        lang_t       dist_mean dist_median third_quant number_formulas
@@ -198,12 +230,11 @@ from_to appears?
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
 -   overall: we can see than Czech, German, & Slovenian from_to
-    distances are usually below 2k km; longest from-to are en, fr, and
-    somewhat ru
+    aggregated(!) distances are usually below 2k km; longest from-to are
+    en, fr, and somewhat ru;
 
--   2000 km threshold is absolutely arbitrary
-
--   nb: I removed periods with less than 5 formulas
+-   NB: my 2000 km threshold is absolutely arbitrary; also, I removed
+    periods with less than 5 formulas;
 
 -   Peaks details:
 
@@ -212,10 +243,10 @@ from_to appears?
 
     -   EN: authors born in 1750-1799: 40 formulas found; for 1800-1849
         & 1850-1899 even more data (104 & 158 resp.) –\> these dist are
-        really long
+        really long on average;
 
     -   FR: low number of formulas for any period before 1750-1799;
-        1800-1849 has 200+ though
+        1800-1849 has 200+ though, so also long;
 
     -   RU: most formulas come from authors born in 18500-1899; but for
         18c-authors there are 18 (1700-1749) and 24 (1750-1799) formulas
@@ -224,17 +255,40 @@ from_to appears?
 
 ### short vs long dist
 
-How mean distances are changing, if we divide these in two groups and
-put on roughly the same timeline (no grouping)
+Previous plot was just aggregating all distances based on 50-year period
+and calculated means etc. Here I did not do any aggregation, but divided
+the observations in two groups (\> or \<1000km distance). Then I put
+everything on roughly the same timeline (no aggregation, just formulas +
+author’s year birth)
 
     `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png)
 
 For longer distances: everyone except EN and FR are usually below the 5k
-distances even for longer ones? ru is somewhere inbetween
+distances even for longer ones? ru is somewhere inbetween.
+
+So I guess what are the takeouts here:
+
+-   the distribution of from-to distances is very unequal: we actually
+    have more closer distances, when something like “from portugal to
+    china” situations;
+
+-   however the latter is characteristic at least for Eng, Fr, and mb Ru
+    (not surprising but still); for Italy we have too little
+    observations; German corpus look to me closer to Czech, than to the
+    ‘expansion’ ones;
+
+-   I think we should consider dividing the distances in groups for
+    sure, otherwise short distances are practically invisible;
+
+-   Question what I’m not sure about is the threshold between short/long
+    distance though, should it be calculated for each country
+    separately, or not, etc. FOR NOW I just used 1000km for all corpora.
 
 ### Types: river –\> mountain
+
+How distances are related to the types of locations in from-to formula?
 
 #### Overview
 
@@ -295,7 +349,7 @@ distances (cs % short – 72%? sl — 87%), while others are more equal to
 
 What I see here: ok basically city-city is a universal thing; mountain
 to mountain is probably strictly a Czech thing (see below); river-river
-is interestingly more like a long distance thing, than sth else.
+is interestingly more like a long-distance thing, than sth else.
 
 Overall rank cor is not very bad, but ofc some things are really only
 about long distances (everything with continents) and some are only
@@ -379,16 +433,6 @@ river --&gt; river (1)</td>
 
 #### longer vs shorter distances
 
-``` r
-formulas_d %>% 
-  mutate(type_pair = paste0(from_type, " --> ", to_type), 
-         dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
-  group_by(lang, dist_type) %>% 
-  count(type_pair, sort = T) %>% 
-  slice_max(order_by = n, n = 5) %>% 
-  ungroup() 
-```
-
     # A tibble: 70 × 4
        lang  dist_type type_pair                 n
        <chr> <chr>     <chr>                 <int>
@@ -404,14 +448,27 @@ formulas_d %>%
     10 cs    short     mountain --> default     13
     # ℹ 60 more rows
 
+Also a long table, some summary from me:
+
+-   I don’t take ‘deafult’ into account here: we should tag it manually
+    to understand what it is;
+
+<!-- -->
+
+-   cs: some distinction that long distances are rather river-to-river,
+    while short are mountain-to-mountain;
+
+-   en: long dist are about sth\<-\>country; short include many rivers
+    sometimes;
+
+-   fr: also a portion of long river-river distances;
+
+-   ru: same as above;
+
 ### from-to places
 
-``` r
-formulas %>% 
-  mutate(from_to_pair = paste0(from_placename, " --> ", to_placename)) %>% 
-  count(from_to_pair, sort = T) %>% 
-  head(20)
-```
+Just lists of real places, I’m not sure we need to think about this now
+(not too many observations also)
 
                               from_to_pair n
     1  Giant Mountains --> Bohemian Forest 9
@@ -436,15 +493,6 @@ formulas %>%
     20 Tatra Mountains --> Bohemian Forest 3
 
 By language
-
-``` r
-formulas %>% 
-  mutate(from_to_pair = paste0(from_placename, " --> ", to_placename)) %>% 
-  group_by(lang) %>% 
-  count(from_to_pair, sort = T) %>% 
-  slice_max(order_by = n, n = 5, with_ties = F) %>% 
-  knitr::kable()
-```
 
 <table data-quarto-postprocess="true">
 <thead>
@@ -636,7 +684,7 @@ Mountains</td>
 </tbody>
 </table>
 
-### maps test
+### 
 
 ``` r
 library(sf)

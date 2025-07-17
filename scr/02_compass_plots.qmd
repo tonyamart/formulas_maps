@@ -1,6 +1,6 @@
 ---
 title: "02 compass plots"
-format: html
+format: md
 editor: visual
 ---
 
@@ -8,23 +8,36 @@ editor: visual
 
 ```{r, warning=F, include=F}
 library(tidyverse)
-library(kableExtra)
+library(geosphere)
 
+library(MetBrewer)
 theme_set(theme_minimal())
 ```
 
-Load data
+Load data & calculate distances
 
-```{r}
+```{r, include=T, echo=F}
 formulas <- read.csv("../data/formulas_table.csv")
-glimpse(formulas)
+# glimpse(formulas)
+
+formulas_d <- formulas %>% 
+  rowwise() %>% 
+  mutate(dist_haversine = distHaversine(
+    c(from_longitude, from_latitude),
+    c(to_longitude, to_latitude)) 
+      / 1000) %>% 
+  ungroup() %>% 
+  # make numbers human-readable
+  mutate(dist_haversine = round(dist_haversine, digits = 3),
+         dist_longer_1k = ifelse(dist_haversine > 1000, "long", "short")) 
+
+head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
 ```
 
 ### calculate coordinates
 
-#### test sample
-
-```{r}
+```{r, eval = F, include = F, echo = F}
+# test sample
 fs <- formulas %>% sample_n(10)
 
 fs[,9:14]
@@ -60,7 +73,7 @@ x2_0
 y2_0
 ```
 
-```{r, eval=F, include=FALSE}
+```{r, eval=F, include=F, echo=F}
 ggplot() + 
   geom_point(data = fs, aes( x = from_longitude, y = from_latitude)) + 
   geom_point(data = fs, aes( x = to_longitude, y = to_latitude)) + 
@@ -75,7 +88,7 @@ ggplot() +
 
 ```
 
-```{r}
+```{r, eval=F, echo=F, include=F}
 fs %>% 
   # calculate new coordinates
   mutate(x1_0 = 0.0,
@@ -109,10 +122,8 @@ fs %>%
                colour = "red") 
 ```
 
-### transform
-
 ```{r}
-formulas_nc <- formulas %>% 
+formulas_nc <- formulas_d %>% 
   # calculate new coordinates
   mutate(x1_0 = 0.0,
          y1_0 = 0.0,
@@ -125,16 +136,17 @@ glimpse(formulas_nc)
 
 #### plot — all
 
-```{r}
+```{r, include=T, echo=F}
 #p_main <- 
   
 formulas_nc %>% 
-  filter(lang != "it") %>% 
+  # filter(lang != "it") %>% 
   
   ggplot() + 
   annotate("point", x = 0, y = 0, size = 100, 
            alpha = 0.6, 
-           fill = "lightblue", colour = "lightblue") + 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
   
   geom_hline(yintercept = 0, lty = 2, colour = "white", 
              linewidth = 1) + 
@@ -143,11 +155,11 @@ formulas_nc %>%
   
   geom_segment(aes(x = x1_0, xend = x2_0,
                    y = y1_0, yend = y2_0), 
-               colour = "darkslategrey",
+               colour = met.brewer("Cassatt2")[9],
                arrow = arrow(length = unit(4, "pt"))) + 
   facet_wrap(~lang, ncol = 3) + 
   scale_x_continuous(limits = c(-230, 230)) + 
-  scale_y_continuous(limits = c(-140, 120)) + 
+  scale_y_continuous(limits = c(-140, 140)) + 
   
   annotate("point", x = 0, y = 0, size = 1,
            fill = "white", colour = "white") + 
@@ -167,22 +179,23 @@ formulas_nc %>%
 
 ```
 
-```{r}
+```{r, eval=F, inlude=F, echo=F}
 ggsave("../plots/00_compass_main.png", plot = last_plot(), 
        width = 10, height = 10, bg = "white", dpi = 300)
 ```
 
 #### plot – river to river
 
-```{r}
+```{r, include=T, echo=F}
 formulas_nc %>% 
-  filter(lang != "it") %>% 
+  #filter(lang != "it") %>% 
   filter(from_type == "river" & to_type == "river") %>% 
   
   ggplot() + 
   annotate("point", x = 0, y = 0, size = 100, 
            alpha = 0.6, 
-           fill = "lightblue", colour = "lightblue") + 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
   
   geom_hline(yintercept = 0, lty = 2, colour = "white", 
              linewidth = 1) + 
@@ -194,13 +207,13 @@ formulas_nc %>%
                colour = "darkblue",
                arrow = arrow(length = unit(4, "pt"))) + 
   facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-230, 230)) + 
-  scale_y_continuous(limits = c(-140, 120)) + 
+  scale_x_continuous(limits = c(-100, 100)) + 
+  scale_y_continuous(limits = c(-100, 100)) + 
   
   annotate("point", x = 0, y = 0, size = 1,
            fill = "white", colour = "white") + 
   
-  labs(title = "River to river") + 
+  labs(title = "River to river directions") + 
   
   theme(plot.background = element_blank(),
         panel.grid.major = element_blank(),
@@ -214,7 +227,9 @@ formulas_nc %>%
 
 #### compass – 1 lang
 
-```{r}
+Use only ru corpus to look into different types of directions
+
+```{r, include=T, echo=F}
 x <- formulas_nc %>% 
   filter(lang == "ru") %>% 
   mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
@@ -231,7 +246,7 @@ formulas_nc %>%
   ggplot() + 
   annotate("point", x = 0, y = 0, size = 100, 
            alpha = 0.6, 
-           fill = "lightgrey", colour = "lightgrey") + 
+           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
   
   geom_hline(yintercept = 0, lty = 2, colour = "white", 
              linewidth = 1) + 
@@ -245,7 +260,7 @@ formulas_nc %>%
                arrow = arrow(length = unit(4, "pt"))) + 
   facet_wrap(~loc_type, ncol = 3) + 
   scale_x_continuous(limits = c(-230, 230)) + 
-  scale_y_continuous(limits = c(-140, 120)) + 
+  scale_y_continuous(limits = c(-230, 230)) + 
   
   annotate("point", x = 0, y = 0, size = 1,
            fill = "white", colour = "white") + 
@@ -258,8 +273,230 @@ formulas_nc %>%
         panel.border = element_blank(), 
         #axis.text = element_blank(), 
         axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
+        strip.text.x = element_text(size = 12, face = "bold")) + 
+  labs(title = "Only ru corpus")
   
 ```
 
 ### add short/long distances types
+
+two different plots for long & for short distances
+
+#### short dist closer look
+
+```{r, include=T, echo=F}
+p_short <- formulas_nc %>% 
+  #filter(lang != "it") %>% 
+  filter(dist_longer_1k == "short") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 70, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[4], colour = met.brewer("Cassatt1")[4]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = met.brewer("Cassatt2")[9],
+               arrow = arrow(length = unit(4, "pt"))) + 
+  # facet_wrap(~lang, ncol = 1) + 
+  scale_x_continuous(limits = c(-15, 15)) + 
+  scale_y_continuous(limits = c(-15, 15)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold")) + 
+  labs(title = "Short distances (<1000 km)")
+  
+p_short + facet_wrap(~lang, ncol = 3)
+
+p1 <- p_short + facet_wrap(~lang, ncol = 1)
+```
+
+```{r, eval=F, inlude=F, echo=F}
+ggsave("../plots/01_compass_dist_short.png", plot = last_plot(), 
+       width = 10, height = 8, bg = "white", dpi = 300)
+```
+
+#### longer dist
+
+```{r, include=T, echo=F}
+p_long <- formulas_nc %>% 
+  #filter(lang != "it") %>% 
+  filter(dist_longer_1k == "long") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = met.brewer("Cassatt2")[9],
+               arrow = arrow(length = unit(4, "pt"))) + 
+
+  scale_x_continuous(limits = c(-230, 230)) + 
+  scale_y_continuous(limits = c(-230, 230)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold")) + 
+  labs(title = "Long distances (>1000 km)")
+
+
+p_long + facet_wrap(~lang, ncol = 3)  
+
+p2 <-  p_long + facet_wrap(~lang, ncol = 1)
+```
+
+```{r, eval=F, inlude=F, echo=F}
+ggsave("../plots/02_compass_dist_long.png", plot = last_plot(), 
+       width = 15, height = 11, bg = "white", dpi = 300)
+```
+
+Merge two plots in one
+
+```{r, eval=F, include=F, echo=F}
+plot_grid(p1, p2)
+
+ggsave("../plots/03_compass_two_rows.png", plot = last_plot(), 
+       bg = "white", dpi = 300, width = 10, height = 22)
+```
+
+### Directions in time
+
+Temporal facets for each corpus: groupings by author's birth year; 50-years spans
+
+```{r}
+
+# fucntion for easier running
+
+time_plot <- function(corpus, lim_x1, lim_x2, lim_y1, lim_y2, point_size) { 
+  
+  formulas_nc %>% 
+  filter(!is.na(year_birth)) %>% 
+  mutate(period_birth = floor(year_birth/50)*50,
+         period_end = period_birth + 49,
+         period = paste0(period_birth, "—", period_end)) %>% 
+  filter(lang == corpus) %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = point_size, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  facet_wrap(~period, ncol=6) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = met.brewer("Cassatt2")[9],
+               arrow = arrow(length = unit(4, "pt"))) + 
+  scale_x_continuous(limits = c(lim_x1, lim_x2)) + 
+  scale_y_continuous(limits = c(lim_y1, lim_y2)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  }
+```
+
+Czech corpus:
+
+```{r}
+time_plot(corpus = "cs", 
+          lim_x1 = -150, lim_x2 = 150, 
+          lim_y1 = -150, lim_y2 = 150,
+          point_size = 80) + labs(title = "Czech")
+```
+
+German corpus: there are mostly small distances which are hardly visible here
+
+```{r}
+time_plot(corpus = "de", 
+          lim_x1 = -140, lim_x2 = 140, 
+          lim_y1 = -140, lim_y2 = 140,
+          point_size = 80) + labs(title = "DE")
+```
+
+English: interesting expansion to north and to south, huh? and later to the north
+
+```{r}
+time_plot(corpus = "en", 
+          lim_x1 = -230, lim_x2 = 230, 
+          lim_y1 = -230, lim_y2 = 230,
+          point_size = 80) + labs(title = "EN")
+```
+
+FR: authors born in the first half of the 19th-c. are colonialists
+
+```{r}
+time_plot(corpus = "fr", 
+          lim_x1 = -200, lim_x2 = 200, 
+          lim_y1 = -200, lim_y2 = 200,
+          point_size = 80) + labs(title = "FR")
+```
+
+IT: the only case of reducing the scope of from-to
+
+```{r}
+time_plot(corpus = "it", 
+          lim_x1 = -150, lim_x2 = 150, 
+          lim_y1 = -150, lim_y2 = 150,
+          point_size = 80) + labs(title = "IT")
+```
+
+RU: horizontal expansion + caucasus?
+
+```{r}
+time_plot(corpus = "ru", 
+          lim_x1 = -190, lim_x2 = 190, 
+          lim_y1 = -190, lim_y2 = 190,
+          point_size = 80) + labs(title = "RU")
+```
+
+SL: too small (3 longest dist are removed on this plot)
+
+```{r}
+time_plot(corpus = "sl", 
+          lim_x1 = -15, lim_x2 = 15, 
+          lim_y1 = -15, lim_y2 = 15,
+          point_size = 80) + labs(title = "SL")
+```
+
+sample map with one corpus long dist vs short dist snippet
