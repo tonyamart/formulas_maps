@@ -261,3 +261,5 @@ formulas_nc %>%
         strip.text.x = element_text(size = 12, face = "bold"))
   
 ```
+
+### add short/long distances types
