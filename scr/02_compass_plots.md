@@ -55,6 +55,8 @@ glimpse(formulas_nc)
 
 #### plot — all
 
+**NB: BIGGER PLOTS ARE IN THE NORMAL RESOLUTION IN THE PLOTS FOLDER**
+
 ![](02_compass_plots.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png)
 
 #### plot – river to river
@@ -136,13 +138,6 @@ time_plot <- function(corpus, lim_x1, lim_x2, lim_y1, lim_y2, point_size) {
 
 Czech corpus:
 
-``` r
-time_plot(corpus = "cs", 
-          lim_x1 = -150, lim_x2 = 150, 
-          lim_y1 = -150, lim_y2 = 150,
-          point_size = 80) + labs(title = "Czech")
-```
-
     Warning: Removed 1 row containing missing values or values outside the scale range
     (`geom_segment()`).
 
@@ -150,13 +145,6 @@ time_plot(corpus = "cs",
 
 German corpus: there are mostly small distances which are hardly visible
 here
-
-``` r
-time_plot(corpus = "de", 
-          lim_x1 = -140, lim_x2 = 140, 
-          lim_y1 = -140, lim_y2 = 140,
-          point_size = 80) + labs(title = "DE")
-```
 
     Warning: Removed 1 row containing missing values or values outside the scale range
     (`geom_segment()`).
@@ -166,23 +154,9 @@ time_plot(corpus = "de",
 English: interesting expansion to north and to south, huh? and later to
 the north
 
-``` r
-time_plot(corpus = "en", 
-          lim_x1 = -230, lim_x2 = 230, 
-          lim_y1 = -230, lim_y2 = 230,
-          point_size = 80) + labs(title = "EN")
-```
-
 ![](02_compass_plots.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png)
 
 FR: authors born in the first half of the 19th-c. are colonialists
-
-``` r
-time_plot(corpus = "fr", 
-          lim_x1 = -200, lim_x2 = 200, 
-          lim_y1 = -200, lim_y2 = 200,
-          point_size = 80) + labs(title = "FR")
-```
 
     Warning: Removed 1 row containing missing values or values outside the scale range
     (`geom_segment()`).
@@ -191,34 +165,13 @@ time_plot(corpus = "fr",
 
 IT: the only case of reducing the scope of from-to
 
-``` r
-time_plot(corpus = "it", 
-          lim_x1 = -150, lim_x2 = 150, 
-          lim_y1 = -150, lim_y2 = 150,
-          point_size = 80) + labs(title = "IT")
-```
-
 ![](02_compass_plots.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png)
 
 RU: horizontal expansion + caucasus?
 
-``` r
-time_plot(corpus = "ru", 
-          lim_x1 = -190, lim_x2 = 190, 
-          lim_y1 = -190, lim_y2 = 190,
-          point_size = 80) + labs(title = "RU")
-```
-
 ![](02_compass_plots.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png)
 
 SL: too small (3 longest dist are removed on this plot)
-
-``` r
-time_plot(corpus = "sl", 
-          lim_x1 = -15, lim_x2 = 15, 
-          lim_y1 = -15, lim_y2 = 15,
-          point_size = 80) + labs(title = "SL")
-```
 
     Warning: Removed 1 row containing missing values or values outside the scale range
     (`geom_segment()`).
@@ -229,4 +182,4 @@ time_plot(corpus = "sl",
 
 ![](02_compass_plots.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png)
 
-sample map with one corpus long dist vs short dist snippet
+to do mb: sample map with one corpus long dist vs short dist snippet

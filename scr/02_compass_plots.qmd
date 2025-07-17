@@ -136,6 +136,8 @@ glimpse(formulas_nc)
 
 #### plot — all
 
+**NB: BIGGER PLOTS ARE IN THE NORMAL RESOLUTION IN THE PLOTS FOLDER**
+
 ```{r, include=T, echo=F}
 #p_main <- 
   
@@ -438,7 +440,7 @@ time_plot <- function(corpus, lim_x1, lim_x2, lim_y1, lim_y2, point_size) {
 
 Czech corpus:
 
-```{r}
+```{r, include=T, echo=F}
 time_plot(corpus = "cs", 
           lim_x1 = -150, lim_x2 = 150, 
           lim_y1 = -150, lim_y2 = 150,
@@ -447,7 +449,7 @@ time_plot(corpus = "cs",
 
 German corpus: there are mostly small distances which are hardly visible here
 
-```{r}
+```{r, include=T, echo=F}
 time_plot(corpus = "de", 
           lim_x1 = -140, lim_x2 = 140, 
           lim_y1 = -140, lim_y2 = 140,
@@ -456,7 +458,7 @@ time_plot(corpus = "de",
 
 English: interesting expansion to north and to south, huh? and later to the north
 
-```{r}
+```{r, include=T, echo=F}
 time_plot(corpus = "en", 
           lim_x1 = -230, lim_x2 = 230, 
           lim_y1 = -230, lim_y2 = 230,
@@ -465,7 +467,7 @@ time_plot(corpus = "en",
 
 FR: authors born in the first half of the 19th-c. are colonialists
 
-```{r}
+```{r, include=T, echo=F}
 time_plot(corpus = "fr", 
           lim_x1 = -200, lim_x2 = 200, 
           lim_y1 = -200, lim_y2 = 200,
@@ -474,7 +476,7 @@ time_plot(corpus = "fr",
 
 IT: the only case of reducing the scope of from-to
 
-```{r}
+```{r, include=T, echo=F}
 time_plot(corpus = "it", 
           lim_x1 = -150, lim_x2 = 150, 
           lim_y1 = -150, lim_y2 = 150,
@@ -483,7 +485,7 @@ time_plot(corpus = "it",
 
 RU: horizontal expansion + caucasus?
 
-```{r}
+```{r, include=T, echo=F}
 time_plot(corpus = "ru", 
           lim_x1 = -190, lim_x2 = 190, 
           lim_y1 = -190, lim_y2 = 190,
@@ -492,11 +494,11 @@ time_plot(corpus = "ru",
 
 SL: too small (3 longest dist are removed on this plot)
 
-```{r}
+```{r, include=T, echo=F}
 time_plot(corpus = "sl", 
           lim_x1 = -15, lim_x2 = 15, 
           lim_y1 = -15, lim_y2 = 15,
           point_size = 80) + labs(title = "SL")
 ```
 
-sample map with one corpus long dist vs short dist snippet
+to do mb: sample map with one corpus long dist vs short dist snippet
