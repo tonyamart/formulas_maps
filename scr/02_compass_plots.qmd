@@ -136,17 +136,15 @@ glimpse(formulas_nc)
 
 #### plot — all
 
-**NB: BIGGER PLOTS ARE IN THE NORMAL RESOLUTION IN THE PLOTS FOLDER**
-
 ```{r, include=T, echo=F}
 #p_main <- 
   
 formulas_nc %>% 
-  # filter(lang != "it") %>% 
+  filter(lang != "it") %>% 
   
   ggplot() + 
   annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
+           alpha = 0.4, 
            fill = met.brewer("Cassatt1")[5], 
            colour = met.brewer("Cassatt1")[5]) + 
   
@@ -158,10 +156,11 @@ formulas_nc %>%
   geom_segment(aes(x = x1_0, xend = x2_0,
                    y = y1_0, yend = y2_0), 
                colour = met.brewer("Cassatt2")[9],
-               arrow = arrow(length = unit(4, "pt"))) + 
+               arrow = arrow(length = unit(4, "pt")),
+               alpha = 0.5) + 
   facet_wrap(~lang, ncol = 3) + 
   scale_x_continuous(limits = c(-230, 230)) + 
-  scale_y_continuous(limits = c(-140, 140)) + 
+  scale_y_continuous(limits = c(-230, 230)) + 
   
   annotate("point", x = 0, y = 0, size = 1,
            fill = "white", colour = "white") + 
@@ -172,17 +171,12 @@ formulas_nc %>%
         panel.border = element_blank(), 
         #axis.text = element_blank(), 
         axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
+        strip.text.x = element_text(size = 14, face = "bold"))
   
-  
-  
-  #theme(axis.text = element_blank(), 
-        #axis.title = element_blank()) 
-
 ```
 
 ```{r, eval=F, inlude=F, echo=F}
-ggsave("../plots/00_compass_main.png", plot = last_plot(), 
+ggsave("../plots/Fig_2.png", plot = last_plot(), 
        width = 10, height = 10, bg = "white", dpi = 300)
 ```
 
@@ -288,13 +282,14 @@ two different plots for long & for short distances
 
 ```{r, include=T, echo=F}
 p_short <- formulas_nc %>% 
-  #filter(lang != "it") %>% 
+  filter(lang != "it") %>% 
   filter(dist_longer_1k == "short") %>% 
   
   ggplot() + 
   annotate("point", x = 0, y = 0, size = 70, 
            alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[4], colour = met.brewer("Cassatt1")[4]) + 
+           fill = met.brewer("Cassatt1")[4], 
+           colour = met.brewer("Cassatt1")[4]) + 
   
   geom_hline(yintercept = 0, lty = 2, colour = "white", 
              linewidth = 1) + 
@@ -304,7 +299,8 @@ p_short <- formulas_nc %>%
   geom_segment(aes(x = x1_0, xend = x2_0,
                    y = y1_0, yend = y2_0), 
                colour = met.brewer("Cassatt2")[9],
-               arrow = arrow(length = unit(4, "pt"))) + 
+               arrow = arrow(length = unit(4, "pt")),
+               alpha = 0.5) + 
   # facet_wrap(~lang, ncol = 1) + 
   scale_x_continuous(limits = c(-15, 15)) + 
   scale_y_continuous(limits = c(-15, 15)) + 
@@ -318,7 +314,7 @@ p_short <- formulas_nc %>%
         panel.border = element_blank(), 
         #axis.text = element_blank(), 
         axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold")) + 
+        strip.text.x = element_text(size = 14, face = "bold")) + 
   labs(title = "Short distances (<1000 km)")
   
 p_short + facet_wrap(~lang, ncol = 3)
@@ -335,13 +331,14 @@ ggsave("../plots/01_compass_dist_short.png", plot = last_plot(),
 
 ```{r, include=T, echo=F}
 p_long <- formulas_nc %>% 
-  #filter(lang != "it") %>% 
+  filter(lang != "it") %>% 
   filter(dist_longer_1k == "long") %>% 
   
   ggplot() + 
   annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
+           alpha = 0.4, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
   
   geom_hline(yintercept = 0, lty = 2, colour = "white", 
              linewidth = 1) + 
@@ -351,7 +348,8 @@ p_long <- formulas_nc %>%
   geom_segment(aes(x = x1_0, xend = x2_0,
                    y = y1_0, yend = y2_0), 
                colour = met.brewer("Cassatt2")[9],
-               arrow = arrow(length = unit(4, "pt"))) + 
+               arrow = arrow(length = unit(4, "pt")), 
+               alpha = 0.5) + 
 
   scale_x_continuous(limits = c(-230, 230)) + 
   scale_y_continuous(limits = c(-230, 230)) + 
@@ -365,7 +363,7 @@ p_long <- formulas_nc %>%
         panel.border = element_blank(), 
         #axis.text = element_blank(), 
         axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold")) + 
+        strip.text.x = element_text(size = 14, face = "bold")) + 
   labs(title = "Long distances (>1000 km)")
 
 
@@ -384,8 +382,8 @@ Merge two plots in one
 ```{r, eval=F, include=F, echo=F}
 plot_grid(p1, p2)
 
-ggsave("../plots/03_compass_two_rows.png", plot = last_plot(), 
-       bg = "white", dpi = 300, width = 10, height = 22)
+ggsave("../plots/Fig_3.png", plot = last_plot(), 
+       bg = "white", dpi = 300, width = 8, height = 20)
 ```
 
 ### Directions in time

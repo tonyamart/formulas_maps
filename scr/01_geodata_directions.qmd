@@ -9,6 +9,8 @@ editor: visual
 ```{r, warning=F, include=F}
 library(tidyverse)
 
+library(MetBrewer)
+library(cowplot)
 library(kableExtra)
 theme_set(theme_minimal())
 
@@ -170,7 +172,7 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
 
 #### overall
 
-Poet's mind is often flying not that far away? (the line is trochee-2 btw)
+Poet's mind is often flying not that far away?
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
@@ -186,13 +188,66 @@ formulas_d %>%
   #filter(lang == "sl") %>% 
   ggplot(aes(x = lang, y = dist_haversine, group = lang)) + 
   geom_jitter(alpha = 0.2, width = 0.2) #+
-  # facet_wrap(~lang) + 
-  # labs(title = "Density of various distances")
+  labs(title = "Distribution of all distances",
+       y = "Dist Haversine (km)")
 ```
 
 What I see here: most of the distances are actually very small; but for some traditions there are quite a portion of longer ones.
 
 The problem is the threshold here: would we want to divide into short/long groups based on any corpus-related number (mean/med dist? country size? which country then), or to set an arbitrary baseline like everything less then 1000km is a small distance, and anything longer – is long?
+
+### Plot 1: dist distribution
+
+```{r}
+dist_raw <- formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(dist_haversine > 0) %>% 
+  ggplot(aes(x = lang, y = dist_haversine, group = lang)) + 
+  geom_jitter(alpha = 0.2, width = 0.2, colour = met.brewer("Cassatt2")[10]) + 
+  geom_violin(fill = met.brewer("Cassatt2")[4], alpha = 0.7) + 
+  labs(y = "Distance (km)",
+       x = "Corpus") + 
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+dist_raw
+```
+
+```{r}
+dist_log <- formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(dist_haversine > 0) %>% 
+  ggplot(aes(y = factor(lang, levels = c("sl", "ru", "fr", "en", "de", "cs")), 
+             x = dist_haversine, group = lang)) + 
+  geom_jitter(alpha = 0.2, width = 0.2, colour = met.brewer("Cassatt2")[10]) + 
+  geom_violin(fill = met.brewer("Cassatt2")[4], alpha = 0.7) + 
+  labs(x = "Distance (log scale)",
+       y = "Corpus") + 
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14)) + 
+  scale_x_log10()
+
+dist_log
+```
+
+```{r}
+plot_grid(dist_raw, NULL, dist_log,
+          rel_widths = c(1, 0.03, 1), nrow = 1,
+          labels = c("A", "B"), label_size = 18)
+
+
+ggsave("../plots/Fig_1.png", plot = last_plot(),
+       bg = "white", dpi = 300, width = 12, height = 6)
+```
+
+```{r}
+formulas_d %>% 
+  filter(lang %in% c("en", "ru", "fr")) %>% 
+  filter(from_type == "river" & to_type == "river") %>% 
+  group_by(lang) %>% 
+  slice_max(order_by = dist_haversine, n = 10) %>% 
+  select(text, from_placename, to_placename, dist_haversine)
+```
 
 ### dist summary stats
 
@@ -457,9 +512,8 @@ Also a long table, some summary from me:
 
 -   I don't take 'deafult' into account here: we should tag it manually to understand what it is;
 
-```{=html}
 <!-- -->
-```
+
 -   cs: some distinction that long distances are rather river-to-river, while short are mountain-to-mountain;
 
 -   en: long dist are about sth\<-\>country; short include many rivers sometimes;
