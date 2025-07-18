@@ -1,0 +1,1 @@
+Data and code prepared for the paper: *Where Empires End: Tracing the Geography of a “Soaring Spirit” in Poetry*
