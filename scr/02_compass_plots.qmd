@@ -498,5 +498,3 @@ time_plot(corpus = "sl",
           lim_y1 = -15, lim_y2 = 15,
           point_size = 80) + labs(title = "SL")
 ```
-
-to do mb: sample map with one corpus long dist vs short dist snippet

@@ -153,12 +153,20 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
 
 #### overall
 
-Poet’s mind is often flying not that far away? (the line is trochee-2
-btw)
+Poet’s mind is often flying not that far away?
 
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+
+    $y
+    [1] "Dist Haversine (km)"
+
+    $title
+    [1] "Distribution of all distances"
+
+    attr(,"class")
+    [1] "labels"
 
 What I see here: most of the distances are actually very small; but for
 some traditions there are quite a portion of longer ones.
@@ -168,6 +176,44 @@ short/long groups based on any corpus-related number (mean/med dist?
 country size? which country then), or to set an arbitrary baseline like
 everything less then 1000km is a small distance, and anything longer –
 is long?
+
+### Figure 1: dist distribution
+
+``` r
+dist_raw <- formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(dist_haversine > 0) %>% 
+  ggplot(aes(x = lang, y = dist_haversine, group = lang)) + 
+  geom_jitter(alpha = 0.2, width = 0.2, colour = met.brewer("Cassatt2")[10]) + 
+  geom_violin(fill = met.brewer("Cassatt2")[4], alpha = 0.7) + 
+  labs(y = "Distance (km)",
+       x = "Corpus") + 
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+dist_raw
+```
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+
+``` r
+dist_log <- formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(dist_haversine > 0) %>% 
+  ggplot(aes(y = factor(lang, levels = c("sl", "ru", "fr", "en", "de", "cs")), 
+             x = dist_haversine, group = lang)) + 
+  geom_jitter(alpha = 0.2, width = 0.2, colour = met.brewer("Cassatt2")[10]) + 
+  geom_violin(fill = met.brewer("Cassatt2")[4], alpha = 0.7) + 
+  labs(x = "Distance (log scale)",
+       y = "Corpus") + 
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14)) + 
+  scale_x_log10()
+
+dist_log
+```
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
 ### dist summary stats
 
@@ -189,21 +235,21 @@ Plot based on the groups long / short distances:
 I just wanted to see how these values are distributed, should we divide
 them in two groups
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png)
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png)
 
 Same grouping method for all: dist is short is \< 1000km, long if
 \>1000km
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
 #### Time: distances based on author birth year
 
 This is how author’s birth years are distributed, if we’re only looking
 in our formulas subset
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png)
 
 Add time period column & recalculate summary dist metrics: I aggregated
 based on the half-century periods the author was born. The question here
@@ -227,7 +273,7 @@ when from_to formula appears?
 
     Joining with `by = join_by(lang_t)`
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png)
 
 -   overall: we can see than Czech, German, & Slovenian from_to
     aggregated(!) distances are usually below 2k km; longest from-to are
@@ -263,7 +309,7 @@ author’s year birth)
 
     `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png)
 
 For longer distances: everyone except EN and FR are usually below the 5k
 distances even for longer ones? ru is somewhere inbetween.

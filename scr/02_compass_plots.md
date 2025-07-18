@@ -55,8 +55,6 @@ glimpse(formulas_nc)
 
 #### plot — all
 
-**NB: BIGGER PLOTS ARE IN THE NORMAL RESOLUTION IN THE PLOTS FOLDER**
-
 ![](02_compass_plots.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png)
 
 #### plot – river to river
@@ -181,5 +179,3 @@ SL: too small (3 longest dist are removed on this plot)
     (`geom_segment()`).
 
 ![](02_compass_plots.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png)
-
-to do mb: sample map with one corpus long dist vs short dist snippet

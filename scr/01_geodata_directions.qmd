@@ -196,7 +196,7 @@ What I see here: most of the distances are actually very small; but for some tra
 
 The problem is the threshold here: would we want to divide into short/long groups based on any corpus-related number (mean/med dist? country size? which country then), or to set an arbitrary baseline like everything less then 1000km is a small distance, and anything longer – is long?
 
-### Plot 1: dist distribution
+### Figure 1: dist distribution
 
 ```{r}
 dist_raw <- formulas_d %>% 
@@ -230,7 +230,7 @@ dist_log <- formulas_d %>%
 dist_log
 ```
 
-```{r}
+```{r, eval=F, include=F, echo=F}
 plot_grid(dist_raw, NULL, dist_log,
           rel_widths = c(1, 0.03, 1), nrow = 1,
           labels = c("A", "B"), label_size = 18)
@@ -240,7 +240,10 @@ ggsave("../plots/Fig_1.png", plot = last_plot(),
        bg = "white", dpi = 300, width = 12, height = 6)
 ```
 
-```{r}
+```{r, eval=F, include=F, echo=F}
+
+# rivers formulas
+
 formulas_d %>% 
   filter(lang %in% c("en", "ru", "fr")) %>% 
   filter(from_type == "river" & to_type == "river") %>% 
