@@ -212,3 +212,32 @@ r <- read.csv("../data/formulas_table.csv")
 
 glimpse(r)
 ```
+
+Write a table with unique locations from the formula (to work on types)
+
+```{r}
+loc_f <- r %>% 
+  select(from_id, from_latitude, from_longitude, from_placename, from_type) %>% 
+  rename(id = from_id, 
+         lat = from_latitude,
+         lon = from_longitude,
+         placename = from_placename,
+         type = from_type)
+
+loc_t <- r %>% 
+  select(to_id, to_latitude, to_longitude, to_placename, to_type) %>% 
+  rename(id = to_id, 
+         lat = to_latitude, 
+         lon = to_longitude,
+         placename = to_placename,
+         type = to_type)
+
+colnames(loc_f) == colnames(loc_t)
+
+locs <- rbind(loc_f, loc_t)
+
+locs <- locs %>% 
+  distinct()
+
+write.csv(locs, "../data/loc_unique.csv")
+```
