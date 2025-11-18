@@ -27,8 +27,7 @@ str(x[[2]][1])
 
 ```{r, eval = FALSE}
 # test run with one language
-#df <- 
-tibble(
+df <- tibble(
   doc_key = names(x$de),
   triplets = x$de
 ) %>% 
@@ -205,6 +204,10 @@ write.csv(formulas_df, "../data/formulas_table.csv", row.names = F)
 write.csv(wiki_df, "../data/wiki_df.csv", row.names = F)
 ```
 
+## fixes
+
+### add loc types
+
 ```{r}
 # check
 
@@ -240,4 +243,109 @@ locs <- locs %>%
   distinct()
 
 write.csv(locs, "../data/loc_unique.csv")
+```
+
+Load a table with tagged location types
+
+```{r}
+loc_tag <- read_delim("../data/loc_unique_tagged.csv") %>% 
+  select(-`...1`)
+
+glimpse(loc_tag)
+```
+
+Clean the types
+
+```{r}
+loc_tag <- loc_tag %>% 
+  mutate(type_new = ifelse(is.na(type_detail), type, type_detail)) %>% 
+  select(-type, -type_detail) %>% 
+  rename(type_detail = type_new)
+
+loc_tag %>% 
+  count(type_detail, sort = T)
+```
+
+Create larger groups of loc types
+
+```{r}
+loc_tag <- loc_tag %>% 
+  mutate(type_general = type_detail,
+         type_general = str_replace(type_general, "historic region", "region")) %>% 
+  mutate(type_general = str_replace(type_general, "^land$", "region")) %>% 
+  mutate(type_general = str_replace(type_general, "archipelago", "island")) %>% 
+  mutate(type_general = str_replace_all(type_general, 
+                                        "castle|fort|^castle ruin$|^historic castle/fort$ ", 
+                                        "castle/fort")) %>% 
+  mutate(type_general = str_replace_all(type_general, "^castle/fort ruin$", "castle/fort")) %>% 
+  mutate(type_general = str_replace_all(type_general, "^historic castle/fort$", "castle/fort")) %>% 
+  mutate(type_general = str_replace(type_general, "ciity", "city")) %>% 
+  mutate(type_general = str_replace(type_general, "mountain pass", "mountain")) %>% 
+  mutate(type_general = ifelse(type_general %in% c("hill", "hills", "hilltop"), 
+                               "hill", type_general)) %>% 
+  
+  mutate(type_general = ifelse(type_general %in% c("point", "prison", "battle",
+                                                   "church", "cliff", "college", 
+                                                   "pillars (also mythological)", 
+                                                   "road", "spring", "rock",
+                                                   "tower", "beach"
+                                                   ), "default", type_general)) %>% 
+  mutate(type_general = str_replace(type_general, "street", "city part"),
+         type_general = str_replace(type_general, "sea area", "sea"),
+         type_general = str_replace(type_general, "kibbutz", "village"),
+         type_general = str_replace(type_general, "state", "region")) 
+
+loc_tag %>% count(type_general, sort = T)
+```
+
+Attach types back to the main table
+
+```{r}
+glimpse(r)
+```
+
+```{r}
+locs <- r %>% 
+  left_join(loc_tag %>% select(id, type_detail, type_general) %>% 
+              rename(from_id = id,
+                     from_type_detail = type_detail,
+                     from_type_g = type_general),
+            by = "from_id") %>% 
+  left_join(loc_tag %>% select(id, type_detail, type_general) %>% 
+              rename(to_id = id,
+                     to_type_detail = type_detail, 
+                     to_type_g = type_general),
+            by = "to_id") %>% 
+  select(-from_type, -to_type) %>% 
+  rename(from_type = from_type_g,
+         to_type = to_type_g) 
+
+# colnames(locs)
+
+# reoder columns
+locs <- locs %>% select(lang, doc_key, 
+                from_id, to_id, text,
+                author_name, year_birth, year_death, 
+                from_placename, from_latitude, from_longitude, 
+                from_type, from_type_detail,
+                to_placename, to_latitude, to_longitude,
+                to_type, to_type_detail)
+
+glimpse(locs)
+```
+
+write
+
+```{r}
+write.csv(locs, "../data/formulas_table.csv", row.names = F)
+```
+
+### fix formulas
+
+Read initial file and
+
+```{r}
+
+fch <- read_delim("../data/formulas_check.csv")
+
 ```
