@@ -206,19 +206,19 @@ write.csv(wiki_df, "../data/wiki_df.csv", row.names = F)
 
 ## fixes
 
-### add loc types
+### work with loc types
 
-```{r}
+```{r, eval = F}
 # check
 
-r <- read.csv("../data/formulas_table.csv")
-
-glimpse(r)
+# r <- read.csv("../data/formulas_table.csv")
+# 
+# glimpse(r)
 ```
 
 Write a table with unique locations from the formula (to work on types)
 
-```{r}
+```{r, eval = F, include = F, echo = F}
 loc_f <- r %>% 
   select(from_id, from_latitude, from_longitude, from_placename, from_type) %>% 
   rename(id = from_id, 
@@ -242,7 +242,7 @@ locs <- rbind(loc_f, loc_t)
 locs <- locs %>% 
   distinct()
 
-write.csv(locs, "../data/loc_unique.csv")
+# write.csv(locs, "../data/loc_unique.csv")
 ```
 
 Load a table with tagged location types
@@ -263,12 +263,12 @@ loc_tag <- loc_tag %>%
   rename(type_detail = type_new)
 
 loc_tag %>% 
-  count(type_detail, sort = T)
+  count(type_detail, sort = T) %>% head(10)
 ```
 
 Create larger groups of loc types
 
-```{r}
+```{r, include = F, echo = F}
 loc_tag <- loc_tag %>% 
   mutate(type_general = type_detail,
          type_general = str_replace(type_general, "historic region", "region")) %>% 
@@ -295,57 +295,190 @@ loc_tag <- loc_tag %>%
          type_general = str_replace(type_general, "kibbutz", "village"),
          type_general = str_replace(type_general, "state", "region")) 
 
-loc_tag %>% count(type_general, sort = T)
-```
-
-Attach types back to the main table
-
-```{r}
-glimpse(r)
-```
-
-```{r}
-locs <- r %>% 
-  left_join(loc_tag %>% select(id, type_detail, type_general) %>% 
-              rename(from_id = id,
-                     from_type_detail = type_detail,
-                     from_type_g = type_general),
-            by = "from_id") %>% 
-  left_join(loc_tag %>% select(id, type_detail, type_general) %>% 
-              rename(to_id = id,
-                     to_type_detail = type_detail, 
-                     to_type_g = type_general),
-            by = "to_id") %>% 
-  select(-from_type, -to_type) %>% 
-  rename(from_type = from_type_g,
-         to_type = to_type_g) 
-
-# colnames(locs)
-
-# reoder columns
-locs <- locs %>% select(lang, doc_key, 
-                from_id, to_id, text,
-                author_name, year_birth, year_death, 
-                from_placename, from_latitude, from_longitude, 
-                from_type, from_type_detail,
-                to_placename, to_latitude, to_longitude,
-                to_type, to_type_detail)
-
-glimpse(locs)
-```
-
-write
-
-```{r}
-write.csv(locs, "../data/formulas_table.csv", row.names = F)
+loc_tag %>% count(type_general, sort = T) %>% head(10)
 ```
 
 ### fix formulas
 
-Read initial file and
+Read the fixed file
 
 ```{r}
 
-fch <- read_delim("../data/formulas_check.csv")
+fch <- read_delim("../data/working_files/formulas_table_check.csv")
+glimpse(fch)
+```
 
+Remove rows with errors & leave the clean data
+
+```{r}
+unique(fch$error)
+
+formulas <- fch %>% 
+  mutate(error = ifelse(is.na(error), "", error)) %>% 
+  # leave when not an error
+  filter(error %in% c("multiple items order", "")) %>% 
+  select(-error)
+```
+
+```{r}
+glimpse(formulas)
+```
+
+Re-attach coordinates and location types
+
+*NB load df_binded (chunk 4) and wiki_df (chunk 7 etc)*
+
+```{r}
+# attch author's data back
+df_authors <- df_binded %>% 
+  select(lang, doc_key, author_name, year_birth, year_death) %>% 
+  distinct()
+
+
+formulas <- formulas %>% 
+  left_join(df_authors, by = "doc_key")
+
+# quick check
+formulas %>% 
+  filter(is.na(author_name))
+
+glimpse(formulas)
+```
+
+check Lat-Lon
+
+```{r}
+formulas %>% 
+  filter(is.na(from_id) | from_id == "")
+
+formulas %>% 
+  filter(is.na(to_id) | from_id == "")
+```
+
+Load fixed wiki df
+
+```{r}
+wiki_df <- read_csv("../data/wiki_df.csv")
+glimpse(wiki_df)
+```
+
+Attach types
+
+```{r}
+# glimpse(loc_tag)
+
+wiki_df <- wiki_df %>% 
+  left_join(loc_tag %>% 
+              select(id, type_detail, type_general) %>% 
+              rename(entity_id = id),
+            by = "entity_id") 
+
+glimpse(wiki_df)
+```
+
+```{r}
+# quick fix: two instances of Q29 in wiki_df
+wiki_df %>% 
+  count(entity_id, sort = T)
+
+wiki_df %>% distinct() %>% nrow()
+nrow(wiki_df)
+
+wiki_df <- wiki_df %>% 
+  distinct()
+```
+
+```{r}
+glimpse(formulas)
+```
+
+Attach wiki_df data to the main table
+
+```{r}
+formulas_l <- formulas %>% 
+  #rename old names
+  rename(from_placename_old = from_placename,
+         to_placename_old = to_placename) %>% 
+  
+  # attach data for FROM
+  left_join(wiki_df %>% 
+              rename(from_id = entity_id) %>% 
+              select(-instances), 
+            by = "from_id") %>% 
+  rename(
+         from_placename = label,
+         from_type_old = type,
+         from_latitude = latitude,
+         from_longitude = longitude,
+         from_type = type_general,
+         from_type_d = type_detail) %>% 
+  # attach data for TO
+  left_join(wiki_df %>% 
+              rename(to_id = entity_id) %>% 
+              select(-instances),
+            by = "to_id") %>%  
+  rename(
+         to_placename = label,
+         to_type_old = type,
+         to_latitude = latitude,
+         to_longitude = longitude,
+         to_type = type_general,
+         to_type_d = type_detail) %>%  
+  # fix NA in types
+  mutate(from_type = ifelse(is.na(from_type), from_type_old, from_type),
+         from_type_d = ifelse(is.na(from_type_d), from_type_old, from_type_d),
+         
+         to_type = ifelse(is.na(to_type), to_type_old, to_type),
+         to_type_d = ifelse(is.na(to_type_d), to_type_old, to_type_d))
+
+glimpse(formulas_l)
+```
+
+Check
+
+```{r}
+formulas_l %>% 
+  filter(is.na(from_latitude) | is.na(from_longitude))
+
+formulas_l %>% 
+  filter(is.na(to_latitude) | is.na(to_longitude))
+
+formulas_l %>% 
+  filter(from_placename_old != from_placename) %>% 
+  select(from_id, to_id, text, from_placename_old, from_placename)
+```
+
+Remove (still) missing data & old columns
+
+```{r}
+formulas_l <- formulas_l %>% 
+  filter(!is.na(from_latitude), !is.na(from_longitude)) %>% 
+  filter(!is.na(to_latitude), !is.na(to_longitude)) %>% 
+  # remove old columns
+  select(-from_placename_old, -to_placename_old,
+         -from_type_old, -to_type_old)
+
+# glimpse(formulas_l)
+```
+
+final reorder
+
+```{r}
+# reoder columns
+formulas_fin <- formulas_l %>% 
+  select(lang, doc_key, 
+                from_id, to_id, text,
+                author_name, year_birth, year_death, 
+                from_placename, from_latitude, from_longitude, 
+                from_type, from_type_d,
+                to_placename, to_latitude, to_longitude,
+                to_type, to_type_d)
+
+glimpse(formulas_fin)
+```
+
+### write
+
+```{r}
+write_csv(formulas_fin, "../data/formulas_table.csv")
 ```

@@ -1,0 +1,1267 @@
+doc_key;from_id;to_id;text;from_placename;to_placename;error
+0001_0001-0001-0000-0008-0000;Q1497;Q668;od břehů širých otce Missisipi až k Indu;Mississippi River;India;
+0036_0001-0000-0000-0001-0002;Q37200;Q584;od Pyramid k Rýnu , od Gibraltaru k bouřným vlnám Baltu;Giza pyramid complex;Rhine;
+0036_0001-0000-0000-0001-0002;Q1410;Q545;od Gibraltaru k bouřným vlnám Baltu;Gibraltar;Baltic Sea;
+0063_0001-0000-0000-0018-0000;Q155975;Q1887287;od Hor Kuten k Malešovu;Kutná Hora;Malešov;
+0063_0001-0000-0000-0018-0000;Q155975;Q1085;Od Hor Kuten veden k Praze;Kutná Hora;Prague;
+0067_0001-0003-0000-0012-0000;Q545;Q13924;od Baltu až k Adrii;Baltic Sea;Adriatic Sea;
+0067_0001-0003-0000-0024-0000;Q617511;Q157290;od Sněžky zní po Šumavu;Sněžka;Bohemian Forest;
+0067_0001-0004-0000-0001-0000;Q214644;Q157290;z vlasti a čistit od Krkonoš k Šumavě;Giant Mountains;Bohemian Forest;
+0067_0001-0004-0000-0001-0000;Q214644;Q157290;od Krkonoš k Šumavě;Giant Mountains;Bohemian Forest;
+0085_0001-0000-0000-0005-0000;Q214644;Q13924;Od Krkonoš , ode Tatry k modrým vlnám Adrie;Giant Mountains;Adriatic Sea;
+0085_0001-0000-0000-0005-0000;Q194263;Q13924;Od Krkonoš , ode Tatry k modrým vlnám Adrie;Tatra Mountains;Adriatic Sea;repeated
+0085_0001-0000-0000-0005-0000;Q194263;Q13924;ode Tatry k modrým vlnám Adrie;Tatra Mountains;Adriatic Sea;
+0085_0001-0003-0000-0002-0000;Q3967;Q222;z Wiedu táh do Albánie;Neuwied;Albania;
+0091_0001-0000-0000-0006-0000;Q157290;Q1288;od Šumavy až do Karpat;Bohemian Forest;Carpathian Mountains;
+0099_0001-0000-0000-0007-0000;Q157290;Q194263;od Šumavy až do Tater;Bohemian Forest;Tatra Mountains;
+0154_0-0006-0000-0022-0000;Q106274;Q43266;Od Lehnice do Moravy;Legnica;Moravia;
+0154_0-0009-0000-0019-0000;Q37;Q270;Z Litvy zpátky do Varšavy;Lithuania;Warsaw;
+0163_0001-0002-0000-0006-0000;Q214644;Q157290;od našich Krkonoš až k Šumavě;Giant Mountains;Bohemian Forest;
+0172_0001-0002-0000-0012-0000;Q214644;Q157290;Z Krkonošů až k Šumavě;Giant Mountains;Bohemian Forest;
+0172_0001-0002-0000-0012-0000;Q157290;Q4198;Z Krkonošů až k Šumavě , Z Tater do Krušných;Bohemian Forest;Ore Mountains;repeated
+0172_0001-0002-0000-0012-0000;Q194263;Q4198;Z Tater do Krušných;Tatra Mountains;Ore Mountains;
+0179_0001-0000-0000-0001-0008;Q487971;Q671415;z Reichenhallu do Waidringu;Bad Reichenhall;Waidring;
+0185_0001-0000-0000-0005-0000;Q14960;Q183111;z Brna po Jihlavu;Brno;Jihlava;
+0185_0001-0000-0000-0010-0000;Q45898788;Q40;z Novohradska s cháskou dotěravou do Rakous;Novohradsko;Austria;
+0186_0001-0001-0000-0016-0000;Q754194;Q217527;z Campanily k Piazzettě;St Mark's Campanile;Piazza San Marco;
+0186_0001-0001-0000-0043-0000;Q76925;Q41;od Lagun až k Řecku;Venetian Lagoon;Greece;
+0192_0001-0002-0000-0007-0000;Q549849;Q12770704;z Bánovců k Machnáči;Bánovce nad Bebravou;Machnáč;
+0192_0001-0004-0000-0010-0000;Q213230;Q1653;z Hronce až k Dunaji;Hron;Danube;
+0192_0001-0005-0000-0010-0000;Q1780;Q1781;z Prešpurka k Budapešti;Bratislava;Budapest;
+0208_0001-0001-0000-0031-0000;Q194263;Q1653;od Tater až po Dunaj krasší;Tatra Mountains;Danube;
+0216_0001-0000-0000-0001-0004;Q26119;Q25409;od Prešova dolů ke Košici;Prešov;Košice;
+0216_0001-0000-0000-0001-0012;Q1653;Q2978;od Dunaje k Řeznu;Danube;Regensburg;
+0229_0001-0000-0000-0013-0000;Q1085;Q171150;z Prahy do Uher;Prague;Kingdom of Hungary;
+0230_0001-0000-0000-0015-0000;Q373804;Q214956;Od Telče k Znojmu;Telč;Znojmo;
+0236_0001-0000-0000-0003-0002;Q1015282;Q213;"z Falkenštýna ; na rychlo do Čech";Burg Falkenstein an der Ranna;Czech Republic;
+0236_0001-0000-0000-0022-0000;Q616317;Q518360;z Bedružic , vzhůru již k Bílinské tvrzi;Bezdružice;Bílina;
+0237_0001-0001-0000-0004-0000;Q191687;Q85;z Heljopole kráčí do Kahiry;Heliopolis;Cairo;
+0237_0001-0002-0000-0006-0000;Q1741;Q1085;z Vídně k Praze;Vienna;Prague;
+0237_0001-0002-0000-0007-0000;Q1008750;Q193719;Ze Stříbra juž tajnými jsem slovy do Chebu;Stříbro;Cheb;
+0242_0001-0000-0000-0001-0006;Q934703;Q1113619;Od Kouřimi k Lipanům;Kouřim;Lipany;
+0242_0001-0000-0000-0001-0012;Q32530;Q213;Z Lužic do Čech;Lusatia;Czech Republic;
+0242_0001-0000-0000-0001-0012;Q32530;Q1085;z Lužic k Praze;Lusatia;Prague;
+0242_0001-0000-0000-0001-0012;Q384403;Q63855;z Litoměřic do Roudnice;Litoměřice;Roudnice nad Labem;
+0246_0001-0000-0000-0007-0000;Q750224;Q392571;od Strakonic k Štěkni;Strakonice;Štěkeň;
+0247_0001-0000-0000-0004-0000;Q10396708;Q158245;od Šamonic k Písku;Šamonice;Písek;
+0248_0001-0000-0000-0041-0001;Q744598;Q616334;z Hradčan k Vyšehradu;Hradčany;Vyšehrad;
+0249_0001-0000-0000-0010-0000;Q954596;Q986068;Z Brodu cizák v český kraj k Domažlicům;Havlíčkův Brod;Domažlice;
+0249_0001-0000-0000-0011-0000;Q220;Q1085;z Říma do Prahy;Rome;Prague;
+0249_0001-0000-0000-0026-0000;Q327764;Q158245;od Prachatic k Písku;Prachatice;Písek;
+0250_0001-0000-0000-0013-0000;Q43266;Q4198;od Moravy ku hor Krušných davu;Moravia;Ore Mountains;
+0250_0001-0000-0000-0013-0000;Q4198;Q157290;od Moravy ku hor Krušných davu , od Krkonoš milou po Šumavu;Ore Mountains;Bohemian Forest;repeated
+0250_0001-0000-0000-0013-0000;Q214644;Q157290;od Krkonoš milou po Šumavu;Giant Mountains;Bohemian Forest;
+0250_0001-0000-0000-0016-0002;Q1653;Q392483;od Dunajských břehů ku Strbskému plesu;Danube;Štrbské Pleso;
+0250_0001-0000-0000-0016-0002;Q392483;Q182445;od Dunajských břehů ku Strbskému plesu , od Moravy družné k Prutu;Štrbské Pleso;Prut;repeated
+0250_0001-0000-0000-0016-0002;Q43266;Q182445;od Moravy družné k Prutu;Moravia;Prut;
+0257_0001-0000-0000-0001-0010;Q11863119;Q2698393;z luhu , K Děvínu se béře vyslankyně , K Branovu;Děvín;Branov;wrong direction
+0282_0001-0000-0000-0026-0000;Q157290;Q194263;od Šumavy neproniklých borů až po háje Tater zelené;Bohemian Forest;Tatra Mountains;
+0291_0001-0000-0000-0001-0009;Q157290;Q194263;Od Šumavy až po výšiny Tater;Bohemian Forest;Tatra Mountains;
+0291_0001-0000-0000-0001-0009;Q12130;Q101081;od Bretagně slunné do Provence;Brittany;Provence;
+0292_0001-0000-0000-0001-0000;Q10817265;Q10817986;od Plešivce , Toku ke Třemšínu;Plešivec;Třemšín;
+0292_0001-0000-0000-0001-0000;Q10817953;Q10817986;od Plešivce , Toku ke Třemšínu;Tok;Třemšín;
+0306_0001-0000-0000-0001-0001;Q223353;Q3148382;z Opatije šel jsem do Iky;Opatija;Ika;
+0317_0001-0000-0000-0004-0000;Q215573;Q131574;od Beskyd k stříbrné Vltavě;Beskids;Vltava;
+0329_0001-0001-0000-0010-0000;Q131574;Q157728;od Vltavy Dále do Smrčin;Vltava;Fichtelgebirge;
+0329_0001-0001-0000-0010-0000;Q131574;Q157290;od Vltavy Dále do Smrčin a do Šumavy;Vltava;Bohemian Forest;
+0329_0001-0001-0000-0010-0000;Q157728;Q157290;od Vltavy Dále do Smrčin a do Šumavy;Fichtelgebirge;Bohemian Forest;
+0329_0001-0001-0000-0054-0000;Q616334;Q7596262;Z Libušina sídla , Vyšehradu , Do Stadice;Vyšehrad;Stadice;
+0329_0001-0002-0000-0046-0000;Q220;Q213;Z Říma již se nazpět do Čech;Rome;Czech Republic;
+0331_0001-0000-0000-0007-0000;Q617511;Q102047454;od Sněžky ke Troskám;Sněžka;Trosky;
+0335_0001-0000-0000-0001-0008;Q1894568;Q41190;ze Sychrova a dále k Jivině;Sychrov;Jivina;
+0349_0001-0001-0000-0036-0000;Q157290;Q194263;od Šumavy až k Tatrám;Bohemian Forest;Tatra Mountains;
+0350_0001-0000-0000-0005-0000;Q12039461;Q1488700;od Můstku až k Prašné bráně;Můstek;Powder Tower;
+0353_0001-0001-0000-0001-0000;Q641;Q641;od žaláře okno , v Benátkách když jsem , ať po Benátkách;Venice;Venice;same place
+0353_0001-0001-0000-0003-0000;Q393309;Q157736;od Žabljaka do Morači vody;Žabljak;Morača;
+0353_0001-0001-0000-0003-0000;Q393309;Q2662391;od Žabljaka do Morači;Žabljak;Morač;
+0353_0001-0002-0000-0001-0000;Q3489993;Q730378;ze všech Brd až do zelené Tary;Brdy;Tara;
+0353_0001-0002-0000-0001-0000;Q2662391;Q730378;ze vsi do vsi od Morači do zelené Tary;Morač;Tara;
+0353_0001-0002-0000-0001-0000;Q2662391;Q730378;od Morači do zelené Tary;Morač;Tara;
+0353_0001-0002-0000-0002-0000;Q2662391;Q1066857;od Morači do Sitnice;Morač;Sitnica (Ibar);
+0353_0001-0002-0000-0005-0000;Q3560285;Q3123315;Od Vinićů přes Bělopavliće rovnou cestou ke Spužu;Vinići;Spuž;
+0388_0001-0000-0000-0016-0000;Q157290;Q35600;od Šumavy naší dálný po Urál;Bohemian Forest;Ural Mountains;
+0397_0001-0000-0000-0001-0000;Q157290;Q194263;od Šumavy do Tater;Bohemian Forest;Tatra Mountains;
+0397_0001-0000-0000-0007-0000;Q157290;Q194263;od Šumavy do Tater;Bohemian Forest;Tatra Mountains;
+0408_0-0002-0000-0001-0000;Q584;Q1653;Ode Reynu až tam k zátoce , Kterou Dunaj;Rhine;Danube;
+0410_0001-0001-0000-0001-0000;Q1644;Q548;Od Labe zrádného k rovinám až Visly nevěrné;Elbe;Vistula;
+0410_0001-0001-0000-0001-0000;Q548;Q545;Od Labe zrádného k rovinám až Visly nevěrné , Od Dunaje k heltným Baltu;Vistula;Baltic Sea;repeated
+0410_0001-0001-0000-0001-0000;Q1653;Q545;Od Dunaje k heltným Baltu;Danube;Baltic Sea;
+0410_0001-0003-0000-0015-0000;Q13924;Q545;Od Adrie k Baltu;Adriatic Sea;Baltic Sea;
+0410_0001-0003-0000-0015-0000;Q13924;Q33;Od Adrie k Baltu po zem Finskou;Adriatic Sea;Finland;
+0410_0001-0003-0000-0015-0000;Q545;Q33;Od Adrie k Baltu po zem Finskou;Baltic Sea;Finland;remove
+0410_0001-0003-0000-0074-0000;Q111224;Q497060;Od Těšmíra dále na Vagrie Levou stranu jdeme do Plonu;Holstein;Plön;
+0410_0001-0003-0000-0094-0000;Q2978;Q11863119;z Řezna do Děvína;Regensburg;Děvín;
+0410_0001-0003-0000-0137-0000;Q130321;Q1024;Od Athosa k Trigle;Mount Athos;Triglav;
+0410_0001-0003-0000-0137-0000;Q130321;Q104520;Od Athosa k Trigle , k Pomořanům;Mount Athos;Pomerania;
+0410_0001-0003-0000-0137-0000;Q1024;Q104520;Od Athosa k Trigle , k Pomořanům;Triglav;Pomerania;remove
+0410_0001-0003-0000-0137-0000;Q1015486;Q1246;Ode Psího k poli Kosovu;Psie Pole;Kosovo;
+0410_0001-0003-0000-0137-0000;Q15288;Q3927;Od Ladogy dole k Astrachanům;Lake Ladoga;Astrakhan;
+0410_0001-0003-0000-0137-0000;Q6383;Q545;Od Blatona k Baltu , Ozovu , Ode Prahy k Mozkvě;Blaton;Baltic Sea;
+0410_0001-0003-0000-0137-0000;Q6383;Q102762;Od Blatona k Baltu , Ozovu , Ode Prahy k Mozkvě;Blaton;Azov;
+0410_0001-0003-0000-0137-0000;Q1085;Q649;Ode Prahy k Mozkvě;Prague;Moscow;
+0410_0001-0003-0000-0137-0000;Q993;Q17;Od Kamčatky až tam ku Japanům;Kamchatka Peninsula;Japan;
+0410_0001-0004-0000-0016-0000;Q3493793;Q2628720;Ode Lisce k Žárům;Lysec;Žiar;
+0410_0001-0004-0000-0017-0000;Q3491363;Q1653;od Beskydů přímá Cesta ku Dunaji;Beskydy Protected Landscape Area;Danube;
+0410_0001-0008-0000-0001-0000;Q3150;Q1867060;Z Jeny k Lobdě;Jena;Lobeda;
+0410_0001-0008-0000-0007-0000;Q3150;Q1136224;z Jeny do Gospody;Jena;Cospeda;
+0415_0001-0001-0000-0001-0000;Q214644;Q43266;Od hor Krkonošských do Moravy;Giant Mountains;Moravia;
+0415_0001-0001-0002-0009-0000;Q1644;Q48;Od Labe až k hradbám Asie ledovatým;Elbe;Asia;
+0415_0001-0001-0002-0009-0000;Q645;Q13924;Od Névy pramenů až tam do pěn Adrie šumných;Neva;Adriatic Sea;
+0416_0-0000-0000-0002-0001;Q4018;Q29;z Navarry dále do Špaňhel;Navarre;Spain;
+0416_0-0000-0000-0002-0001;Q15682;Q35484;Od Cadizu zhůru do Mediny;Cádiz;Medina;
+0416_0-0000-0000-0003-0000;Q7596262;Q36;ze Stadické dědiny Do Lechické sahá;Stadice;Lechické;
+0416_0-0000-0000-0003-0000;Q7596262;Q166717;ze Stadické dědiny Do Lechické sahá krajiny K nivám šťastným nízké Krušvice;Stadice;Kruszwica;
+0416_0-0000-0000-0003-0000;Q36;Q166717;ze Stadické dědiny Do Lechické sahá krajiny K nivám šťastným nízké Krušvice;Poland;Kruszwica;remove
+0416_0-0000-0000-0003-0000;Q645;Q1653;od Nevy až ke Dunaji;Neva;Danube;
+0416_0-0000-0000-0003-0000;Q545;Q13924;z plodné matky zrozené Od Baltyku dolu do Adrie;Baltic Sea;Adriatic Sea;repeated
+0416_0-0000-0000-0003-0000;Q545;Q13924;Od Baltyku dolu do Adrie;Baltic Sea;Adriatic Sea;
+0416_0-0000-0000-0003-0000;Q1229;Q157290;Od Donu až temné do Šumavy;Don;Bohemian Forest;
+0418_0001-0000-0000-0001-0002;Q233576;Q173082;z Epidauru do Dacie;Epidaurus;Dacia;
+0419_0001-0000-0000-0002-0000;Q1653;Q131574;Od Dunaje k Vltavě;Danube;Vltava;
+0419_0001-0000-0000-0002-0000;Q1653;Q131210;Od Dunaje k Vltavě a k Dněstru;Danube;Dniester;
+0419_0001-0000-0000-0002-0000;Q131574;Q131210;Od Dunaje k Vltavě a k Dněstru;Vltava;Dniester;repeated
+0423_0001-0001-0000-0006-0003;Q29;Q35958;od květné Spánie až ku Bosporu;Spain;Bosporus Strait;
+0430_0001-0002-0000-0004-0000;Q122443;Q1524;z Attiky se vrátil k dáli . Trůn Athén;Attica;Athens;
+0432_0001-0000-0000-0004-0000;Q23522;Q157290;od Balkánu k Šumavě;Balkans;Bohemian Forest;
+0432_0001-0000-0000-0023-0000;Q1286;Q13924;od Alp k vlnám Adrie;Alps;Adriatic Sea;
+0432_0001-0000-0000-0023-0000;Q1286;Q1653;od Alp k vlnám Adrie a k Dunaji;Alps;Danube;
+0432_0001-0000-0000-0023-0000;Q13924;Q1653;od Alp k vlnám Adrie a k Dunaji;Adriatic Sea;Danube;repeated
+0433_0001-0000-0000-0009-0000;Q214644;Q157290;od Krkonoš do Šumavy;Giant Mountains;Bohemian Forest;
+0436_0001-0000-0000-0017-0000;Q157290;Q616334;od Šumavy dálné k Vyšehradu;Bohemian Forest;Vyšehrad;
+0449_0001-0006-0000-0001-0000;Q131210;Q194263;od Adriina břehu po Dněstru proud a odtud až po Tater;Dniester;Tatra Mountains;
+0454_0001-0001-0000-0028-0000;Q179251;Q1085;z Moravěnky do Prahy;Morava;Prague;
+0459_0001-0001-0000-0001-0000;Q201582;Q5451;od Pindských hor až k patě Himalaje;Pindus;Himalayas;
+0466_0001-0000-0000-0001-0000;Q1229;Q13924;Od pramene Donu k Sinému;Don;Adriatic Sea;
+0547_0001-0001-0000-0012-0000;Q223;Q1492;Z Gronska jsem rozběh’ se do Barcelony;Greenland;Barcelona;
+0561_0001-0001-0000-0016-0000;Q220;Q2749;z Říma do Augšpurku;Rome;Augsburg;
+0561_0001-0001-0000-0052-0000;Q617;Q387095;z Padovy známým jemu astrologem , do služeb jeho vstoupil u Šteinavy;Padua;Ścinawa;
+0562_0001-0000-0000-0047-0005;Q6247;Q111144;z Mantuy obrátil se do Canossy;Mantua;Canossa;
+0577_0001-0000-0000-0020-0000;Q79;Q145;od Egyptu až k dálné Britanii;Egypt;United Kingdom;
+0580_0001-0000-0000-0009-0000;Q220;Q2634;od Romy k Napoli;Rome;Naples;
+0588_0001-0007-0000-0001-0000;Q4373;Q220;z Bílé Hory přes Kostnici k Římu;Battle of White Mountain;Rome;
+0588_0001-0007-0000-0001-0000;Q3834;Q220;z Bílé Hory přes Kostnici k Římu;Constance;Rome;
+0588_0001-0011-0000-0003-0000;Q744598;Q1734030;z Hradčan do Karlína;Hradčany;Karlín;
+0589_0001-0000-0000-0019-0000;Q159;Q668;z Ruska do Indie;Russia;India;
+0589_0001-0000-0000-0023-0000;Q1741;Q2978;Od Vídně až k Regenšpurku;Vienna;Regensburg;
+0589_0001-0000-0000-0040-0003;Q649;Q90;z Moskvy do Paříže;Moscow;Paris;
+0589_0001-0000-0000-0059-0000;Q207927;Q90;od Bereziny ujel do Paříže;Berezina River;Paris;
+0599_0001-0000-0000-0007-0000;Q17252;Q220;z Tibetu poslal velkou deputaci do Říma;Tibet;Rome;
+0605_0001-0000-0000-0001-0000;Q378120;Q427604;od Žižkova až k Petřínu;Žižkov;Petřín;
+0605_0001-0000-0000-0003-0000;Q660795;Q4373;z Dürnkrut * ) až k naší Bílé Hoře;Dürnkrut;Battle of White Mountain;
+0608_0001-0000-0000-0050-0000;Q58477;Q220;z Capuy jde k Římu;Capua;Rome;
+0609_0001-0000-0000-0059-0000;Q13670;Q1282;ze Syrakus a směřovala ku Latia;Syracuse;Lazio;
+0620_0001-0000-0000-0008-0000;Q32;Q213;z Lucemburka , který zapad do drahých Čech;Luxembourg;Czech Republic;
+0621_0001-0000-0000-0060-0000;Q131638;Q372490;ze Skadaru , Skočí dolů do Bojany;Shkodër;Bojana;
+0626_0001-0007-0000-0010-0000;Q157290;Q617511;Od Šumavy až ku Snězce bílé;Bohemian Forest;Sněžka;
+0640_0001-0002-0000-0002-0000;Q131574;Q279943;od Vltavy k Lužnici;Vltava;Lužnice;
+0642_0001-0002-0000-0007-0000;Q1085;Q2092696;z Prahy do Rabí;Prague;Rabí;
+0646_0001-0001-0000-0004-0002;Q1453427;Q445762;Z Týnského chrámu procesí se béře k Mostecké bráně;Church of Our Lady before Týn;Old Town Bridge Tower;
+0673_0001-0007-0000-0013-0000;Q155045;Q43266;Od Ohře k Moravě;Ohře;Moravia;
+0688_0001-0000-0000-0001-0004;Q858;Q79;z Syrye do Egypta;Syria;Egypt;
+0692_0003-0001-0001-0013-0000;Q1013032;Q1085;od Jinonic ostře k Praze;Jinonice;Prague;
+0707_0002-0000-0000-0061-0000;Q4373;Q1069359;Od Bílé hory až po Chemin des;Battle of White Mountain;Chemin des Dames;
+0738_0001-0000-0000-0025-0000;Q2669840;Q2003236;z Růže a kraj od Hlízova k Novým Dvorům;Hlízov;Nové Dvory;repeated
+0738_0001-0000-0000-0025-0000;Q2669840;Q2003236;od Hlízova k Novým Dvorům;Hlízov;Nové Dvory;
+0738_0001-0000-0000-0025-0000;Q12029066;Q48399411;od temene Kaňku k Horské bráně;Kaňk;Horská brána;
+0763_0001-0000-0000-0009-0000;Q35600;Q157290;od Uralu k Šumavě;Ural Mountains;Bohemian Forest;
+0763_0001-0000-0000-0009-0000;Q157290;Q131574;od Uralu k Šumavě , od Balkánu k Vltavě;Bohemian Forest;Vltava;remove
+0763_0001-0000-0000-0009-0000;Q23522;Q131574;od Balkánu k Vltavě;Balkans;Vltava;
+0779_0001-0000-0000-0008-0000;Q35600;Q157290;od Uralu až po Šumavu;Ural Mountains;Bohemian Forest;
+0791_0001-0000-0000-0001-0125;Q38;Q5684;z čarných luhů krásné Italije Jde k Babylonu;Italy;Babylon;
+0803_0001-0000-0000-0001-0000;Q1644;Q1085;Od Labe i od Moravy k Praze;Elbe;Prague;
+0803_0001-0000-0000-0001-0000;Q43266;Q1085;Od Labe i od Moravy k Praze;Moravia;Prague;
+0803_0001-0000-0000-0001-0000;Q43266;Q1085;od Moravy k Praze;Moravia;Prague;remove
+0803_0001-0000-0000-0002-0000;Q545;Q23522;od Baltu až tam k Balkánu;Baltic Sea;Balkans;
+0803_0001-0000-0000-0005-0000;Q43266;Q1085;Od Labe i od Moravy Přiviňme se k matce Praze;Moravia;Prague;
+0803_0001-0000-0000-0005-0000;Q43266;Q1085;od Moravy Přiviňme se k matce Praze;Moravia;Prague;
+0803_0001-0000-0000-0005-0000;Q194263;Q157290;Od Tater až do Šumavy;Tatra Mountains;Bohemian Forest;
+0811_0001-0001-0000-0023-0000;Q548;Q204347;Od Visly , Volhy po Maricu;Vistula;Maritsa;
+0811_0001-0001-0000-0023-0000;Q626;Q204347;Od Visly , Volhy po Maricu;Volga;Maritsa;
+0812_0001-0002-0000-0027-0000;Q157290;Q35600;od Šumavy do Uralu;Bohemian Forest;Ural Mountains;
+0812_0001-0002-0000-0028-0000;Q845990;Q3506100;od Kriváně k Choči;Kriváň;Veľký Choč;
+0823_0001-0000-0000-0001-0001;Q213;Q584;Z Čech tisíc očí hledí k Rýnu;Czech Republic;Rhine;
+0835_0001-0001-0000-0006-0000;Q5836;Q5836;od Toleda a k Toledu;Toledo;Toledo;
+0838_0001-0001-0000-0004-0000;Q43266;Q1085;z Moravy ke Praze;Moravia;Prague;
+0838_0001-0001-0000-0023-0000;Q43266;Q194263;z Moravy až vzhůru do Tater;Moravia;Tatra Mountains;
+0845_0001-0000-0000-0013-0000;Q22647;Q38;z Troje do Vlach;Troy;Italy;
+0848_0001-0000-0000-0298-0000;Q378120;Q1085;Z východu Žižkov zří k Praze;Žižkov;Prague;
+0851_0001-0000-0000-0019-0000;Q12039461;Q1488700;od Můstku k Prašné bráně;Můstek;Powder Tower;
+0851_0001-0000-0000-0021-0000;Q142;Q148;od Francouzska po Kytaj;France;People's Republic of China;
+0870_0001-0000-0000-0004-0000;Q163329;Q79;Z Kanaanu do Egypta;Canaan;Egypt;
+0880_0001-0000-0000-0002-0002;Q15682;Q15;Z Kadixu jsme do Afriky;Cádiz;Africa;
+0883_0001-0003-0001-0010-0000;Q35600;Q157290;Od Urálu do Šumavy;Ural Mountains;Bohemian Forest;
+0883_0001-0003-0001-0010-0000;Q35600;Q545;Od Urálu do Šumavy , k vlnám Baltu;Ural Mountains;Baltic Sea;remove
+0883_0001-0003-0001-0010-0000;Q157290;Q545;Od Urálu do Šumavy , k vlnám Baltu;Bohemian Forest;Baltic Sea;
+0888_0001-0000-0000-0041-0000;Q43453;Q470380;od Plzně až do Přerova;Plzeň;Přerov;
+0888_0001-0000-0000-0041-0000;Q43453;Q470380;od Plzně až ku Přerovu;Plzeň;Přerov;
+0888_0001-0000-0000-0068-0000;Q168234;Q393474;Od Zbirova k Žebráku;Zbiroh;Žebrák;
+0888_0001-0000-0000-0068-0000;Q168234;Q1972068;od Zbirova do Točníka;Zbiroh;Točník;
+0896_0001-0000-0000-0001-0000;Q157290;Q194263;od Šumavy až k Tatrám v;Bohemian Forest;Tatra Mountains;
+0954_0001-0001-0000-0006-0000;Q674016;Q131574;od Pradědu až k pěnné Vltavě;Praděd;Vltava;
+0954_0001-0003-0000-0019-0000;Q13924;Q214644;od Adrie až k strmým chlumům Krkonošských hor;Adriatic Sea;Giant Mountains;
+0954_0001-0003-0000-0019-0000;Q157290;Q1286;od Šumavy až k šedým Alpům;Bohemian Forest;Alps;
+0955_0001-0000-0000-0026-0000;Q1008595;Q131574;Od Vrchlabí k Vltavě;Vrchlabí;Vltava;
+0969_0001-0002-0000-0038-0000;Q157290;Q5955;Od Šumavy k Altaj -;Bohemian Forest;Altai Mountains;
+0971_0001-0000-0000-0001-0006;Q83241;Q104028;z Galílee na ta slova do země Judské;Galilee;Judea;
+0971_0001-0000-0000-0001-0006;Q5776;Q5776;z Betléma já do Betléma;Bethlehem;Bethlehem;
+0980_0001-0000-0000-0001-0002;Q37985;Q34713;z Korutanska , i po arciknězi Solnohradu;Carinthia;Salzburg;
+0982_0001-0001-0001-0008-0000;Q60956;Q2915661;od Askalonu ke bránám Rámy;Ashkelon;Rameh;
+0985_0001-0001-0000-0005-0000;Q617511;Q171080;Od Sněžky až ku Kotarské věži;Sněžka;Kotor;
+0996_0001-0000-0000-0005-0007;Q15;Q46;z mládí z pouště Afrikánské do Evropy;Africa;Europe;
+0996_0001-0000-0000-0005-0007;Q15;Q46;z pouště Afrikánské do Evropy;Africa;Europe;
+0998_0001-0003-0000-0018-0000;Q43266;Q213;Z Moravy k nám do Čech;Moravia;Czech Republic;
+1000_0001-0001-0000-0013-0000;Q23522;Q13924;Od ledu k Balkánu , z Baltu k Adrii;Balkans;Adriatic Sea;remove
+1000_0001-0001-0000-0013-0000;Q545;Q13924;z Baltu k Adrii;Baltic Sea;Adriatic Sea;
+1000_0001-0001-0000-0013-0000;Q13924;Q194263;z Baltu k Adrii , z českých hor do Tater;Adriatic Sea;Tatra Mountains;remove
+1001_0001-0000-0000-0001-0002;Q23522;Q4110;z hor Balkanských lůna Až k Arkoně Baltem;Balkans;Cape Arkona;
+1008_0001-0004-0000-0005-0000;Q41;Q14314;z Řecka jakýs poutník přišel , do Sanjaga;Greece;Santiago de Compostela;
+1008_0001-0011-0000-0012-0000;Q4040;Q8818;z Arragonu dědicovi . Do Valencie;Aragon;Valencia;
+1019_0001-0001-0000-0001-0003;Q35600;Q48;od Urálu větrů křídlem ku Byzanci . Na pobřeží Asiatském;Ural Mountains;Asia;
+1022_0001-0004-0000-0003-0000;Q427604;Q616334;Od Petřína k Vyšehradu;Petřín;Vyšehrad;
+1023_0001-0000-0000-0001-0003;Q202422;Q180918;z Lapethy , Kuria i Salaminy vše valilo se do Pafu;Salamis Island;Paphos;
+1035_0001-0004-0000-0023-0000;Q215573;Q3812;od Beskyd lítá k Celebesu;Beskids;Sulawesi;
+1041_0001-0002-0000-0001-0000;Q378120;Q427604;od Žižkova ku Petřínu;Žižkov;Petřín;
+1042_0001-0007-0000-0007-0000;Q40059;Q131574;od Jordanských břehů jež vedla k břehům Vltavy;Jordan River;Vltava;
+1045_0001-0001-0000-0011-0000;Q812;Q85;od Floridy do Kahýry;Florida;Cairo;
+1047_0001-0002-0000-0060-0007;Q626;Q1644;od Volhy k Labi;Volga;Elbe;
+1047_0001-0002-0000-0060-0008;Q626;Q23522;od Volhy až ku Balkánu;Volga;Balkans;
+1054_0001-0002-0000-0008-0000;Q40855;Q1229;od Dněpru až k Donu;Dnieper;Don;
+1057_0001-0000-0000-0002-0003;Q3255;Q148505;od Uznoima ku Volinu;Usedom;Wolin;
+1062_0001-0003-0000-0003-0000;Q128087;Q5747;od Lesbu až do Palmyry;Lesbos;Palmyra;
+1076_0001-0000-0000-0001-0003;Q1587293;Q1014196;od Hartmanic běží k Svojanovu;Hartmanice;Svojanov Castle;
+1076_0001-0000-0000-0001-0007;Q584;Q602;od Rýna tak jako od Dunaje , od Temže až k Rhoně;Rhine;Rhône;multiple items order
+1076_0001-0000-0000-0001-0007;Q1653;Q602;od Dunaje , od Temže až k Rhoně;Danube;Rhône;
+1076_0001-0000-0000-0001-0007;Q19686;Q602;od Dunaje , od Temže až k Rhoně;River Thames;Rhône;
+1076_0001-0000-0000-0001-0007;Q1653;Q13712;od Dunaje , od Temže až k Rhoně , ku Tibeře;Danube;Tiber;
+1076_0001-0000-0000-0001-0007;Q19686;Q13712;od Rýna tak jako od Dunaje , od Temže až k Rhoně , ku Tibeře;Rhine;Tiber;
+1076_0001-0000-0000-0001-0007;Q19686;Q13712;od Temže až k Rhoně , ku Tibeře;River Thames;Tiber;repeated
+1076_0001-0000-0000-0001-0007;Q602;Q13712;od Temže až k Rhoně , ku Tibeře;Rhône;Tiber;
+1078_0001-0004-0000-0011-0000;Q1641699;Q616334;z nich k Libušínu , k Vyšehradu;Libušín;Vyšehrad;
+1089_0001-0015-0000-0004-0000;Q1085;Q1085;z Prahy jsi , vrátíš se do Prahy;Prague;Prague;same place
+1096_0001-0002-0000-0001-0000;Q279943;Q1085;od Ústí Nad Lužnicí táhnoucí K Praze;Lužnice;Prague;
+1096_0001-0003-0000-0001-0000;Q10856807;Q980;z Janovic našeho Kněze Nakvasu do Bavor;Janovice;Bavaria;
+1116_0001-0000-0000-0001-0000;Q142;Q5836;z Francie , jež do Toleda;France;Toledo;
+1116_0001-0000-0000-0002-0001;Q2486621;Q90;z Egremontu pán do Paříže;Egremont;Paris;
+1116_0001-0000-0000-0002-0004;Q16869;Q142;z Cařihradu vraceje se zpět do Francie;Constantinople;France;
+1120_0001-0000-0000-0001-0006;Q8826;Q15;z Palmy právě do Afriky;Palma de Mallorca;Africa;
+1123_0001-0000-0000-0002-0000;Q171150;Q1085;z Uher do Prahy;Kingdom of Hungary;Prague;
+1143_0001-0002-0000-0003-0000;Q548;Q584;od Visly až k Rýnu;Vistula;Rhine;
+1143_0001-0004-0000-0001-0008;Q194263;Q6489;od výspy Tatranské k valům Rodopy;Tatra Mountains;Rhodope Mountains;
+1154_0001-0000-0000-0022-0000;Q626;Q487372;Od Volhy ona matičky do Bucharska;Volga;Bukhara Region;
+1154_0001-0000-0000-0022-0000;Q626;Q17252;Od Volhy ona matičky do Bucharska , Do Tibetu;Volga;Tibet;multiple items order
+1154_0001-0000-0000-0022-0000;Q649;Q2337;Z matičky kamenné Moskvy do Smolenska;Moscow;Smolensk;
+1154_0001-0000-0000-0022-0000;Q2337;Q185700;Z matičky kamenné Moskvy do Smolenska , A ze Smolenska do Vitebska;Smolensk;Vitebsk Region;repeated
+1154_0001-0000-0000-0022-0000;Q2337;Q185700;ze Smolenska do Vitebska;Smolensk;Vitebsk Region;
+1160_0001-0004-0002-0013-0000;Q980;Q1085;Od Bavor ku Praze;Bavaria;Prague;
+1169_0001-0001-0000-0002-0000;Q1286;Q3376;z modravých Alp k Tridentu;Alps;Trento;
+1173_0001-0000-0000-0001-0003;Q23522;Q157290;od Balkánu po Šumavu;Balkans;Bohemian Forest;
+1174_0001-0000-0000-0004-0000;Q1288;Q157290;od Karpat k Šumavě;Carpathian Mountains;Bohemian Forest;
+1174_0001-0000-0000-0004-0000;Q157290;Q43266;od Karpat k Šumavě , z Krkonoš k Moravě;Bohemian Forest;Moravia;remove
+1174_0001-0000-0000-0004-0000;Q214644;Q43266;z Krkonoš k Moravě;Giant Mountains;Moravia;
+1174_0001-0000-0000-0004-0000;Q1288;Q157290;od Karpat k Šumavě;Carpathian Mountains;Bohemian Forest;repeated
+1174_0001-0000-0000-0004-0000;Q157290;Q43266;od Karpat k Šumavě , z Krkonoš k Moravě;Bohemian Forest;Moravia;repeated
+1174_0001-0000-0000-0004-0000;Q214644;Q43266;z Krkonoš k Moravě;Giant Mountains;Moravia;repeated
+1175_0001-0000-0000-0001-0002;Q214644;Q157290;od Krkonoš po Šumavu;Giant Mountains;Bohemian Forest;
+1181_0001-0000-0000-0006-0000;Q370445;Q465312;z Tisovce do Března;Tisovec;Brezno;
+1190_0001-0002-0000-0002-0000;Q617511;Q157290;ode Sněžky do Šumavy;Sněžka;Bohemian Forest;
+1190_0001-0003-0000-0004-0000;Q157290;Q35600;od Šumavy do Urálu;Bohemian Forest;Ural Mountains;
+1190_0001-0003-0000-0004-0000;Q35600;Q1653;od Šumavy do Urálu , ode Visly do Dunaje;Ural Mountains;Danube;remove
+1190_0001-0003-0000-0004-0000;Q548;Q1653;ode Visly do Dunaje;Vistula;Danube;
+1194_0001-0001-0000-0015-0000;Q194263;Q23522;od Tater až do Balkánu;Tatra Mountains;Balkans;
+1194_0001-0001-0000-0015-0000;Q194263;Q23522;od Tater až do Balkánu;Tatra Mountains;Balkans;repeated
+1194_0001-0003-0000-0013-0000;Q993;Q157290;od Kamčatky šíro k Šumavě;Kamchatka Peninsula;Bohemian Forest;
+1199_0001-0000-0000-0019-0000;Q1218;Q5687;Z Jerusalema jda do Jericha;Jerusalem;Jericho;
+1205_0005-0003-0000-0014-0000;Q740863;Q986070;od České Lípy do Chrudimi;Česká Lípa;Chrudim;
+1205_0005-0003-0000-0028-0000;Q545;Q13924;od Baltu až k Adrii;Baltic Sea;Adriatic Sea;
+1205_0005-0003-0000-0028-0000;Q13924;Q46;od Baltu až k Adrii pýchy pohled nezkrocený vrhá po Evropě;Adriatic Sea;Europe;remove
+1205_0005-0003-0000-0046-0003;Q545;Q13924;od Baltu až k Adrii;Baltic Sea;Adriatic Sea;
+1207_0001-0000-0000-0013-0005;Q1288;Q5428;od Karpat přes smutnou Rus celé po Sibiři;Carpathian Mountains;Siberia;
+1210_0001-0000-0000-0030-0000;Q1085;Q35600;od Prahy k Urálu;Prague;Ural Mountains;
+1212_0001-0002-0000-0004-0001;Q1823216;Q320939;Z Liběchova po silnici k Mělníku;Liběchov;Mělník;
+1214_0001-0000-0000-0001-0004;Q194263;Q157290;od Tater k Šumavě;Tatra Mountains;Bohemian Forest;
+1222_0001-0000-0000-0011-0000;Q1085;Q1780;z Prahy do Bratislavy;Prague;Bratislava;
+1252_0001-0000-0000-0031-0000;Q214644;Q157290;od Krkonoš ku Šumavě;Giant Mountains;Bohemian Forest;
+1253_0001-0000-0000-0008-0000;Q3834;Q43266;z Kostnice . Až k Moravě;Constance;Moravia;
+1253_0001-0000-0000-0008-0000;Q3834;Q157290;z Kostnice . Až k Moravě , až po Šumavu;Constance;Bohemian Forest;multiple items order
+1263_0001-0003-0000-0010-0000;Q470445;Q158239;z Prostějova , dál letí hvízdaje ke Kroměříži;Prostějov;Kroměříž;
+1264_0001-0001-0004-0003-0000;Q213;Q183;z Čech do Německa;Czech Republic;Germany;
+1268_0001-0001-0000-0008-0008;Q1741;Q986070;z Vídně do Chrudimě;Vienna;Chrudim;
+1309_0001-0002-0000-0024-0000;Q38;Q213;z krásné Italie Prchnem do Čech;Italy;Czech Republic;
+1329_0001-0000-0000-0015-0000;Q13924;Q668;od Adrie k Indii;Adriatic Sea;India;
+1356_0001-0000-0000-0010-0000;Q214644;Q157290;od Krkonoš dolů k Šumavě;Giant Mountains;Bohemian Forest;
+1386_0001-0000-0000-0006-0000;Q617511;Q157290;od Sněžky k Šumavě;Sněžka;Bohemian Forest;
+1386_0001-0000-0000-0007-0000;Q194242;Q157290;od Sudet k Šumavě;Sudetenland;Bohemian Forest;
+1386_0001-0000-0000-0014-0000;Q155975;Q954596;z Kutné Hory k Brodu;Kutná Hora;Havlíčkův Brod;
+1388_0001-0001-0000-0005-0000;Q617511;Q594147;od Sněžky k Boubínu;Sněžka;Boubín;
+1388_0001-0001-0000-0005-0000;Q594147;Q194263;od Sněžky k Boubínu , od něho k Tatře;Boubín;Tatra Mountains;
+1388_0001-0002-0000-0001-0000;Q1085;Q157290;z Prahy k Šumavě;Prague;Bohemian Forest;
+1391_0001-0000-0000-0001-0009;Q594147;Q617511;od Boubínu k Sněžce;Boubín;Sněžka;
+1400_0001-0003-0000-0001-0000;Q1278569;Q1435;z dalekého Gradce do Záhřeba;Gradec;Zagreb;
+1401_0001-0001-0000-0011-0000;Q43266;Q157290;Od Moravy po Šumavu;Moravia;Bohemian Forest;
+1402_0001-0000-0000-0001-0007;Q405383;Q372490;od Bregova na Timoku zlatém po Bojanu mlžnou;Bregovo;Bojana;
+1402_0001-0000-0000-0001-0007;Q753919;Q372490;od Bregova na Timoku zlatém po Bojanu mlžnou;Timok;Bojana;
+1402_0001-0000-0000-0001-0007;Q157246;Q1653;od Bitolje bílé za horami po Dunaj;Bitola;Danube;
+1402_0001-0000-0000-0001-0009;Q1644;Q626;od zrádného Labe k Volze;Elbe;Volga;
+1402_0001-0000-0000-0001-0009;Q626;Q545;od zrádného Labe k Volze věrné , od Strumice k Baltu;Volga;Baltic Sea;remove
+1402_0001-0000-0000-0001-0009;Q149214;Q545;od Strumice k Baltu;Strumica;Baltic Sea;
+1402_0001-0000-0000-0001-0012;Q405383;Q372490;od Bregova na Timoku zlatém po Bojanu;Bregovo;Bojana;
+1402_0001-0000-0000-0001-0012;Q753919;Q372490;od Bregova na Timoku zlatém po Bojanu;Timok;Bojana;remove
+1402_0001-0000-0000-0001-0012;Q157246;Q1653;od Bitolje bílé za horami po Dunaj;Bitola;Danube;
+1404_0001-0000-0000-0003-0000;Q10555398;Q268;od Kubáně k Poznani;Kuban;Poznań;
+1404_0001-0006-0001-0002-0000;Q5089;Q1156;Od Gangu do Bombeje;Ganges;Mumbai;
+1430_0001-0001-0000-0016-0000;Q546;Q641;z Terstu do Benátek;Trieste;Venice;
+1431_0001-0002-0000-0005-0000;Q157290;Q358361;od Šumavy k horám Orlickým;Bohemian Forest;Orlické hory;
+1440_0001-0000-0000-0012-0000;Q548;Q10965;od Visly až k vlnám Ebra;Vistula;Ebro;
+1448_0001-0002-0000-0024-0000;Q131574;Q1653;od Vltavy k Dunaji;Vltava;Danube;
+1457_0001-0003-0000-0002-0000;Q1000046;Q1000046;z Kuříma a do Kuříma;Kuřim;Kuřim;same place
+1458_0001-0003-0000-0003-0000;Q812761;Q321197;Z Bašky zajdi do Těšína;Baška;Cieszyn;
+1458_0001-0004-0000-0002-0000;Q8385;Q321197;Z Ostravy jdu do Těšína;Ostrava;Cieszyn;
+1464_0001-0001-0000-0009-0000;Q210205;Q1741;z Pešti do Vídně;Pest;Vienna;
+1464_0001-0001-0000-0009-0000;Q210205;Q1741;z Pešti do Vídně;Pest;Vienna;repeated
+1470_0001-0000-0000-0001-0002;Q157290;Q194263;od Šumavy ku Tatrám;Bohemian Forest;Tatra Mountains;
+1475_0001-0000-0000-0012-0000;Q3834;Q220;od Kostnice po Řím;Constance;Rome;
+1483_0001-0000-0000-0002-0001;Q14960;Q1809680;z Brna do Moravan;Brno;Moravany;
+1484_0001-0003-0000-0017-0000;Q14960;Q158242;z Brna do Adamova;Brno;Adamov;
+1545_0001-0000-0000-0001-0000;Q166;Q5428;od Černého moře až k Leně v Sibíři;Black Sea;Siberia;
+1545_0001-0000-0000-0014-0000;Q1085;Q1641748;od strýčka z vinárny v Praze k matince v Manětíně;Prague;Manětín;
+1545_0001-0000-0000-0014-0000;Q1085;Q1641748;z vinárny v Praze k matince v Manětíně;Prague;Manětín;
+1552_0001-0000-0000-0013-0000;Q1085;Q386858;z Prahy do Řevnic;Prague;Řevnice;
+1557_0001-0000-0000-0016-0000;Q1524;Q75459;Od Athen do Delf;Athens;Delphi;
+1568_0001-0002-0000-0011-0000;Q164486;Q94507;od Herálce do Pikárce;Herálec;Pikárec;
+1569_0001-0000-0000-0018-0000;Q1085;Q46;ze dne Praha baletí , k zenitu spěje poklusem , Evropy;Prague;Europe;
+1601_0001-0000-0000-0038-0000;Q21;Q1173;od záplavy zde cizích vojů Anglie , k nimž Burgund;England;Burgundy;
+1601_0001-0000-0000-0060-0000;Q2807;Q36433;Od Madridu do Oporta;Madrid;Porto;
+1606_0001-0000-0000-0001-0000;Q5776;Q170516;z Betléma mne ku Golgotě hoře;Bethlehem;Calvary;
+1650_0001-0001-0000-0002-0000;Q583910;Q1093421;od Aše k Jasině;Aš;Yasinya;
+1650_0001-0001-0000-0002-0000;Q1093421;Q157290;od Aše k Jasině , od Tater k Šumavě;Yasinya;Bohemian Forest;remove
+1650_0001-0001-0000-0002-0000;Q194263;Q157290;od Tater k Šumavě;Tatra Mountains;Bohemian Forest;
+1655_0001-0000-0000-0008-0000;Q36;Q215573;Z Polské přijde žid k nám pod Bezkydem;Poland;Beskids;
+1655_0001-0000-0000-0020-0000;Q9264038;Q321197;Z Frydku šel jsem do Těšína;Frýdek;Cieszyn;
+1655_0001-0000-0000-0020-0000;Q9264038;Q321197;z Frydku do Těšína;Frýdek;Cieszyn;
+1656_0001-0000-0000-0085-0000;Q40855;Q6862;od Dněpra do Amura;Dnieper;Amur River;
+1681_0001-0000-0000-0001-0002;Q194242;Q194263;od Sudet do Tater;Sudetenland;Tatra Mountains;
+1681_0001-0000-0000-0001-0010;Q90;Q1479;z Paříže do Bordeaux;Paris;Bordeaux;
+00-1734-0000-0001-DDF5-D#19;Q602;Q584;Von dem Rotten bis zu dem Rheine;Rhône;Rhine;
+00-1734-0000-0002-3A19-D#0;Q536924;Q584;Von dem Kyros bis zu dem Rhein;Cyrrhus;Rhine;
+00-1734-0000-0002-6A58-C#0;Q1792;Q776965;von hoher Wart , Von Gedanum bis Memelgard;Gdańsk;Klaipėda;
+00-1734-0000-0002-6A68-8#0;Q858;Q189;von Syria bis Thuleland;Syria;Iceland;
+00-1734-0000-0002-9DEF-C#0;Q36755;Q101583;Von dem Sinai runter nach Theben;Sinai Peninsula;Thebes;
+00-1734-0000-0002-30C8-6#0;Q597;Q11720;von Lissabon bis Mukden;Lisbon;Shenyang;
+00-1734-0000-0002-30C8-6#0;Q383386;Q90;von Potschappel bis Paris;Potschappel;Paris;
+00-1734-0000-0002-690E-9#0;Q18869;Q12544;Von dem Kaukasus bis vor Byzanz;Caucasus;Byzantine Empire;
+00-1734-0000-0002-696E-4#0;Q18869;Q39193;Von dem Kaukasus bebt bis nach Böhmen;Caucasus;Bohemia;
+00-1734-0000-0002-AF22-5#0;Q5622;Q584;Von dem Njemen bis an den Rhein;Neman;Rhine;
+00-1734-0000-0002-B0DC-2#0;Q22;Q818499;von Schottland tragen Die Leiche nach Sankt Alban;Scotland;Sankt Alban;
+00-1734-0000-0002-B08A-B#0;Q12439;Q40435;von Schnee , Von Detroit fliegt sie nach Buffalo;Detroit;Buffalo;
+00-1734-0000-0002-B309-6#0;Q64;Q1741;von Berlin nach Wien;Berlin;Vienna;
+00-1734-0000-0002-B309-6#0;Q1741;Q64;von Wien zurück wieder nach Berlin;Vienna;Berlin;
+00-1734-0000-0002-B974-F#0;Q1741;Q545;von Wien bis in die Ostsee;Vienna;Baltic Sea;
+00-1734-0000-0002-B974-F#0;Q546;Q490457;von Triest bis Rendsburg;Trieste;Rendsburg;
+00-1734-0000-0002-BDB2-3#0;Q1693;Q375769;Von dem Sand der Nordsee bis zu dem wald'gen Brenner;North Sea;Brenner;
+00-1734-0000-0002-D9D3-A#0;Q1524;Q75459;von Athen nach Delphi;Athens;Delphi;
+00-1734-0000-0002-DFCA-1#0;Q776965;Q10041;von Memel an – bis Soest;Klaipėda;Soest;
+00-1734-0000-0002-EF33-8#0;Q393426;Q1085;von Sotz nach der Prager;Žatec;Prague;
+00-1734-0000-0002-F31D-E#0;Q505288;Q690417;von Ips bis Währing;Ipsheim;Währing;
+00-1734-0000-0003-0EB1-5#0;Q131210;Q643;Von dem Dniester bis zu dem fernen Po;Dniester;Po;
+00-1734-0000-0003-4F34-1#0;Q22756;Q90;von Spichern bis nach Paris;Spicheren;Paris;
+00-1734-0000-0003-5C45-3#0;Q12501;Q491239;von der Mauer bis nach Canton zu , Ja bis nach Lao-Tschua , Cotschin-Tschina , Cambotscha;Great Wall of China;Canton;multiple items order
+00-1734-0000-0003-5C45-3#0;Q12501;Q819;von der Mauer bis nach Canton zu , Ja bis nach Lao-Tschua , Cotschin-Tschina , Cambotscha;Great Wall of China;Laos;
+00-1734-0000-0003-5C45-3#0;Q12501;Q505503;von der Mauer bis nach Canton zu , Ja bis nach Lao-Tschua , Cotschin-Tschina , Cambotscha;Great Wall of China;Cochinchina;
+00-1734-0000-0003-5C45-3#0;Q12501;Q424;von der Mauer bis nach Canton zu , Ja bis nach Lao-Tschua , Cotschin-Tschina , Cambotscha;Great Wall of China;Cambodia;
+00-1734-0000-0003-5FD5-3#0;Q6986;Q7070;von Gotha bis Eisenach;Gotha;Eisenach;
+00-1734-0000-0003-5FD5-3#0;Q6986;Q7070;von Gotha bis Eisenach;Gotha;Eisenach;repeated
+00-1734-0000-0003-5FD5-3#0;Q6986;Q7070;von Gotha bis Eisenach;Gotha;Eisenach;repeated
+00-1734-0000-0003-5FD5-3#0;Q6986;Q7070;von Gotha bis Eisenach;Gotha;Eisenach;repeated
+00-1734-0000-0003-5FD5-3#0;Q6986;Q7070;von Gotha bis Eisenach;Gotha;Eisenach;repeated
+00-1734-0000-0003-5FD5-3#0;Q6986;Q7070;von Gotha bis Eisenach;Gotha;Eisenach;repeated
+00-1734-0000-0003-7A8C-4#0;Q584;Q13712;von dem blauen Rheine bis zu der Tyber;Rhine;Tiber;
+00-1734-0000-0003-8F9A-C#0;Q788;Q152854;von dem Eißmeer bis zu Herculs Säulen , Von dem Belt bis zu dem Hellespont;Arctic Ocean;Pillars of Hercules;
+00-1734-0000-0003-8F9A-C#0;Q204715;Q6514;von dem Eißmeer bis zu Herculs Säulen , Von dem Belt bis zu dem Hellespont;Great Belt;Dardanelles;
+00-1734-0000-0003-57BC-3#0;Q645;Q1229;Von dem Newa bis zu dem Don;Neva;Don;
+00-1734-0000-0003-60F6-3#0;Q130135;Q46;Von dem Atlas bis Archangel ! In halb Europa;Atlas Mountains;Europe;wrong direction
+00-1734-0000-0003-80A1-5#0;Q1741;Q90;von Wien bis nach Paris;Vienna;Paris;
+00-1734-0000-0003-81E5-3#0;Q155721;Q181157;Von dem Brocken bis zu dem Popokatepetl;Brocken;Popocatépetl;
+00-1734-0000-0003-90A3-2#0;Q34589;Q1653;Von dem Euphrat bis zu dem Donaustrom;Euphrates;Danube;
+00-1734-0000-0003-107F-E#0;Q12724;Q1288;von dem Tessin bis fern an die Karpathenhänge;Ticino;Carpathian Mountains;
+00-1734-0000-0003-1154-4#0;Q261399;Q475596;von Terouanne fernhin bis Guinegat';Thérouanne;Enguinegatte;
+00-1734-0000-0003-B83A-A#0;Q727;Q2843;von Amsterdam nach Lübekk;Amsterdam;Lübeck;
+00-1734-0000-0003-F19A-8#0;Q201385;Q1693;Von dem Golf Neapels bis zu der Nordsee;Gulf of Naples;North Sea;
+00-1734-0000-0004-2A63-1#0;Q220;Q1012797;von Rom bis Ostia;Rome;Ostia;
+00-1734-0000-0004-8C14-1#0;Q597;Q973;von Lisboa bis zu dem kalten Oby;Lisbon;Ob;
+00-1734-0000-0004-8CB8-4#0;Q1055;Q1741;von Hamburg bis nach Wien;Hamburg;Vienna;
+00-1734-0000-0004-79C6-6#0;Q1653;Q1650;Von dem Strand der Donau bis zu dem Strand der Weser;Danube;Weser;
+00-1734-0000-0004-C1BB-A#0;Q491788;Q522236;Von dem Pentling bis zu dem Wendelstein;Pentling;Wendelstein;
+00-1734-0000-0004-CB82-7#0;Q991372;Q41843;von Dan bis Berseba;Dan;Beersheba;
+00-1734-0000-0004-D6D6-5#0;Q1055;Q11812551;von Hamburg bis nach Schwaben;Hamburg;Swabia;
+00-1734-0000-0005-0A4E-4#0;Q25286;Q1171;von Upsal bis Goa;Uppsala;Goa;
+00-1734-0000-0005-0A83-A#0;Q131716;Q81483;von dem Kattegat setzten bis in die Levante;Kattegat;Levant;
+00-1734-0000-0005-0A83-A#0;Q406;Q17;von Stambul stracks mit einem Fuße nach Japan;Istanbul;Japan;
+00-1734-0000-0005-1A1D-2#0;Q552;Q602;von der Oder bis hin zu dem Rhodan;Oder;Rhône;
+00-1734-0000-0005-5DFA-3#0;Q1711;Q1491774;von Potsdam bis Petzow;Potsdam;Petzow;
+00-1734-0000-0005-5FE1-B#0;Q13696;Q584;von der Etsch bis an den Rhein;Adige;Rhine;
+00-1734-0000-0005-61C8-5#0;Q1017;Q474697;von Aachen bis Dirschau;Aachen;Tczew;
+00-1734-0000-0005-68AC-9#0;Q2044;Q1630;von Florenz bis Altona;Florence;Altona;
+00-1734-0000-0005-68AC-9#0;Q2044;Q1630;von Florenz bis Altona;Florence;Altona;repeated
+00-1734-0000-0005-68AC-9#0;Q2044;Q1630;von Florenz bis Altona;Florence;Altona;repeated
+00-1734-0000-0005-203A-B#0;Q45;Q148;von Portugal bis China;Portugal;People's Republic of China;
+00-1734-0000-0005-735F-2#1;Q5089;Q3392;Von dem Ganges bis zu dem Nil;Ganges;Nile;
+00-1734-0000-0005-965A-E#0;Q12444;Q12434;von Königswinter bis Honnef;Königswinter;Bad Honnef;
+00-1734-0000-0005-6323-7#0;Q1726;Q226884;von München bis Zossen;Munich;Zossen;
+00-1734-0000-0005-A6BA-6#0;Q84;Q656;von London bis nach Petersburg;London;Saint Petersburg;
+abbey-stories---24;Q1851740;Q216868;From Lookout Mountain to the Chesapeake;Lookout Mountain;Chesapeake Bay;
+akenside-poeticalWorks---2;Q12792;Q115457;from fair Valclusa 's bowers To Arno;Vaucluse;Arno;
+allingham-sixteenPoems---5;Q1120038;Q2487413;From Slieveleague to Rosses;Slieve League;Rosses Point;
+arnold-lightOfAsia---2;Q5451;Q5089;from Himalay's broad feet , To bear its tribute into Gunga;Himalayas;Ganges;
+arnold-poeticalWorks---40;Q22890;Q23148;From Ireland to Cornwall;Ireland;Cornwall;
+arnold-poeticalWorks---40;Q22890;Q23148;From Ireland to Cornwall bore , To Tyntagel;Ireland;Cornwall;
+arnold-poeticalWorks---40;Q22890;Q934922;From Ireland to Cornwall bore , To Tyntagel;Ireland;Tintagel Castle;multiple items order
+barlow-columbiad---1;Q40430;Q183124;From Bahia 's coast to Cochabamba;Bahia;Cochabamba;
+bierce-blackBeetles---48;Q493261;Q16553;From Walnut Creek to San Jose;Walnut Creek;San Jose;
+bierce-blackBeetles---102;Q476913;Q16552;From Siskiyou to San Diego;Siskiyou Mountains;San Diego;
+bierce-shapesOfClay---68;Q188155;Q42053;From Astrabad to Ispahan;Gorgan;Isfahan;
+blind-ascentOfMan---5;Q668;Q5684;From mystic Ind to fleshly Babylon;India;Babylon;
+bowles-poeticalWorks1---53;Q3392;Q668;from the shore Of ancient Nile to India;Nile;India;
+bowles-poeticalWorks1---118;Q11767;Q79;From Shinar's plain to Egypt;Mesopotamia;Egypt;
+bowles-poeticalWorks1---133;Q2868;Q298;From Lima bound to Chili;Lima;Chile;
+bowles-poeticalWorks2---1;Q19686;Q216373;From Thames to Tyne;River Thames;River Tyne;
+bowles-poeticalWorks2---13;Q192896;Q3073271;From Carlisle - Wall to Flamborough Head;Carlisle;Flamborough Head;
+bowles-poeticalWorks2---14;Q209176;Q19714;From Ely to the banks of Trent;Ely;River Trent;
+brooke-1914---32;Q2041191;Q2224061;From Haslingfield to Madingley;Haslingfield;Madingley;
+browning-poeticalWorks4---53;Q739037;Q19714;from Nicaea up to Trent;Nicaea;River Trent;
+browning-poeticalWorks4---53;Q5776;Q124110;From Bethlehem to Loreto;Bethlehem;Loreto;
+browning-poeticalWorks4---55;Q1471;Q584;From the Seine back to the Rhine;Seine;Rhine;
+browning-selection---48;Q163108;Q840597;from Malo Roads to Croisic Point;Saint-Malo;Le Croisic;
+byron-poeticalWorks1---2;Q46;Q23792;from Europe to Palestine;Europe;Palestine;
+byron-works6---11;Q189;Q30151210;from Iceland to Barbadoes;Iceland;Barbados;
+campbell-mountainSinger---39;Q434165;Q1755549;From Edair to Acaill Sound;Howth;Achill Sound;
+campbell-mountainSinger---54;Q4856854;Q55299;from Banna to Laoi;Banna Strand;County Laois;
+carman-balladsOfLost---8;Q6869752;Q1542630;From Minudie to Manan;Minudie;Grand Manan Island;
+carman-laterPoems---3;Q5684;Q220;From Babylon to Rome;Babylon;Rome;
+carman-sappho---90;Q3392;Q128087;From the seven mouths of Nile to Lesbos;Nile;Lesbos;
+cawein-idyllicMonologues---1;Q1509;Q1397;From Tennessee to Ohio;Tennessee;Ohio;
+chesteron-balladOfStBarbara---29;Q207639;Q170263;From Chichester to Chester;Chichester;Chester;
+chesterton-balladOfWhiteHorse---4;Q229;Q107393;From Cyprus round to Skye;Cyprus;Isle of Skye;
+chesterton-balladOfWhiteHorse---5;Q31945;Q216373;From red Arabia to the Tyne;Arabian Peninsula;River Tyne;
+chesterton-balladOfWhiteHorse---6;Q170263;Q550995;From Chester to the Humber;Chester;Humber;
+chesterton-balladOfWhiteHorse---7;Q584;Q220;from Rhine to Rome;Rhine;Rome;
+chesterton-balladOfWhiteHorse---9;Q953957;Q43382;From Wantage Town to Plymouth Bluff;Wantage;Plymouth;
+churchill-poeticalWorks---16;Q142;Q21;From France to England;France;England;
+churchill-poeticalWorks---16;Q142;Q142;From France to England , hence to France;France;France;same place
+churchill-poeticalWorks---16;Q21;Q142;From France to England , hence to France;England;France;
+clough-amours---4;Q1308;Q7024;from Como straight to Lugano;Como;Lugano;
+clough-amours---4;Q490;Q1308;from Milan to Como;Milan;Como;
+combe-heroicEpistle---1;Q23220;Q19709;From Berkshire 's hills to Avon;Berkshire;River Avon;
+combe-heroicEpistle---1;Q2405266;Q464955;From Buscot 's meads , to Windsor's;Buscot;Windsor;
+coventry-unknownEros---29;Q79;Q163329;From Egypt , and to Canaan;Egypt;Canaan;
+crosland-outlookOdes---24;Q29520;Q419;From China to Peru;China;Peru;
+darwin-botanicGarden1---1;Q794;Q79;From Persia 's rocks to Egypt's;Iran;Egypt;
+davis-selection---1;Q936301;Q1012476;from Bearbha' sbanks to Eóchaill;Barrow;Youghal;
+davis-selection---6;Q490;Q6231;From Milan to Cremona;Milan;Cremona;
+davis-selection---9;Q45797;Q3711;from Dunkirk to Belgrade;Dunkirk;Belgrade;
+davis-selection---22;Q1020354;Q192820;From Carrick streets to Shannon shore;Carrickfergus;River Shannon;
+davis-selection---22;Q192820;Q1016302;From Carrick streets to Shannon shore , From Slievenamon to Ballindeary;River Shannon;Ballingeary;remove
+davis-selection---22;Q1520625;Q1016302;From Slievenamon to Ballindeary;Slievenamon;Ballingeary;
+davis-selection---22;QXXX;Q2333034;From Slievenamon to Ballindeary , From Longford Pass to Gaillte Mór;Longford Pass;Galtymore;
+devere-legendsofTheSaxonSaints---3;Q19686;Q1540243;from Thames to Stour;River Thames;River Stour;
+devere-legendsofTheSaxonSaints---11;Q550995;Q503262;From Humber 's bank to Tweed;Humber;River Tweed;
+devere-legendsofTheSaxonSaints---13;Q586895;Q160642;from Sherburne and from Winbourne flashed To Sarum;Sherburne;Salisbury;
+devere-legendsofTheSaxonSaints---13;Q535233;Q160642;from Winbourne flashed To Sarum;Wimborne Minster;Salisbury;
+devere-mayCarols---46;Q5776;Q430776;From Bethlehem 's crib to Nazareth;Bethlehem;Nazareth;
+dobson-collected---14;Q216185;Q2339242;From Charing Cross to Ludgate Hill;Charing Cross;Ludgate Hill;
+doesticks-nothingToSay---1;Q1346856;Q41843;From Dan to Beersheba — from Dublin to Dennevitz;Dan;Beersheba;multiple items order
+doesticks-nothingToSay---1;Q1761;Q882375;from Dublin to Dennevitz;Dublin;Dennewitz;
+doyle-guardsCameThrough---3;Q735865;Q1030579;From Poelcapelle to Festubert;Langemark-Poelkapelle;Festubert;
+doyle-guardsCameThrough---9;Q1860807;Q2624470;From Helen 's Point to Bembridge Bay;St Helens;Bembridge;
+doyle-songsOfAction---4;Q854791;Q52028;From Bhamo south to Kiang - mai;Bhamo;Chiang Mai;
+doyle-songsOfTheRoad---1;Q217142;Q19682;from Snowdon 's vales To Severn;Snowdon;River Severn;
+drinkwater-poems---51;Q170497;Q281749;from Gloucester lay to Stroud;Gloucester;Stroud;
+drinkwater-poems---80;Q7356450;Q767811;From Rodboro ’ to Campden;Rodborough;Chipping Campden;
+drinkwater-poems---80;Q2255910;Q170497;From Stow to Gloucester;Stow;Gloucester;
+earls-balladOfPeace---6;Q2620177;Q492342;From Holy Cross to Fredericksburg;College of the Holy Cross;Fredericksburg;
+earls-balladOfPeace---21;Q824;Q724;From Oregon to Maine;Oregon;Maine;
+earls-balladOfPeace---32;Q41843;Q1346856;from Bersabee to Dan;Beersheba;Dan;
+earls-balladOfPeace---32;Q41843;Q1346856;From Bersabee to Dan;Beersheba;Dan;
+emerson-mayDay---11;Q724;Q422487;from Maine To Powhatan;Maine;James River;
+field-secondBook---72;Q1715;Q2079;FROM Hanover to Leipzig;Hanover;Leipzig;
+field-secondBook---72;Q1715;Q1733;from Hanover to Magdeburg;Hanover;Magdeburg;
+field-secondBook---72;Q1715;Q1733;From Hanover to Magdeburg;Hanover;Magdeburg;repeated
+field-songs---16;Q168225;Q151920;From Hebron to Tiberius;Hebron;Tiberias;
+flecker-42poems---19;Q7348;Q29;from the Indus to Spain;Indus River;Spain;
+flecker-42poems---24;Q29;Q25;from Spain And lent their swords to Wales;Spain;Wales;
+freeman-poemsNewAndOld---45;Q1433715;Q19686;From Wear to Thames;River Wear;River Thames;
+freeman-poemsNewAndOld---175;Q200942;Q99755622;From Swindon out to White Horse Hill;Swindon;Whitehorse Hill;
+freneau-poems1---20;Q16;Q230;from Canada To Georgia;Canada;Georgia;
+freneau-poems1---20;Q298;Q1247;From Chili to the Caribbean;Chile;Caribbean Sea;
+freneau-poems1---21;Q81178;Q82601;From Baffin 's bay to Del Fuego;Baffin Island;Tierra del Fuego;
+freneau-poems1---21;Q82601;Q7103795;From Baffin 's bay to Del Fuego south , From California to the Oronoque;Tierra del Fuego;Oronoque;remove
+freneau-poems1---21;Q99;Q7103795;From California to the Oronoque;California;Oronoque;
+freneau-poems1---21;Q16;Q230;from Canada To Georgia;Canada;Georgia;
+freneau-poems1---21;Q96;Q1507;From Mexico to Patagonia;Mexico;Patagonia;
+freneau-poems1---21;Q298;Q1247;From Chili to the Caribbean;Chile;Caribbean Sea;
+freneau-poems1---21;Q1034291;Q486306;From Cape Breton to Pensacola;Cape Breton;Pensacola;
+freneau-poems1---44;Q16;Q230;From Canada to Georgia;Canada;Georgia;
+freneau-poems3---58;Q13712;Q3783;From Tyber to the Amazon;Tiber;Amazon;
+freneau-poems3---108;Q1952;Q724;From Nova Scotia to the woods of Maine;Nova Scotia;Maine;
+freneau-poems3---124;Q1383;Q1509;From Huron 's shores to savage Tennessee;Lake Huron;Tennessee;
+garrett-trenchBallads---23;Q59457;Q1089844;From Xivray to Cantigny;Xivray-et-Marvoisin;Cantigny;
+garrett-trenchBallads---23;Q1089844;Q41986;From Xivray to Cantigny — From Soissons to the Meuse;Cantigny;Meuse;remove
+garrett-trenchBallads---23;Q167152;Q41986;From Soissons to the Meuse;Soissons;Meuse;
+gilbert-ballads---1;Q1011096;Q736439;From Deal to Ramsgate;Deal;Ramsgate;
+gilbert-ballads---21;Q212150;Q179034;From Marathon to Waterloo;Marathon;Waterloo;
+gilbert-rebelVerses---8;Q7140795;Q2255910;From Partney down to Stow;Partney;Stow;
+graham-misrepresentativeMen---4;Q9427;Q2290461;From Timbuctoo to Rotten Row;Timbuktu;Rotten Row;
+graham-misrepresentativeWomen---4;Q25610;Q138578;From Happy Hampstead to Hoboken;Hampstead;Hoboken;
+hanson-frontierBallads---2;Q40747;Q422487;From Pierre to the mouth of the James;Pierre;James River;
+hardy-satires---103;Q195413;Q179224;From Solway Frith to Dover Strand;Solway Firth;Dover;
+hardy-timesLaughing---1;Q746518;Q7205623;From the Milton Woods to Dole - Hill;Milton Abbas;Plush;
+hardy-timesLaughing---83;Q1003997;Q3991738;from Judaea north to Ty re;Judaea;Tyre;
+harte-complete---80;Q686818;Q523273;From quaint Schwalbach To the clustering tiles of Bacharach;Schwalbach;Bacharach;
+harte-complete---80;Q285879;Q3104;From Bingen , hence To old Coblentz;Bingen am Rhein;Koblenz;
+harte-eastAndWest---9;Q3476563;Q487315;From Pescadero to Monterey;Pescadero;Monterey;
+harte-eastAndWest---9;Q3476563;Q487315;From Pescadero to Monterey;Pescadero;Monterey;repeated
+hay-pikeCounty---9;Q16990;Q1286;from the lava of AEtna To the ice of the Alps;Mount Etna;Alps;
+hay-poems---68;Q79;Q173532;From Egypt to Gebail;Egypt;Byblos;
+hofland-aSeasonAtHarrogateln---4;Q535902;Q1840961;From Knaresbro ’ to Plumpton;Knaresborough;Plumpton;
+holland-mistress---49;Q724;Q824;from Maine to Oregon;Maine;Oregon;
+holland-mistress---61;Q959127;Q62;From rock - bound Massachusetts Bay To San Francisco 's;Massachusetts Bay;San Francisco;
+holland-spunyarn---69;Q21;Q21;From the great heart of England To England;England;England;same place
+holmes-poeticalWorksComplete---287;Q29;Q23666;From Spain to Britain;Spain;Great Britain;
+hood-poeticalWorks---91;Q662059;Q93366;From Cadiz Bay to rough Biscay;Bay of Cádiz;Biscay;
+hood-poeticalWorks---153;Q22890;Q1011;From Emerald Isle to Cape de Verd;Ireland;Cape Verde;
+hope-wreath---10;Q812;Q1439;From Florida to Texas;Florida;Texas;
+hope-wreath---35;Q216868;Q370750;From Chesapeake to where Savannah;Chesapeake Bay;Savannah River;
+housman-ShropshireLady---59;Q142;Q21;From France to England;France;England;
+howells-daughterOfTheStorage---1;Q43196;Q1342;from Cincinnati to Pittsburg;Cincinnati;Pittsburgh;
+howells-poems---12;Q2028;Q641;from Verona To fair Venice;Verona;Venice;
+howells-poems---12;Q641;Q3415;From Venice by sea to Ancona;Venice;Ancona;
+howells-poems---50;Q2634;Q641;from Naples to Venice;Naples;Venice;
+jacob-songsOfAngus---38;Q3071035;Q2619909;From Fringford up to Hethe;Fringford;Hethe;
+johnson-vanityOfHumanWishes---1;Q29520;Q419;from China to Peru;China;Peru;
+johnson-vanityOfHumanWishes---1;Q794;Q980;From Persia 's Tyrant to Bavaria;Iran;Bavaria;
+keats-poems1820---3;Q5753;Q822;From silken Samarcand to cedar'd Lebanon;Samarkand;Lebanon;
+keble-christianYear---82;Q40059;Q2193088;From Jordan banks to Bethphage;Jordan River;Bethphage;
+kettle-poemsAndParodies---20;Q865849;Q162442;From Birr to Allahabad;Birr;Prayagraj;
+kettle-poemsAndParodies---21;Q83407;Q41983;from Mons to the banks of the Marne;Mons;Marne;
+kingsley-andromeda---67;Q3138;Q365;From Trier to Coln;Trier;Cologne;
+kipling-barrackRoomBallads---15;Q37995;Q185518;from Rangoon to Mandalay;Yangon;Mandalay;
+kipling-barrackRoomBallads---15;Q185518;Q185518;from Rangoon to Mandalay ? On the road to Mandalay;Mandalay;Mandalay;wrong direction
+kipling-barrackRoomBallads---20;Q456624;Q66568;from Umballa to Cawnpore;Ambala;Kanpur;
+kipling-barrackRoomBallads---21;Q865849;Q213026;From Birr to Bareilly;Birr;Bareilly;
+kipling-barrackRoomBallads---21;Q213026;Q11739;From Birr to Bareilly , from Leeds to Lahore;Bareilly;Lahore;remove
+kipling-barrackRoomBallads---21;Q39121;Q11739;from Leeds to Lahore;Leeds;Lahore;
+kipling-barrackRoomBallads---25;Q1006232;Q2712129;from Woolwich to Bernardmyo;Woolwich;Mogok;
+kipling-barrackRoomBallads---32;Q1195983;Q334;From Kohat to Singapore;Kohat;Singapore;
+kipling-departmentalDitties---17;Q83786;Q83786;From Boileaugunge to Simla Downs;Shimla;Shimla;
+kipling-departmentalDitties---26;Q1113311;Q854;from Peshawur to Ceylon;Peshawar;Sri Lanka;
+kipling-departmentalDitties---26;Q1113311;Q854;from Peshawur to Ceylon;Peshawar;Sri Lanka;repeated
+kipling-departmentalDitties---28;Q289273;Q200718;from fear , Baron of Luni to Jeysulmeer , Lord of the Desert of Bikaneer;Luni River;Bikaner;
+kipling-sevenSeas---43;Q380307;Q17012;From Labrador to Guadeloupe;Labrador;Guadeloupe;
+kipling-sevenSeas---52;Q3846;Q826769;from Minden to Maiwand;Minden;Maiwand;
+kipling-verses---25;Q121104;Q173808;from Balkh to Kandahar;Balkh;Kandahar;
+kipling-verses---25;Q121104;Q173808;from Balkh to Kandahar;Balkh;Kandahar;repeated
+kipling-verses---27;Q139706;Q1353;From Paniput to Delhi;Panipat;Delhi;
+kipling-verses---30;Q195413;Q107393;from Solway Firth to Skye;Solway Firth;Isle of Skye;
+kipling-verses---30;Q123741;Q122767;from Limehouse to Blackwall;Limehouse;Blackwall;
+kipling-verses---77;Q173148;Q133315;from Delos up to Limerick;Delos;Limerick;
+kipling-works---13;Q191333;Q185453;from Michni to Mooltan;Khyber Pass;Multan;
+kipling-works---32;Q1497;Q19721;From Mississip to Clyde;Mississippi River;River Clyde;
+kipling-works---54;Q733093;Q855330;From Queenstown Bay to Donegal;Cobh;Donegal;
+kipling-yearsBetween---14;Q2116218;Q1117354;From Barry Wood to Gouzeaucourt , From Boyne to Pilkem Ridge;Barry Wood;Gouzeaucourt;
+kipling-yearsBetween---14;Q896037;Q890339;From Boyne to Pilkem Ridge;River Boyne;Boezinge;
+kirk-rightOff---15;Q80338;Q185518;from there he made Bengal , Then journeyed he to Mandalay;Bengal;Mandalay;
+kirk-rightOff---15;Q223;Q668;From Greenland 's icy mountains clear to India;Greenland;India;
+laidlaw-soldierSongs---35;Q132724;Q207927;From Borodino to the icy brink Of Beresina;Borodino;Berezina River;
+lampman-amongTheMille---42;Q132564;Q103011;From grey Mycenæ by the pass to Corinth;Mycenae;Corinth;
+lang-banAndArriere---38;Q68815586;Q30279317;from haunted Glamis To haunted Woodhouselea;Glamis;Woodhouselee;
+lang-rhymesAlaMode---30;Q100;Q3392;From Boston to the banks of Nile;Boston;Nile;
+lang-rhymesAlaMode---39;Q41843;Q1346856;From Beersheba to Dan;Beersheba;Dan;
+lawson-versePopular---4;Q2918297;Q2881464;from Woollahra to Balmain;Woollahra;Balmain;
+lazarus-poems1---50;Q724;Q812;From Maine to Florida;Maine;Florida;
+lear-bookOfNonsense---51;Q43;Q142;from Turkey to France;Turkey;France;
+leland-songsOfSea---59;Q176;Q2841;from Quebec to Bogotáw;Quebec;Bogotá;
+locker-selection---51;Q385060;Q2098078;From Camberwell to Aldgate;Camberwell;Aldgate;
+lowell-complete---128;Q1346856;Q41843;from Dan to Beersheba;Dan;Beersheba;
+lowell-complete---188;Q724;Q824;From Maine to utmost Oregon;Maine;Oregon;
+luce-complete---5;Q2302305;Q2418364;from Chilmark to New Town;Chilmark;West Tisbury;
+maccarthy-denisFlorence---15;Q192820;Q936301;From the Shannon 's soft shores to the banks of the Barrow;River Shannon;Barrow;
+mackay-byTrench---5;Q36647;Q9427;From Cork to Timbuctoo;Cork;Timbuktu;
+mackay-byTrench---5;Q545;Q3392;From Baltic to the Nile;Baltic Sea;Nile;
+mackay-byTrench---19;Q1973;Q724;From the camps of B. Columbia To the lumber camps of Maine;British Columbia;Maine;
+mackay-byTrench---28;Q62;Q5083;from old Frisco we wallowed our way To lovely Seattle;San Francisco;Seattle;
+mackeracher-canadaMyLand---2;Q40191;Q721374;From Hobart Town to Hammerfest;Hobart;Hammerfest;
+mackeracher-canadaMyLand---11;Q1285;Q584;"From Apennine to Sacred Isle ; And Rhine";Apennine Mountains;Rhine;
+mackeracher-canadaMyLand---22;Q1930746;Q855330;From Skibbereen town to the Donegal;Skibbereen;Donegal;
+masters-domesdayBook---26;Q1439;Q241;from Texas clear to Cuba;Texas;Cuba;
+masters-domesdayBook---32;Q33959;Q2044;from Nice to Florence;Nice;Florence;
+masters-domesdayBook---34;Q33959;Q38;From Nice to get a glimpse of Italy;Nice;Italy;
+masters-starvedRock---4;Q82070;Q1524;from Ty re to Athens;Tyre;Athens;
+masters-towardTheGulf---1;Q1297;Q55;From the dock at Chicago to the dock at Holland;Chicago;Netherlands;
+masters-towardTheGulf---4;Q771;Q1204;From Massachusetts to Illinois;Massachusetts;Illinois;
+masters-towardTheGulf---6;Q5330799;Q17107717;From Eastmanville to Nunica;Eastmanville;Nunica;
+masters-towardTheGulf---21;Q82070;Q334;from Ty re to Singapore;Tyre;Singapore;
+masters-towardTheGulf---32;Q19709;Q2281103;from Avon clear to Kenilworth;River Avon;Kenilworth;
+masters-towardTheGulf---44;Q180294;Q69354;from Jaffa There to Montreaux;Jaffa;Montreux;
+mcintyre-poems---10;Q182343;Q291233;From Niagara to Hamilton;Niagara River;Churchill River;
+mcintyre-poems---12;Q40435;Q5492;from Buffalo to Lake Erie;Buffalo;Lake Erie;
+mcintyre-poems---58;Q487564;Q16;from Herkimer county , To Canada;Herkimer County;Canada;
+mcintyre-poems---117;Q1360927;Q19721;From Moray Frith to Frith of Clyde;Moray Firth;River Clyde;
+meredith-poems2---64;Q12431;Q1262;from peaks of Pyrenees To Graians;Pyrenees;Graian Alps;
+meredith-poems3---25;Q203950;Q193724;from Trafalger To darken Austerlitz;Cape Trafalgar;Slavkov u Brna;
+miller-areWomenPeople---15;Q724;Q173;from Maine to Alabama;Maine;Alabama;
+moody-gloucesterMoors---3;Q986634;Q49470032;from Oswego to Sault Sainte - Marie , And on to where the Pictured Rocks;Sault Ste. Marie;Pictured Rocks;
+moody-gloucesterMoors---3;Q1017583;Q986634;from Oswego to Sault Sainte - Marie , And on to where the Pictured Rocks;Oswego;Sault Ste. Marie;
+moore-complete---137;Q21;Q21;From England 's debtors to be England;England;England;same place
+moore-complete---544;Q745295;Q635058;From Maina 's rills To Thracia;Mani Peninsula;Thracia;
+moore-cornishCatches---17;Q5303081;Q1024896;from Downderry to Looe;Downderry;Looe;
+moore-cornishCatches---17;Q1024896;Q5303081;from Looe to Downderry;Looe;Downderry;
+moore-cornishCatches---17;Q5303081;Q2041269;from Looe to Downderry , An ’ on to Torpoint;Downderry;Torpoint;
+moore-cornishCatches---17;Q7289328;Q602760;from the Rame to the Lizzer;Rame;The Lizard;
+moore-cornishCatches---42;Q23154;Q155;from Bristol to Brazil;Bristol;Brazil;
+morley-songsForLittleHouse---49;Q6454;Q1963;from Calais to Khartoum;Calais;Khartoum;
+morris-earthlyParadise---9;Q29520;Q38;From Cathay to the head of Italy;China;Italy;
+morris-selection---8;Q229;Q481514;From sunny Cyprus to the headland blue Of Lilybaeum;Cyprus;Marsala;
+murray-hame---36;Q318306;Q5465;From Quilimane to Cape Town;Quelimane;Cape Town;
+nesbit-alphabetOfHistory---8;Q135744;Q1297;from Galveston to Chicago;Galveston;Chicago;
+nesbit-alphabetOfHistory---14;Q42462;Q467664;from York to Butte;York;Butte;
+newbolt-poems---38;Q917319;Q8745;from Torres Vedras to golden Vigo Bar;Torres Vedras;Vigo;
+newbolt-poems---104;Q1757559;Q7230184;From Bratton to Porlock Bay;Bratton;Porlock Bay;
+newbolt-poems---104;Q1757559;Q7230184;From Bratton to Porlock Bay;Bratton;Porlock Bay;repeated
+newbolt-poems---104;Q1757559;Q7230184;From Bratton to Porlock Bay;Bratton;Porlock Bay;repeated
+newbolt-poems---104;Q1757559;Q7230184;From Bratton to Porlock Bay;Bratton;Porlock Bay;repeated
+newbolt-poems---116;Q23156;Q17252;from Devon to Thibet;Devon;Tibet;
+noyes-collectedPoems1---7;Q7687213;Q11437728;from Tashiro To Mount Daimugenzan;Tashiro;Mount Daimugen;
+noyes-collectedPoems1---157;Q812895;Q2292191;From Beachy Head to Skiddaw;Beachy Head;Skiddaw;
+noyes-collectedPoems1---161;Q991055;Q23298;From Milford Haven to the Downs of Kent;Milford Haven;Kent;
+noyes-collectedPoems1---161;Q23298;Q550995;From Milford Haven to the Downs of Kent , And up to Humber;Kent;Humber;
+noyes-collectedPoems1---162;Q7114777;Q1783560;from Owers to Spithead;Ower;Spithead;
+noyes-collectedPoems1---162;Q2292191;Q427283;From Skiddaw to Helvellyn;Skiddaw;Helvellyn;
+noyes-collectedPoems2---79;Q84;Q130191;from London town To Norwich;London;Norwich;
+noyes-collectedPoems2---80;Q7355468;Q2568918;from Rockland on to Hingham;Rockland St Mary;Hingham;
+noyes-collectedPoems2---80;Q2568918;Q130191;from Rockland on to Hingham , From Hingham on to Norwich;Hingham;Norwich;remove
+noyes-collectedPoems2---80;Q2568918;Q130191;From Hingham on to Norwich;Hingham;Norwich;
+noyes-collectedPoems2---80;Q130191;Q42462;from Norwich up to York;Norwich;York;
+owen-battleOfBaysby---23;Q1134899;Q179224;from Delagoa Bay To Dover;Maputo Bay;Dover;
+page-coastOfBohemia---15;Q82601;Q123377;From Del Fuego 's beetling coast To sleety Hebrides;Tierra del Fuego;Hebrides;
+palgrave-visionOfEngland---14;Q29520;Q12544;From Cathaya westward it stole to Byzance;China;Byzantine Empire;
+palgrave-visionOfEngland---40;Q5089;Q584;from Ganges to Rhine;Ganges;Rhine;
+palgrave-visionOfEngland---44;Q14294;Q14299;From Tagus back by Douro to Garonne;Tagus River;Douro;
+palgrave-visionOfEngland---44;Q14299;Q5077;From Tagus back by Douro to Garonne;Douro;Garonne;
+paterson-saltsbushBill---36;Q40059;Q85;from Jordan to Cairo;Jordan River;Cairo;
+presland-deluge---21;Q23792;Q21;from Palestine To assure me England;Palestine;England;
+procter-legendsAndLyrics1---28;Q23792;Q12994;from far Palestine , And given to Bruges;Palestine;Bruges;
+rice-songSurf---63;Q3392;Q584;from Nile to Rhine;Nile;Rhine;
+riley-greenFields---11;Q2471;Q5753;From Sana on to Samarcand;Sanaa;Samarkand;
+rogers-poems---40;Q51;Q797;From the ANTARCTICK , from the Land of Fire To where ALASKA;Antarctic;Alaska;
+rogers-poems---40;Q82601;Q797;From the ANTARCTICK , from the Land of Fire To where ALASKA;Tierra del Fuego;Alaska;
+rogers-poems---40;Q82601;Q797;from the Land of Fire To where ALASKA;Tierra del Fuego;Alaska;
+sackvilleWest-orchardAndVineyard---39;Q15;Q48;from Africa to Asia;Africa;Asia;
+sackvilleWest-orchardAndVineyard---45;Q649;Q29520;from Moscow through to China;Moscow;China;
+sackvilleWest-orchardAndVineyard---48;Q23148;Q67479626;From Cornish Lizard to the Kentish Nore;Cornwall;Kent;
+sassoon-counterAttack---25;Q102728;Q143665;From Ypres to Frise;Ypres;Frise;
+scollard-spraysOfShamrock---39;Q163584;Q184469;From Derry to Kerry;Derry;County Kerry;
+scollard-spraysOfShamrock---45;Q1413986;Q166232;From Feale Water to Kenmare;River Feale;Kenmare;
+scollard-spraysOfShamrock---45;Q1413986;Q166232;From Feale Water to Kenmare;River Feale;Kenmare;repeated
+scollard-spraysOfShamrock---45;Q1413986;Q166232;From Feale Water to Kenmare;River Feale;Kenmare;repeated
+scott-ladyOfTheLake---2;Q503262;Q19720;From Tweed to Spey;River Tweed;River Spey;
+service-balladsOfBohemian---4;Q241021;Q186115;From Montrouge to the Martyr's Hill;Montrouge;Montmartre;
+service-balladsOfBohemian---15;Q130978;Q142;From Yucatan to France;Yucatan Peninsula;France;
+service-rhymesOfRedCross---6;Q83407;Q102728;from Mons to Wipers;Mons;Ypres;
+service-rhymesOfRedCross---26;Q45240;Q724;from Monte Carlo to Maine;Monte Carlo;Maine;
+service-rhymesOfRedCross---26;Q724;Q179224;"from Monte Carlo to Maine ; From Dawson City to Dover";Maine;Dover;remove
+service-rhymesOfRedCross---26;Q372324;Q179224;From Dawson City to Dover;Dawson City;Dover;
+service-rhymesOfRedCross---26;Q179224;Q29;From Dawson City to Dover , from San Francisco to Spain;Dover;Spain;remove
+service-rhymesOfRedCross---26;Q62;Q29;from San Francisco to Spain;San Francisco;Spain;
+service-rhymesOfRollingStone---33;Q1546553;Q60067;From Koyokuk to Kuskoquim;Koyukuk River;Kuskokwim River;
+shanks-poems---15;Q2497835;Q7620330;From Amberley to Storrington;Amberley;Storrington;
+shanks-poems---15;Q7620330;Q2497835;From Amberley to Storrington , From Storrington to Amberley;Storrington;Amberley;remove
+shanks-poems---15;Q7620330;Q2497835;From Storrington to Amberley;Storrington;Amberley;
+shelley-peterbell---7;Q19709;Q19714;from Avon to Trent;River Avon;River Trent;
+shelley-works3---100;Q5456;Q130135;From the Andes to Atlas;Andes;Atlas Mountains;
+shelley-works3---103;Q189387;Q2257429;From Pithecusa to Pelorus;Ischia;Faro Point;
+smith-rejectedAddresses---8;Q26328;Q2886632;From Knightsbridge , Pancras , Camden Town , To Redriffe;Knightsbridge;Rotherhithe;
+smith-rejectedAddresses---8;Q2065416;Q2886632;From Knightsbridge , Pancras , Camden Town , To Redriffe;St Pancras;Rotherhithe;
+smith-rejectedAddresses---8;Q149836;Q2886632;From Knightsbridge , Pancras , Camden Town , To Redriffe;Camden Town;Rotherhithe;
+stead-songsOfPrairie---14;Q2702410;Q11769;from Cape Race to Behring Sea;Cape Race;Bering Strait;
+stephens-reincarnations---11;Q84;Q2090978;From London back to Beltra;London;Beltra;
+stoddardJ-poems---20;Q14294;Q584;From the Tagus to the Rhine;Tagus River;Rhine;
+stoddardJ-poems---36;Q794;Q17;from Persia to Japan;Iran;Japan;
+stoddardJ-poems---36;Q5684;Q79;from Babylon to Egypt;Babylon;Egypt;
+stoddardJ-poems---36;Q1490;Q1854;from Tokyo to Saigon;Tokyo;Ho Chi Minh City;
+stoddardJ-poems---36;Q858;Q854;from Syria to Ceylon;Syria;Sri Lanka;
+stuart-gobolinks---9;Q130978;Q215646;From Yucatan to Yeddo;Yucatan Peninsula;Edo;
+stuart-songsOfSilent---44;Q90;Q667205;"from Paris ; We sent to Worth";Paris;Worth;
+swift-poems---42;Q41;Q23666;from Greece to Britain;Greece;Great Britain;
+swift-poems---105;Q1761;Q84;From Dublin soon to London;Dublin;London;
+swinburne-atalanta---1;Q12898802;Q750313;From Arcadia to Calydon;Arcadia;Calydon;
+swinburne-studiesInSongs---2;Q690347;Q79;From radiant Calpe to revealed Masar;Rock of Gibraltar;Egypt;
+swinburne-studiesInSongs---2;Q130135;Q668;From utmost Atlas even to extremest Ind;Atlas Mountains;India;
+thackeray-ballads---63;Q648;Q12892;from Lille . To Antwerp;Lille;Antwerp;
+thomas-latePoems---68;Q79848;Q1425428;From Southampton to Newcastle;Southampton;Newcastle upon Tyne;
+thomas-poems---33;Q134672;Q39121;from Exeter to Leeds;Exeter;Leeds;
+whitman-leavesOfGrass---73;Q134514;Q83318;from Suez to Bab- el - mandeb;Suez;Bab-el-Mandeb;
+whitman-leavesOfGrass---81;Q4558;Q1544388;From the Cascade range to the Wahsatch;Cascade Range;Wasatch Range;
+whitman-leavesOfGrass---81;Q604141;Q1261;from Puget sound to Colorado;Puget Sound;Colorado;
+whitney-elias---5;Q5089;Q13712;From Ganges on to Tiber;Ganges;Tiber;
+whittier-antislavery1---6;Q230;Q724;from Georgia to Maine;Georgia;Maine;
+whittier-antislavery1---12;Q1393;Q5492;From the Delaware 's marge to the Lake of the West;Delaware;Lake Erie;
+whittier-antislavery1---16;Q179444;Q596106;From broad Potomac to the far Sabine;Potomac River;Sabine River;
+whittier-antislavery1---17;Q3140;Q686021;From Hudson 's frowning palisades To Alleghany's;Hudson River;Allegheny River;
+whittier-antislavery1---20;Q326295;Q49149;from Plymouth's rocky bound To where Nantucket;Plymouth;Nantucket;
+whittier-antislavery2---20;Q129705;Q838143;From slumberous Timpanogos , to Gila;Mount Timpanogos;Gila River;
+whittier-antislavery2---20;Q15282;Q99;from Nuevo - Leon to California;Nuevo León;California;
+whittier-mountainPictures---14;Q4736866;Q34903434;From Alton Bay to Sandwich Dome;Alton Bay;Sandwich Dome;
+whittier-mountainPictures---14;Q34903434;Q2210898;From Alton Bay to Sandwich Dome , From Mad to Saco river;Sandwich Dome;Saco River;remove
+whittier-mountainPictures---14;Q6726033;Q2210898;From Mad to Saco river;Mad River;Saco River;
+whittier-occasionalPoems---21;Q894570;Q16952948;from Neck to Boston Stone;Boston Neck;Boston Stone;
+whittier-songsOfLabor---7;Q233;Q220;From Malta 's temples to the gates of Rome;Malta;Rome;
+whittier-songsOfLabor---13;Q13712;Q1653;From Tiber 's hills to Danube;Tiber;Danube;
+wilde-ballad1---99;Q23666;Q34589;From Britain 's isles to far Euphrates;Great Britain;Euphrates;
+wilkinson-epicOfPaul---7;Q185318;Q45829;From Carmel round to Ptolemais;Mount Carmel;Ptolemais;
+wilkinson-epicOfPaul---12;Q858;Q220;from Syria to Rome;Syria;Rome;
+wilkinson-epicOfPaul---21;Q79;Q38;From Egypt to the shores of Italy;Egypt;Italy;
+wilkinson-epicOfSaul---3;Q134287;Q1218;from Tarsus to Jerusalem;Tarsus;Jerusalem;
+wilson-santaFe---1;Q2817296;Q65089632;From Fort Dodge to San Miguel;Fort Dodge;San Miguel del Vado;
+wordsworth-works2---48;Q142;Q21;From France to sheltering England;France;England;
+wordsworth-works4---42;Q503262;Q216373;from Tweed to Tyne;River Tweed;River Tyne;
+wordsworth-works7---31;Q19686;Q216373;from Thames to Tyne;River Thames;River Tyne;
+ANG4;Q2634;Q133274;De Naples à le Kremlin;Naples;Moscow Kremlin;
+ANO34;Q90;Q5089;de Paris jusqu' à le Gange;Paris;Ganges;
+ARV12;Q13498;Q641;De Tarente à Venise;Taranto;Venice;
+ARV12;Q641;Q69194;De Tarente à Venise , et de Rome à le Simplon;Venice;Simplon;remove
+ARV12;Q220;Q69194;de Rome à le Simplon;Rome;Simplon;
+ARV14;Q159987;Q13522657;De l' Artois jusqu' à le Roussillon;Artois;Roussillon;
+BAN20;Q27;Q48;de l' Irlande à l' Asie;Republic of Ireland;Asia;
+BAN34;Q229;Q207239;de les flots vint de Cypre à Cythère;Cyprus;Kythira;
+BAN34;Q229;Q207239;de Cypre à Cythère;Cyprus;Kythira;repeated
+BAN120;Q233733;Q207239;De Ferney jusqu' à Cythère;Ferney-Voltaire;Kythira;
+BAN138;Q56761602;Q1141295;de Leuctres à Thespies;Leuctra;Thespiae;
+BAN169;Q235297;Q6593;de Tréguier jusqu' à Vannes;Tréguier;Vannes;
+BAN534;Q90;Q90;de la Paresse ! Et Paris est à moi , Paris;Paris;Paris;wrong direction
+BAN537;Q41183;Q956;d' Alep et d' Ispahan , À le Chinois que Pékin;Aleppo;Beijing;
+BAN537;Q1367759;Q956;d' Alep et d' Ispahan , À le Chinois que Pékin;Isfahan Province;Beijing;
+BAN537;Q1367759;Q956;d' Ispahan , À le Chinois que Pékin;Isfahan Province;Beijing;remove
+BAN551;Q19686;Q10965;De la Tamise jusqu' à l' Èbre;River Thames;Ebro;
+BAN645;Q845909;Q325946;de la Scythie Fort connu , comme à Landerneau;Scythia;Landerneau;
+BAN765;Q186115;Q90;De la colline de Montmartre . A Paris;Montmartre;Paris;wrong direction
+BAN765;Q186115;Q90;de Montmartre . A Paris;Montmartre;Paris;wrong direction
+BEA6;Q9427;Q259203;De Tombouctou , jusqu’ à le Raincy;Timbuktu;Le Raincy;
+BOI9;Q90;Q419;De Paris à le Pérou;Paris;Peru;
+BOI9;Q17;Q220;de le Japon jusqu' à Rome;Japan;Rome;
+BOI22;Q10965;Q5089;de l' Èbre jusqu' à le Gange;Ebro;Ganges;
+BOI36;Q208267;Q12631;De leur enceinte fameuse La Sambre , unie à la Meuse;Sambre;Meuse;
+BOI36;Q171009;Q90;de la Drave soumise , Jusqu' à Paris;Drava;Paris;
+BOI60;Q90;Q1353;De Paris à Delhi;Paris;Delhi;
+BOU1;Q1548355;Q34925;De le quartier de Suburre à le mont Capitolin;Suburra;Capitoline Hill;
+BOU1;Q1548355;Q34925;de Suburre à le mont Capitolin;Suburra;Capitoline Hill;
+BRB40;Q84;Q17;de Londre à le Japon;London;Japan;
+BRI11;Q235297;Q6593;de Tréguier jusqu' à Vannes;Tréguier;Vannes;
+BRI25;Q202368;Q235382;de Morlaix et deux à Kemperlé;Morlaix;Quimperlé;
+BRI26;Q71661;Q235382;De Lo'- Christ à Kemperlé;Inzinzac-Lochrist;Quimperlé;
+BRI89;Q913286;Q82670;de le Mugnoné , de Florence à Fiésole;Mugnone;Fiesole;
+BRI89;Q2044;Q82670;de le Mugnoné , de Florence à Fiésole;Florence;Fiesole;
+BRI89;Q2044;Q82670;de Florence à Fiésole;Florence;Fiesole;repeated
+BRI89;Q913286;Q2044;de le Mugnoné , de Fiésole à Florence;Mugnone;Florence;
+BRI89;Q82670;Q2044;de le Mugnoné , de Fiésole à Florence;Fiesole;Florence;
+BRI89;Q82670;Q2044;de Fiésole à Florence;Fiesole;Florence;remove
+BRJ28;Q6602;Q154728;de boire ! A nous Strasbourg ! à nous Toul;Strasbourg;Toul;wrong direction
+BRJ29;Q151330;Q27306;de Sans-Souci Diront seuls a tes fils : La Prusse;Sanssouci;Kingdom of Prussia;wrong direction
+BRJ55;Q1653;Q40855;De le Danube à le Dniéper;Danube;Dnieper;
+BRJ55;Q40855;Q13712;De le Danube à le Dniéper , de la Tamise à le Tibre;Dnieper;Tiber;remove
+BRJ55;Q19686;Q13712;de la Tamise à le Tibre;River Thames;Tiber;
+CAM24;Q1469;Q187843;de la Loire à les Vosges;Loire;Vosges Mountains;
+CHE78;Q41;Q183150;de la Grèce , à Colchos;Greece;Colchis;
+CHE80;Q130135;Q822;De l' Atlas à le Liban;Atlas Mountains;Lebanon;
+CHE80;Q822;Q14309;De l' Atlas à le Liban , de l' Euphrate à le Bétis;Lebanon;Guadalquivir;remove
+CHE80;Q34589;Q14309;de l' Euphrate à le Bétis;Euphrates;Guadalquivir;
+CHE80;Q14309;Q584;de l' Euphrate à le Bétis , De le Tage à le Rhin;Guadalquivir;Rhine;
+CHE80;Q1644;Q1229;de l' Elbe à le Tanaïs;Elbe;Don;
+CHF7;Q597;Q148;de les enfers Grondaient de Lisbonne à la Chine;Lisbon;People's Republic of China;wrong direction
+CHF7;Q597;Q148;de Lisbonne à la Chine;Lisbon;People's Republic of China;
+CHF36;Q15682;Q1461;de Cadix à Manille;Cádiz;Manila;
+CRB48;Q195958;Q17812;De Tolose à le Guadalété;Toulouzette;Guadalete;
+CRB70;Q6582;Q9427;De Carcassonne à Tombouctou;Carcassonne;Timbuktu;
+CRO168;Q1479;Q6555;de Bordeaux à Narbonne;Bordeaux;Narbonne;
+CRO168;Q1479;Q6555;de Bordeaux à Narbonne;Bordeaux;Narbonne;repeated
+CRO168;Q1479;Q6555;de le canal de Bordeaux à Narbonne;Bordeaux;Narbonne;
+CRO168;Q1479;Q6555;de Bordeaux à Narbonne;Bordeaux;Narbonne;
+CRO168;Q142;Q90;de France est à Paris;France;Paris;wrong direction
+DAN13;Q10305;Q162615;De Saragosse à Carthagène;Zaragoza;Cartagena;
+DAU19;Q1851236;Q330564;de le Temple à la Madeleine;Boulevard du Temple;La Madeleine;
+DLP26;Q1471;Q1469;de la Seine à la Loire;Seine;Loire;
+DLP29;Q184371;Q22690;De Sedan qu' on trahit à Metz;Sedan;Metz;
+DUC67;Q5089;Q6514;De le Gange à l' Hellespont;Ganges;Dardanelles;
+DUN1;Q519640;Q1060595;de Rosbach à Valmy;Braunsbedra;Valmy;
+DUN1;Q1060595;Q184371;de Rosbach à Valmy , D' Auwerstædt à Sedan;Valmy;Sedan;remove
+DUN1;Q552165;Q184371;D' Auwerstædt à Sedan;Auerstedt;Sedan;
+FLE14;Q173695;Q3561;d' Épinal à Alger;Épinal;Algiers;
+GAU14;Q85;Q216;de le Caire à Wilna;Cairo;Vilnius;
+GAU116;Q20;Q135028;De la Norwége à la Nubie;Norway;Nubia;
+GAU230;Q90;Q2044;"de les tisons ; Paris est dans la boue à le beau mois où Florence";Paris;Florence;wrong direction
+GAU279;Q525811;Q47476;de le Généralife A l' Alhambra;Generalife;Alhambra;
+GAU295;Q1075988;Q217925;de le Louvre À le Champ-de-Mars;Louvre Palace;Champ de Mars;
+GAU323;Q5684;Q100;de Babylone à Boston;Babylon;Boston;
+GLA11;Q142;Q142;"d' hier ; À la France joyeuse , à la France";France;France;wrong direction
+GRS3;Q1741;Q64;de Vienne à Berlin;Vienna;Berlin;
+HER60;Q208081;Q192438;de le Néthou jusqu' à Bègle;Aneto;Bègles;
+HER85;Q199910;Q688660;de le Magdalena jusqu' à le Darien;Magdalena Department;Darién Province;
+HER108;Q1500472;Q168986;De le Raz jusqu' à Penmarcʼh;Pointe du Raz;Penmarch;
+HER120;Q10965;Q14305;de l' Èbre Jusques à le Guadiana;Ebro;Guadiana;
+HRV46;Q5687;Q126982;de Jéricho jusqu' à Génésareth;Jericho;Sea of Galilee;
+HUG523;Q1075988;Q217925;De le Louvre à le Champ-de-Mars;Louvre Palace;Champ de Mars;
+HUG527;Q192483;Q782278;de Lemnos à Lépante;Lemnos;Nafpaktos;
+HUG576;Q2887644;Q1479;de Bastan , Le second , à Bordeaux;Bastan;Bordeaux;
+HUG577;Q791134;Q1410;D' Avis à Gibraltar;Avis;Gibraltar;
+HUG581;Q22801;Q68124;d' Altorf à Chaux-de-Fonds;Altorf;La Chaux-de-Fonds;
+HUG582;Q22647;Q5715;de Troie à Memphis;Troy;Memphis;
+HUG582;Q5715;Q134287;de Troie à Memphis , et d' Ecbatane à Tarse;Memphis;Tarsus;remove
+HUG582;Q696193;Q134287;d' Ecbatane à Tarse;Ecbatana;Tarsus;
+HUG589;Q5089;Q589347;de le Gange à le Pausilippe;Ganges;Posillipo;
+HUG592;Q909357;Q845855;de les cols de le Malpas roulent jusqu' à Sallanches;Malpas;Sallanches;
+HUG592;Q909357;Q845855;de le Malpas roulent jusqu' à Sallanches;Malpas;Sallanches;repeated
+HUG784;Q5699;Q82070;d' Ur à Tyr;Ur;Tyre;
+HUG787;Q6514;Q243456;de l' Hellespont va se briser à Cumes;Dardanelles;Cumae;
+HUG787;Q173096;Q34374;de l' Eubée à la Crète;Euboea;Crete;
+HUG789;Q101583;Q1160195;de Thèbe à Mantinée;Thebes;Mantineia;
+HUG792;Q14294;Q613574;De le Tage à l' Almonacid;Tagus River;Almonacid de Toledo;
+HUG804;Q6681413;Q917870;de Lorne à Knapdala;Lorne;Knapdale;
+HUG810;Q134674;Q23047;De Bayonne à Cahors;Bayonne;Cahors;
+HUG810;Q3542400;Q861715;de le Tursan à le Marsan;Tursan;Marsan;
+HUG811;Q31424;Q10965;de le Llobregat à l' Èbre;Llobregat;Ebro;
+HUG811;Q10965;Q14556;de le Llobregat à l' Èbre , De le Tage à le Cil;Ebro;Sil;remove
+HUG811;Q14294;Q14556;De le Tage à le Cil;Tagus River;Sil;
+HUG865;Q5715;Q64;De Memphis à Berlin;Memphis;Berlin;
+HUG865;Q64;Q1205;De Memphis à Berlin , de l' Èbre à la Thuringe;Berlin;Thuringia;remove
+HUG865;Q10965;Q1205;de l' Èbre à la Thuringe;Ebro;Thuringia;
+HUG872;Q2634;Q11925;de Naple à les Grisons;Naples;Grisons;
+HUG872;Q52174;Q209064;de le cap d' Otrante à le mont Ventoux;Otranto;Mont Ventoux;repeated
+HUG872;Q52174;Q209064;d' Otrante à le mont Ventoux;Otranto;Mont Ventoux;
+HUG893;Q200201;Q15682;d' Irun à Cadiz;Irun;Cádiz;
+HUG899;Q794;Q123377;de la Perse Jusqu' à les Hébrides;Iran;Hebrides;
+HUG104;Q220;Q490;"de les Navarres . Rome a les clefs ; Milan";Rome;Milan;wrong direction
+HUG110;Q80985;Q1903;de Fez à Catane;Fez;Catania;
+HUG132;Q6839;Q173699;De Figuère à Setuval;Figueres;Setúbal;
+HUG132;Q2609855;Q15696;d' Albe à Zamore;Albe;Zamora;
+HUG140;Q23406;Q7355;De la mer Rouge à le fleuve Jaune;Red Sea;Yellow River;
+HUG142;Q2634;Q72414;De Naple à Portici;Naples;Portici;
+HUG603;Q170427;Q193819;de l' Hémus ! Acclimatons Faune à Vincenne;Balkan Mountains;Vincennes;wrong direction
+HUG615;Q490670;Q207239;de Camargo . D' Ems à Cythère;Bad Ems;Kythira;wrong direction
+HUG615;Q490670;Q207239;D' Ems à Cythère;Bad Ems;Kythira;
+HUG632;Q207239;Q1026315;De Cythère à Gretna-Green;Kythira;Gretna Green;
+HUG646;Q11769;Q48365;De Behring à Magellan;Bering Strait;Strait of Magellan;
+HUG29;Q641203;Q101081;De l' Armorique à la Provence;Armorica;Provence;
+HUG39;Q133274;Q28471;De le Kremlin à l' Escurial;Moscow Kremlin;Royal Monastery of San Lorenzo de El Escorial;
+HUG41;Q85;Q34925;De le Caire à le Capitole;Cairo;Capitoline Hill;
+HUG41;Q34925;Q626;De le Caire à le Capitole et de le Tage à le Volga;Capitoline Hill;Volga;remove
+HUG41;Q14294;Q626;de le Tage à le Volga;Tagus River;Volga;
+HUG43;Q1741;Q133274;de les Pyramides , À Vienne , à le vieux Kremlin;Vienna;Moscow Kremlin;
+HUG46;Q18869;Q130321;De le Caucase à l' Athos;Caucasus;Mount Athos;
+HUG93;Q12191;Q476288;de Nante à Mortagne;Nantes;Mortagne-au-Perche;
+HUG100;Q8810;Q8717;de les filles à Grenade , Il en est à Séville;Granada;Seville;
+HUG686;Q914073;Q163329;D' Ophir à Chanaan et d' Assur à Saba;Ophir;Canaan;
+HUG686;Q41137;Q216068;D' Ophir à Chanaan et d' Assur à Saba;Assyrian Empire;Sheba;
+HUG739;Q14294;Q1644;de le Tage à l' Elbe;Tagus River;Elbe;
+HUG739;Q1644;Q13696;de le Tage à l' Elbe et de le Nil à l' Adige;Elbe;Adige;remove
+HUG739;Q3392;Q13696;de le Nil à l' Adige;Nile;Adige;
+HUG744;Q90;Q2879070;de Paris à Cayenne;Paris;Cayenne's Prison;
+HUG761;Q845310;Q85;de Caprera , Songe à Kléber à le Caire;Caprera;Cairo;
+HUG915;Q204430;Q4043;d' Avranche à Fougère;Avranches;Fougères;
+HUG955;Q101583;Q5680;de les cirons tomber Thèbe à les cent portes Et Ninive;Thebes;Nineveh;
+HUG968;Q75459;Q3876767;de glace , Morne à Delphes , sombre à Béthel;Delphi;Bethel;wrong direction
+HUG185;Q1686757;Q819568;de Jemmape à Montmirail;Jemappes;Montmirail;
+HUG185;Q192184;Q160506;De Sainte-Hélène à Saint-Denis;Saint Helena, Ascension and Tristan da Cunha;Saint-Denis;
+HUG317;Q548;Q851323;De la Vistule à le Tanaro;Vistula;Tanaro;
+HUG317;Q545;Q16990;De le lac Baltique à le mont Etna;Baltic Sea;Mount Etna;
+HUG330;Q90;Q210205;de Paris à Pesth;Paris;Pest;
+HUG330;Q210205;Q1288;de Paris à Pesth , de le Tibre à les monts Carpathes;Pest;Carpathian Mountains;remove
+HUG330;Q13712;Q1288;de le Tibre à les monts Carpathes;Tiber;Carpathian Mountains;
+HUG361;Q13712;Q643;de le Tibre à le Pô;Tiber;Po;
+HUG401;Q1865480;Q2720548;de la Bastille à le Roule;Bastille;Quartier du Faubourg-du-Roule;
+HUG677;Q90;Q96;de Paris oublieux , À le Mexique;Paris;Mexico;wrong direction
+HUG1014;Q5089;Q3783;de le Gange à l’ Amazone;Ganges;Amazon;
+HUG1150;Q42810;Q183557;de le Havre à Dieppe;Le Havre;Dieppe;
+HUG1203;Q5089;Q824;de le Gange à l' Orégon;Ganges;Oregon;
+HUG1203;Q824;Q17252;de le Gange à l' Orégon , De les Andes à le Thibet;Oregon;Tibet;remove
+HUG1203;Q5456;Q17252;De les Andes à le Thibet;Andes;Tibet;
+HUG1416;Q220;Q209086;de les dieux . À Rome Comme à Pantin;Rome;Pantin;wrong direction
+HUG1462;Q626;Q13712;de le Volga jusqu' à le Tibre;Volga;Tiber;
+HUG1464;Q626;Q10965;de le Volga jusqu' à l' Èbre;Volga;Ebro;
+HUG1464;Q14294;Q5622;de le Tage à le Niémen;Tagus River;Neman;
+HUG1464;Q186115;Q16928476;De la butte Montmartre à le mont Valérien;Montmartre;Fort Mont-Valérien;
+HUG1474;Q1865480;Q330564;de la Bastille aille à la Madeleine;Bastille;La Madeleine;
+HUG1483;Q5690;Q220583;de plus que Sparte à moins que Sybaris;Sparta;Sybaris;
+HUG1484;Q142;Q1060595;d' humeur à servir la France , et qu' à Valmy;France;Valmy;wrong direction
+HUG1536;Q34001;Q142;d' émeute à Roubaix . Le sultan à la France;Roubaix;France;wrong direction
+HUG1536;Q572191;Q1684;De le Vulturne à la Sprée;Volturno;Spree;
+HUG1551;Q6602;Q134674;de Strasbourg jusqu' à Bayonne;Strasbourg;Bayonne;
+HUG1581;Q854;Q155;d' avoir à Ceylan , à le Brésil;Sri Lanka;Brazil;wrong direction
+HUG1826;Q46490;Q179034;d' Arcole à Waterloo;Arcole;Waterloo;
+HUG1917;Q1285;Q831469;De les Apennins à les Cordillières;Apennine Mountains;Baetic System;
+LAB1;Q33959;Q33959;de Nice , à Nice;Nice;Nice;same place
+LAB1;Q33959;Q33959;de Nice , à Nice;Nice;Nice;same place
+LAM21;Q41;Q1136637;de la Grèce , Platon à Sunium;Greece;Sounion;
+LAM61;Q6403;Q209270;De les rives de le Léman à les rochers d’ Appenzell;Lake Geneva;Appenzell;
+LAM61;Q6403;Q209270;de le Léman à les rochers d’ Appenzell;Lake Geneva;Appenzell;
+LAM61;Q14294;Q643;De le Tage à l’ Éridan;Tagus River;Po;
+LAM88;Q14294;Q40855;De le Tage à le Borysthène;Tagus River;Dnieper;
+LAM125;Q191082;Q742538;de les autels sur Égine ! De les autels à Platée;Aegina;Plataea;wrong direction
+LAM125;Q742538;Q2606004;De les autels à Platée , à Leuctre;Plataea;Leuctra;wrong direction
+LAM125;Q742538;Q212150;De les autels à Platée , à Leuctre , à Marathon;Plataea;Marathon;wrong direction
+LAM137;Q101583;Q220;de l' homme . De Thèbe et de Memphis à Rome;Thebes;Rome;repeated
+LAM137;Q101583;Q220;De Thèbe et de Memphis à Rome;Thebes;Rome;
+LAM137;Q5715;Q220;De Thèbe et de Memphis à Rome;Memphis;Rome;
+LAM137;Q5715;Q220;de Memphis à Rome;Memphis;Rome;repeated
+LAP5;Q34589;Q3392;de l’ Euphrate à le Nil;Euphrates;Nile;
+LAP34;Q5684;Q220;de Babylone à Rome;Babylon;Rome;
+LAP149;Q183;Q1075988;d' Allemagne Allemagne . Souris à le Louvre;Germany;Louvre Palace;wrong direction
+LAP212;Q1524;Q1136637;D' Athènes à Sunium;Athens;Sounion;
+LEC90;Q690347;Q12431;de le mont de Tharyq jusques à les Pyrénées;Rock of Gibraltar;Pyrenees;repeated
+LEC90;Q690347;Q12431;de Tharyq jusques à les Pyrénées;Rock of Gibraltar;Pyrenees;
+LEC119;Q13712;Q602;de le Tibre à le Rhône;Tiber;Rhône;
+LEC119;Q602;Q1471;de le Tibre à le Rhône et de le Rhône à la Seine;Rhône;Seine;remove
+LEC119;Q602;Q1471;de le Rhône à la Seine;Rhône;Seine;
+LEC132;Q45412;Q8717;de Coïmbre à Séville;Coimbra;Seville;
+LEC182;Q565751;Q2292319;d' Épire apporte à le vieil Aitna;Epirus;Aetna;
+LEG7;Q322453;Q6593;de Paimpol à Vanne;Paimpol;Vannes;
+LEG73;Q71657;Q495468;de Lopéret à Ruguellou;Locmariaquer;La Feuillée;
+LFT254;Q90;Q220;de Paris jusqu’ à Rome;Paris;Rome;
+LFT362;Q584;Q12431;de le Rhin jusqu' à les Pyrénées;Rhine;Pyrenees;
+LFT437;Q5715;Q18102;de Memphis à Saint-Mandé;Memphis;Saint-Mandé;
+LOR25;Q5690;Q101583;de Sparte à Thèbes;Sparta;Thebes;
+LOR70;Q848831;Q8810;De Sicile en Brabant , de Mayence à Grenade;Province of Brabant;Granada;
+LOR70;Q1720;Q8810;de Mayence à Grenade;Mainz;Granada;
+LOR130;Q9580;Q10282;de lune De Burgos à Pampelune;Burgos;Pamplona;repeated
+LOR130;Q9580;Q10282;De Burgos à Pampelune;Burgos;Pamplona;
+LOR130;Q8717;Q8810;de Sêville à Grenade;Seville;Granada;
+LOR178;Q269732;Q1164176;de toile grise , De Fécamp à Saint-Léonard;Fécamp;Saint-Léonard;repeated
+LOR178;Q269732;Q1164176;De Fécamp à Saint-Léonard;Fécamp;Saint-Léonard;
+LOU87;Q80344;Q132378;de l’ Olympe à l’ Œta;Mount Olympus;Mount Oeta;
+MAL50;Q12753;Q250106;De Monsieur Élimir Bourges En Seine-et-Marne , à Samois;Seine-et-Marne;Samois-sur-Seine;
+MAL50;Q96601828;Q48958;de Saint-James , à Neuilly;Parc de la Folie Saint-James;Neuilly-sur-Seine;
+MAL68;Q96099935;Q250106;de Valvins à Samois;Valvins;Samois-sur-Seine;
+MEN15;Q318432;Q474771;de Dol à Kergloff;Dol-de-Bretagne;Kergloff;
+MIC15;Q131792;Q13712;De l’ Orénoque jusqu’ à le Tibre;Orinoco River;Tiber;
+MIC21;Q62646;Q212;De la Germanie à l’ Ukraine;Germania;Ukraine;
+MON62;Q90;Q8356;de Paris jusqu' à Valladolid;Paris;Valladolid;
+MRT206;Q90;Q186115;de deux sous C' est Paris qui lâche pour nous A Montmartre;Paris;Montmartre;wrong direction
+MRT210;Q166131;Q96;de nul débit À les Antilles comme à les Mexiques;Antilles;Mexico;wrong direction
+MRT214;Q220;Q186115;de Rome . Or c' est à Montmartre;Rome;Montmartre;wrong direction
+MUS2;Q9580;Q15682;de Burgos à Cadix;Burgos;Cádiz;
+MUS5;Q195958;Q17812;De Tolose à le Guadalété;Toulouzette;Guadalete;
+MUS39;Q1285;Q365;"de l' Apennin ; A Cologne";Apennine Mountains;Cologne;wrong direction
+MUS39;Q584;Q33959;"de le Rhin ; A Nice";Rhine;Nice;wrong direction
+MUS39;Q1286;Q1449;"de les Alpes désolées ; A Gênes";Alps;Genoa;wrong direction
+MUS39;Q1285;Q365;"de l' Apennin ; A Cologne";Apennine Mountains;Cologne;wrong direction
+MUS39;Q584;Q33959;"de le Rhin ; A Nice";Rhine;Nice;wrong direction
+MUS39;Q1286;Q1449;"de les Alpes désolées ; A Gênes";Alps;Genoa;wrong direction
+MUS46;Q90;Q956;De Paris à Pékin;Paris;Beijing;
+MUS46;Q90;Q956;De Paris à Pékin;Paris;Beijing;repeated
+MUS48;Q46;Q649;d' avoir vu l' Europe dévastée , De Memphis à Moscou;Europe;Moscow;wrong direction
+MUS48;Q5715;Q649;De Memphis à Moscou;Memphis;Moscow;
+MUS51;Q3432892;Q57954906;d' y revenir , A Saint-Blaise , à la Zuecca;rio di San Biagio;rio della Giudecca;wrong direction
+MUS93;Q220;Q90;De Rome à Paris;Rome;Paris;
+NOU53;Q1471;Q90;de la Seine , à Paris;Seine;Paris;wrong direction
+NOU86;Q271085;Q12191;de Sisteron à Nantes;Sisteron;Nantes;
+NOU122;Q127775;Q189059;De Ploërmel à Mytilène;Ploërmel;Mytilene;
+NOU124;Q455657;Q475816;De Fos à Cavalaire;Fos-sur-Mer;Cavalaire-sur-Mer;
+NOU131;Q47465;Q211647;d' Aix à Beaucaire;Aix-en-Provence;Beaucaire;
+PAR100;Q207239;Q90;de Cythère Parut la plus belle à Paris;Kythira;Paris;
+PAR115;Q23666;Q100;d' Albion . Rome ressucite à Boston;Great Britain;Boston;wrong direction
+PAR115;Q220;Q100;d' Albion . Rome ressucite à Boston;Rome;Boston;wrong direction
+PEG3;Q752189;Q201352;de Limours à Pontoise;Limours;Pontoise;
+PON9;Q90;Q220;de Paris à Rome;Paris;Rome;
+PON12;Q186115;Q773318;De Montmartre à Bercy;Montmartre;Quartier de Bercy;
+PON32;Q834;Q69354;de le Valais . À le « Montreux;Valais;Montreux;wrong direction
+REN9;Q130514;Q10288;de Louqsor à le Parthénon;Luxor;Parthenon;
+REN192;Q42810;Q259107;d' un voyage à le Havre Ou d' une fête à Robinson;Le Havre;Le Plessis-Robinson;wrong direction
+REN214;Q13329;Q2683;de Plaisance , étant abbesse à Parme;Piacenza;Parma;
+REN216;Q989552;Q641;D' Érin que la brume enveloppe A Venise;Érin;Venice;
+RIC32;Q209086;Q209086;De les préfectanciers de Pantin . À Pantin;Pantin;Pantin;wrong direction
+RIC32;Q209086;Q209086;de Pantin . À Pantin;Pantin;Pantin;wrong direction
+RIC32;Q2701404;Q211604;De Ménilmuche à Montparno;Ménilmontant;Montparnasse;
+RIC43;Q3399184;Q773318;De le Point-du-Jour à Bercy;porte du Point-du-Jour;Quartier de Bercy;
+RIC224;Q186115;Q207239;de Montmartre à Cythère;Montmartre;Kythira;
+RIC244;Q90;Q90;de Paris . C' est à Paris;Paris;Paris;wrong direction
+RIC282;Q12191;Q1479;de bras . Et de Nantes jusqu’ à Bordeaux;Nantes;Bordeaux;repeated
+RIC282;Q12191;Q1479;de Nantes jusqu’ à Bordeaux;Nantes;Bordeaux;
+RIM34;Q235297;Q3001;de Tréguier À Paramaribo;Tréguier;Paramaribo;
+ROL240;Q1463559;Q773318;de la Villette , Je la connus à Bercy;Quartier de la Villette;Quartier de Bercy;wrong direction
+SAM153;Q922498;Q3297078;de Galad à Sodome;Gilead;Sodom;
+TAI10;Q3783;Q626;De le fleuve Amazone à le Volga;Amazon;Volga;
+TAI23;Q25286;Q85;de les in-folios connus d’ Upsal à le Caire;Uppsala;Cairo;
+TAI64;Q5332;Q132671;de Saratow à Pau;Saratov;Pau;
+TAI65;Q204648;Q271659;de Port-Vendre à Gonesse;Port-Vendres;Gonesse;
+THE1;Q477021;Q649125;"de faim , Avaient atteint Grandpré ; devant eux à la fin , L' Argonne";Grandpré;Forest of Argonne;wrong direction
+THL32;Q79;Q5765;de l' Égypte jusqu' à les îles Baléares;Egypt;Balearic Islands;
+TOU88;Q3306;Q142;de Panama Ça vaut -il à jamais qu' en France;Panama City;France;wrong direction
+TOU266;Q668;Q213137;DE l' Inde jusqu' à les Grandes Indes;India;East Indies;
+TST4;Q35600;Q130135;de l' Oural à l' Atlas;Ural Mountains;Atlas Mountains;
+TST6;Q584;Q552;de le Rhin à l' Oder;Rhine;Oder;
+VER18;Q5690;Q758056;De Spartè la sévère à la rieuse Attique;Sparta;Attica Region;
+VER528;Q273827;Q1173;De la Champagne et de l' Argonne à la Bourgogne;Champagne;Burgundy;
+VER528;Q649125;Q1173;de l' Argonne à la Bourgogne;Forest of Argonne;Burgundy;
+VER592;Q90;Q2981;de Paris on entre à Notre-Dame;Paris;Notre-Dame de Paris;
+VER487;Q206493;Q194160;De Sèvres à Clamart;Sèvres;Clamart;
+VER487;Q194160;Q275366;De Sèvres à Clamart et de Meudon à le Pecq;Clamart;Le Pecq;remove
+VER487;Q234735;Q275366;de Meudon à le Pecq;Meudon;Le Pecq;
+VER498;Q103011;Q201272;de Corinthe à Paros;Corinth;Paros;
+VER722;Q70;Q4191;De Berne à Lucerne;Bern;Lucerne;
+VER846;Q90;Q649;de les villes De les Paris à les Moscous;Paris;Moscow;
+VER846;Q90;Q649;De les Paris à les Moscous;Paris;Moscow;
+VER846;Q649;Q8717;De les Paris à les Moscous , de les Londres à les Sévilles;Moscow;Seville;remove
+VER846;Q84;Q8717;de les Londres à les Sévilles;London;Seville;
+VER912;Q220;Q766;de Rome Rome à la Jamaïque Jamaïque;Rome;Jamaica;
+VIG19;Q42810;Q4629;de le Havre à Surate;Le Havre;Surat;
+VIG25;Q1588;Q2747220;De la Louisiane à les deux sœurs Carolines;Louisiana;The Carolinas;
+VIG34;Q148;Q419;De la Chine à le Pérou;People's Republic of China;Peru;
+VOL44;Q1075988;Q142;de le haut de son Louvre fatal , Médicis à la France;Louvre Palace;France;repeated
+VOL44;Q1075988;Q142;de son Louvre fatal , Médicis à la France;Louvre Palace;France;
+VOL45;Q220;Q220;de la part de Rome annoncer à son roi Que Rome;Rome;Rome;same place
+VOL45;Q220;Q220;de Rome annoncer à son roi Que Rome;Rome;Rome;wrong direction
+VOL45;Q90;Q220;"de les rois ; Dans Paris comme à Rome";Paris;Rome;wrong direction
+VOL46;Q220;Q220;"de ses ondes . Rome enfin se découvre à ses regards cruels ; Rome";Rome;Rome;wrong direction
+VOL50;Q14294;Q643;De le Tage à l’ Éridan;Tagus River;Po;
+VOL100;Q15;Q419;De l' Afrique à le Pérou;Africa;Peru;
+VOL118;Q64;Q90;de Berlin à Paris;Berlin;Paris;
+VOL128;Q33959;Q12789;"de la Bouquette ; À Nice , à le Var";Nice;Var;wrong direction
+VOL170;Q90;Q220583;de Paris . Je crois voir à la fois Athène et Sybaris;Paris;Sybaris;wrong direction
+bibit000117-5;Q6247;Q14379;da Mantova senza stanchezza a il Lago Maggiore;Mantua;Lake Maggiore;
+bibit000118-193;Q1471;Q1286;da la Senna volano leggeri , E a piè de l' Alpi;Seine;Alps;
+bibit000131-21;Q34615;Q546;da San Giusto ridere glauco l' Adria . Oh a il bel mar di Trieste;Adria;Trieste;wrong direction
+bibit000131-26;Q683578;Q13712;da Superga rivola a il Tevere;Superga;Tiber;
+bibit000226-14;Q1286;Q2260811;da l' Alpi a Lilibeo;Alps;Lilibaeum;
+bibit000226-41;Q1286;Q2656;da l' Alpi a Palermo;Alps;Palermo;
+bibit000226-46;Q1286;Q2260811;da l' Alpe a Lilibeo;Alps;Lilibaeum;
+bibit000226-75;Q220;Q13496;da Roma a Brindisi;Rome;Brindisi;
+bibit000521-37;Q565751;Q649217;da ' monti d' Epiro ed allunga sino a Leuca;Epirus;Santa Maria di Leuca;
+bibit000695-4;Q5456;Q822;da l' Ande algenti a il Libano;Andes;Lebanon;
+bibit000695-8;Q1286;Q12508;Da l' Alpi a le Piramidi;Alps;Giza pyramid complex;
+bibit000695-8;Q12508;Q584;Da l' Alpi a le Piramidi , da il Manzanarre a il Reno;Giza pyramid complex;Rhine;
+bibit000695-8;Q16512;Q584;da il Manzanarre a il Reno;Manzanares;Rhine;
+bibit000698-53;Q643;Q1285;da il Po superbo a l' Appennin;Po;Apennine Mountains;
+bibit000735-3;Q156882;Q6343;da Samo indarno porta a la sua Cartago;Samos;Carthage;
+bibit000850-32;Q3392;Q1171;da l' Orse a il Nilo , E da Boston a Goa;Nile;Goa;
+bibit000850-32;Q100;Q1171;da Boston a Goa;Boston;Goa;
+bibit000850-32;Q90;Q6454;Da Parigi a Calais;Paris;Calais;
+bibit000850-32;Q6454;Q84;Da Parigi a Calais , di quivi a Londra;Calais;London;
+bibit000850-32;Q84;Q24826;Da Londra a Liverpool;London;Liverpool;
+bibit000850-32;Q14294;Q6514;Da le foci di il Tago a l' Ellesponto;Tagus River;Dardanelles;
+bibit001172-187;Q10965;Q214874;da l' ispano Ibero a l' indo Idaspe;Ebro;Jhelum River;
+bibit001258-119;Q6514;Q3392;da l' Ellesponto a il Nilo!... O Memfi;Dardanelles;Nile;
+bibit001258-129;Q55416;Q4656;da Chioggia a Pola;Chioggia;Pula;
+bibit001325-101;Q1288;Q171009;da ' monti Carpazi a la Drava;Carpathian Mountains;Drava;
+bibit001471-59;Q19826;Q1061804;Da Palazzo Madama a il Valentino;Palazzo Madama and Casaforte degli Acaja, Turin;Parco del Valentino;
+axmat-961;Q4132377;Q1229234;от своих могил . На Галерной чернела арка , В Летнем;Galernaia Street (Saint Petersburg);Summer Garden;wrong direction
+axmat-444;Q36;Q270;с тобою в Польше ? Первое утро в Варшаве;Poland;Warsaw;wrong direction
+axmat-721;Q167668;Q959;От Либавы до Владивостока;Liepāja;Vladivostok;
+brius-0786;Q2981;Q41876;с неба Notre-Dame , Знай : в Реймсе;Notre-Dame de Paris;Reims;
+brius-0784;Q1286;Q12689;От Альп неподвижных до Па-де-Кале;Alps;Pas-de-Calais;
+brius-0784;Q1286;Q12689;От Альп неподвижных до Па-де-Кале;Alps;Pas-de-Calais;repeated
+brius-0784;Q1286;Q12689;От Альп неподвижных до Па-де-Кале;Alps;Pas-de-Calais;repeated
+brius-0864;Q490;Q1286;Из Милана Милана на профили Альп;Milan;Alps;
+brius-0352;Q1286;Q173292;От Альп крепковыйных до ясной Капреи;Alps;Capri;
+brius-0352;Q173292;Q1460;От Альп крепковыйных до ясной Капреи И далее , До пустынь когда-то богатой Сицилии;Capri;Sicily;
+antkl-360;Q133274;Q4472241;от Кремля до Земляного вала;Moscow Kremlin;Zemlyanoy Val Street;
+antkl-360;Q133274;Q649;от Кремля до Земляного вала , Оправленная в золото Москва;Moscow Kremlin;Moscow;wrong direction
+antkl-360;Q4472241;Q649;от Кремля до Земляного вала , Оправленная в золото Москва;Zemlyanoy Val Street;Moscow;wrong direction
+antkl-137;Q2807;Q18869;от Мадрида до Кавказа;Madrid;Caucasus;
+antkl-301;Q592880;Q4472241;от Воробьевых гор До Земляного вала;Sparrow Hills;Zemlyanoy Val Street;
+antkl-004;Q179224;Q959;От Дувра до Владивостока;Dover;Vladivostok;
+antkl-099;Q42956;Q580;от Харбина до Лодзи;Harbin;Łódź;
+antkl-210;Q15288;Q1139404;от Ладоги до Мсты;Lake Ladoga;Msta;
+antkl-381;Q38;Q656;Из далекой Италии в Санкт-Петербург;Italy;Saint Petersburg;
+antkl-367;Q4498825;Q991032;От Ходынки вплоть до Цусимы;Khodynka;Tsushima;
+antkl-002;Q626;Q584;от Волги до Рейна;Volga;Rhine;
+antkl-368;Q548;Q79082;от Вислы до самой Камы;Vistula;Kama;
+antkl-155;Q4472241;Q133274;От Земляного вала до Кремля;Zemlyanoy Val Street;Moscow Kremlin;
+antkl-125;Q545;Q166;От Балтики до Черноморья;Baltic Sea;Black Sea;
+antkl-362;Q12431;Q161750;От Пиреней до древнего Памира;Pyrenees;Pamir Mountains;
+antkl-015;Q4498825;Q991032;От черной Ходынки до желтой Цусимы;Khodynka;Tsushima;
+bergh-238;Q34640;Q183;от Ламанша рванулись на Германию;English Channel;Germany;
+bergh-359;Q159;Q5428;Из России в Сибирь;Russia;Siberia;
+utkin-064;Q959;Q36;От Владивостока , и до Польши;Vladivostok;Poland;
+utkin-085;Q6862;Q4528198;От Амура и до Шуи , До Архангельска;Amur river;Shuya;
+utkin-085;Q4528198;Q1851;От Амура и до Шуи , До Архангельска;Shuya;Arkhangelsk;
+epolo-092;Q590269;Q4473315;от Мойки до Бассейной;Moyka River;Nekrasova Street in St. Petersburg;
+epolo-291;Q185518;Q185518;Из Рангуна в Мандалей . На дороге в Мандалей;Mandalay;Mandalay;
+eren-629;Q60;Q1494;от страха , Глухой в Нью-Йорке и на ощупь в шахте , У Миссисипи;New York City;Mississippi;wrong direction
+zenk2-096;Q43105;Q207680;От Эльбруса и до Казбека;Mount Elbrus;Mount Kazbek;
+zabol-206;Q548;Q1229;из Вислы на Дону;Vistula;Don;
+gumil-076;Q3392;Q220;С берегов далеких Нила В Рим;Nile;Rome;
+gumil-428;Q668;Q12544;От Индии до Византии;India;Byzantine Empire;
+gumil-428;Q668;Q12544;От Индии до Византии;India;Byzantine Empire;repeated
+gumil-386;Q216;Q1741;от Вильны до самой Вены;Vilnius;Vienna;
+gumil-206;Q58976;Q848831;Из Ливорно иль Пирея ? Если будете в Брабанте;Piraeus;Province of Brabant;wrong direction
+gumil-265;Q3392;Q85;из Нила , Будет вечно стремиться в Каир;Nile;Cairo;
+anne-247-10;Q201582;Q189901;С дальнего Пинда крутого В Аргос;Pindus;Argos;
+majak8-036;Q142;Q21;Из Франции в Англию;France;England;
+majak4-03;Q1899;Q162083;от Киева до Конотопа;Kyiv;Konotop;
+majak1-44;Q1471;Q584;от Сены до Рейна;Seine;Rhine;
+majak6-32;Q649;Q7835;из Москвы дачу / пооттяпали в Крыму;Moscow;Crimea;
+majak7-124;Q36;Q298;от Польши до Чили;Poland;Chile;
+majak6-31;Q60;Q90;Из Нью-Йорка / в Париж;New York City;Paris;
+ssolov-230;Q172089;Q13670;С родимых берегов Оки Попутешествуй в Сиракузы;Oka;Syracuse;
+ssolov-110;Q545;Q5428;От Бельта до Сибири;Baltic Sea;Siberia;
+ssolov-258;Q43332;Q9239;из Помпеи И в храм пришел на площади Кавур;Pompeii;Cavour;
+ssolov-259;Q133274;Q592880;От Кремля до Воробьевых гор;Moscow Kremlin;Sparrow Hills;
+ssolov-437;Q430776;Q5776;Из Назарета в Вифлеем;Nazareth;Bethlehem;
+vivan-0530;Q858;Q34589;от Суристана Дэвы до ключей Эвфрата;Syria;Euphrates;
+blok2-1034;Q4165502;Q1132624;из лавки Дома искусства На Дворцовую площадь;Dom Iskusstv;Palace Square;
+vrozh-348;Q4018;Q159261;С горячих предгорий Наварры И ярмарок Франции старой В трескучий московский;Navarre;Moskovsky;
+vrozh-104;Q156732;Q202796;От Херсона до Десны;Kherson;Desna;
+vrozh-104;Q156732;Q40855;От Херсона до Десны . Чтоб в лугах по Заднепровью;Kherson;Dnieper;wrong direction
+vrozh-104;Q202796;Q40855;От Херсона до Десны . Чтоб в лугах по Заднепровью;Desna;Dnieper;wrong direction
+lugov-044;Q40605;Q488987;От Баку до Красноводска;Large Hadron Collider;Türkmenbaşy;
+selv2-079;Q1774112;Q4317399;От Колымы и до Непрядвы;Kolyma;Nepryadva;
+selv2-027;Q1697;Q1165879;От Подмосковья до камней Дарьяла;Moscow Oblast;Darial Gorge;
+selv-095;Q7342;Q160135;с женою рядом где-то в Освенциме Освенциме или в Майданеке Майданеке;Oświęcim;Lublin-Majdanek concentration camp;wrong direction
+selv-084;Q33345;Q157065;От Евпатории и до Керчи;Yevpatoriia;Kerch;
+selv-030;Q157065;Q33345;От Керчи и до Евпатории;Kerch;Yevpatoriia;
+selv-076;Q7835;Q649;от ревности в Крыму , В Москве;Crimea;Moscow;wrong direction
+selv-092-2;Q7835;Q2011735;От Крымской от станицы до Чушки;Crimea;Chushka Spit;
+morav-49;Q1229;Q102762;От Дона и до дальнего Азова;Don;Azov;
+kzmn-855;Q1471;Q172089;От Сены до реки Оки;Seine;Oka;
+givan-553;Q645;Q5484;От Невы до Каспийского моря;Neva;Caspian Sea;
+svetl-101;Q78707;Q156237;От Енисея аж До самого до Буга;Yenisey;Western Bug;
+svetl-095;Q626;Q156237;От Волги до Буга;Volga;Western Bug;
+svetl-139;Q4454;Q156747;От Хабаровска до Полтавы;Khabarovsk;Poltava;
+svetl-044;Q1874;Q48256;Из Одессы в Новороссийск;Odesa;Dnipro;
+svetl-204;Q959;Q1288;От Владивостока до Карпат;Vladivostok;Carpathian Mountains;
+vved-37;Q15322;Q656;из Луги в Петроград;Luga;Saint Petersburg;
+volo2-085;Q656;Q1108445;Из плесени в реторте Петербурга . Все имена сменились на Руси;Saint Petersburg;Kievan Rus';wrong direction
+volo2-085;Q183464;Q797;От берегов Ливонских до Аляски;Livonia;Alaska;
+volo1-112;Q5451;Q46;От Гималайских ступеней До древних пристаней Европы;Himalayas;Europe;
+volo2-048;Q196786;Q649;из Углича опять Вез в Москву;Uglich;Moscow;
+volo2-107;Q5753;Q90;Из Самарканда на запад - - в Париж;Samarkand;Paris;
+bagrc-013;Q131210;Q156237;От Днестра до Буга;Dniester;Western Bug;
+bagrc-091;Q1460;Q490;От Сицилии до Милана;Sicily;Milan;
+bagrc-089;Q1731;Q64;Из Дрездена недалеко И до Берлина;Dresden;Berlin;
+bagrc-089;Q1731;Q64;Из Дрездена недалеко И до Берлина;Dresden;Berlin;
+bagrc-038;Q5428;Q131210;От пасмурной Сибири До ясного Днестра;Siberia;Dniester;
+bagrc-094;Q41572;Q194084;От Николаева до Сестрорецка;Mykolaiv;Sestroretsk;
+marty-320;Q626;Q124653;С казаками по Волге и Каме пробиравшийся на Тобол;Volga;Tobol;
+marty-320;Q79082;Q124653;С казаками по Волге и Каме пробиравшийся на Тобол;Kama;Tobol;repeated
+marty-494;Q30;Q1171;из Америки = в Гоа;United States of America;Goa;
+marty-678;Q8542;Q179751;от Пянджа до Аракса;Panj River;Aras River;
+marty-202;Q656;Q656;из Петербурга в Ленинград;Saint Petersburg;Saint Petersburg;
+marty-671;Q898;Q42956;От Омска Омска прямо до Харбина;Omsk;Harbin;
+marty-350;Q3927;Q891;из Астрахани в Нижний;Astrakhan;Nizhny Novgorod;
+marty-685;Q1792;Q36036;от Данцига до Львова;Gdańsk;Lviv;
+paster-324;Q831190;Q1218;из Вифании в Ерусалим;Bethany;Jerusalem;
+mandl-324;Q377485;Q193785;с Синая до Фавора;Mount Sinai;Mount Tabor;
+narbut-115;Q7525;Q1874;Из Севастополя в Одессу;Sevastopol;Odesa;
+ellis-252;Q6247;Q220;из Мантуи , а сам я в Риме;Mantua;Rome;wrong direction
+smel-084;Q3162344;Q41116;от Нескучного сада танки / на Красную площадь;Neskuchny Garden;Red Square;
+smel-115;Q162737;Q5428;с нами вместе на Ангару , в Сибирь;Angara;Siberia;wrong direction
+olein-111;Q60;Q153698;От Нью-Йорка и до Клина;New York City;Klin;
+balm-954;Q5971;Q649;От Алтая до Москвы;Altai Republic;Moscow;
+balm-798;Q5684;Q5776;от царского венца , От Вавилона шел до Вифлеема;Babylon;Bethlehem;repeated
+balm-798;Q5684;Q5776;От Вавилона шел до Вифлеема;Babylon;Bethlehem;
+kant-092;Q649;Q419;с Москвы до Перу;Moscow;Peru;
+kant-092;Q419;Q29520;с Москвы до Перу , с Риму до Китая;Peru;China;remove
+kant-092;Q220;Q29520;с Риму до Китая;Rome;China;
+kant-090;Q90;Q38;с Парижу ? Войско в Италью;Paris;Italy;
+sum-042;Q649;Q956;из Москвы к Пекину : Всмотряся в Рим;Moscow;Beijing;multiple items order
+sum-042;Q956;Q220;из Москвы к Пекину : Всмотряся в Рим;Beijing;Rome;remove
+sum-047;Q545;Q6514;с брегов Бальтийских мещет , Екатеринин меч на Геллеспонте;Baltic Sea;Dardanelles;
+sum-047;Q649;Q956;из Москвы к Пекину : Всмотряся в Рим;Moscow;Beijing;
+sum-108;Q645;Q552;С Невы до Одера;Neva;Oder;
+tred-121;Q656;Q956;От Петрополя в лице разность до Пекина;Saint Petersburg;Beijing;
+lvov-187;Q2235;Q1899;От Новаграда впрям до Киева Киева;Veliky Novgorod;Kyiv;
+hemn-107;Q649;Q900;от Москвы в Казань;Moscow;Kazan;
+lomo-010;Q645;Q105261;С своим искусством пред Невой ! Какая светлость окружает В толикой горести Парнас;Neva;Mount Parnassus;wrong direction
+lomo-112;Q102762;Q1229;"от варвар был Азов ; До Меотиских Дон";Azov;Don;
+lomo-002;Q48;Q545;От теплых уж брегов азийских Вселенной часть до вод Балтийских;Asia;Baltic Sea;
+xviii-484-1;Q645;Q196479;От невских берегов до Старой Руссы;Neva;Staraya Russa;
+derz2069;Q545;Q993;От Бельта до Камчатки;Baltic Sea;Kamchatka Peninsula;
+derz1018;Q695265;Q645;От Орма до Невы;Hormuz Island;Neva;
+radish-003-01;Q18869;Q626;с Тамана чрез Кавказски Горы съеду я на Волгу;Caucasus;Volga;
+le3-057-0;Q2214;Q78898;от Пскова до Онеги;Pskov;Onega;
+kate-010-0;Q11225429;Q1524;из Фив сынами , В Афинах;Thebes;Athens;wrong direction
+butur-037;Q201582;Q515809;От Пинда синего до синего Тайгета;Pindus;Taygetus;
+butur-102;Q3392;Q5680;От Нила до рек Ниневии;Nile;Nineveh;
+vjaz-078;Q202163;Q220;От Кяхты до Афин , от Лужников до Рима;Luzhniki Stadium;Rome;multiple items order
+vjaz-078;Q4251363;Q1524;От Кяхты до Афин , от Лужников до Рима;Kyakhulay;Athens;
+vjaz-078;Q202163;Q220;от Лужников до Рима;Luzhniki Stadium;Rome;remove
+tss-1523;Q3392;Q645;От Нила до Невы;Nile;Neva;
+tss-1523;Q645;Q29520;От Нила до Невы , от Эльбы до Китая;Neva;China;remove
+tss-1523;Q1644;Q29520;от Эльбы до Китая;Elbe;China;
+tss-1523;Q626;Q34589;От Волги по Евфрат , от Ганга до Дуная;Volga;Euphrates;
+tss-1523;Q5089;Q1653;От Волги по Евфрат , от Ганга до Дуная;Ganges;Danube;
+rost-126;Q5627;Q649;От Симбирска до Москвы;Ulyanovsk;Moscow;
+sherb-209;Q1874;Q7835;с камнем блудила» В Одессе , Москве и в Крыму;Odesa;Crimea;wrong direction
+kuch-041;Q790987;Q191;с брегов смиренной Авиноры , В лесах моей Эстонии;Avijõgi;Estonia;
+kara-138;Q220;Q153698;Из Рима в Клин;Rome;Klin;
+petras-05;Q33;Q7835;От финских и до крымских;Finland;Crimea;
+xvost-086;Q34589;Q5484;с берегов Евфрата До Каспия;Euphrates;Caspian Sea;
+xvost-105;Q1899;Q1773;от Киева до Риги;Kyiv;Riga;
+delw-068;Q545;Q5428;От Бельта до Сибири;Baltic Sea;Siberia;
+nek1-036;Q649;Q198834;От Москвы до Юрьевец - Повольска;Moscow;Yuryevets;
+nek2-126;Q103789;Q212;От Арзамаса до Украйны;Arzamas;Ukraine;
+tols-208;Q2770;Q103789;из Тулы в Арзамас;Tula;Arzamas;
+tols-219;Q1524;Q103011;Из Афин в Коринф;Athens;Corinth;
+tols-004;Q668;Q1108445;Из Индии дальной На Русь;India;Kievan Rus';
+tols-206-0;Q3766;Q16869;от Дамаска Дамаска до Царьграда;Damascus;Constantinople;
+apuh-278;Q12544;Q159;из дальней родной Византии Ветер занес их на север России;Byzantine Empire;Russia;
+zhemch-133;Q7835;Q165608;От Крыма до Колы;Crimea;Kola Peninsula;
+polon-096;Q18869;Q270;От Кавказа до Варшавы;Caucasus;Warsaw;
+poets-314;Q80344;Q22647;с надоблачных вершин Олимпа сходим В Троянские;Mount Olympus;Troy;
+poets-151;Q85416;Q152348;из Кубры в Кастальский;Kubra;Castalian Spring;
+poets-120;Q645;Q14294;От Невы до Тага;Neva;Tagus River;
+sluc-651;Q7355;Q5089;С Желтой реки до священных лесов светлоструйного Ганга;Yellow River;Ganges;
+1830-239;Q1471;Q34497;с берегов ли шумной Сены , Иль на гранит Святой Елены;Seine;Saint Helena;
+1830-393;Q72303;Q1288;С товаром тащится литвин От Арарата до Карпата;Mount Ararat;Carpathian Mountains;
+1830-393;Q72303;Q1288;От Арарата до Карпата;Mount Ararat;Carpathian Mountains;
+1830-393;Q6862;Q52842;От Арарата до Карпата , С Амура в Калиш;Amur river;Kalisz;
+bene-097;Q2288;Q5484;с чела , Из Тверской земли широко , Волгу в Каспий;Tver;Caspian Sea;repeated
+bene-097;Q2288;Q5484;Из Тверской земли широко , Волгу в Каспий;Tver;Caspian Sea;
+pavl-008;Q1935566;Q33959;из Сокольников я в Ниццу;Sokolniki District;Nice;
+odoe-025-1;Q2235;Q159261;из родного Новагорода , Выходит на Московский;Veliky Novgorod;Moskovsky;
+dmit-345;Q548;Q645;От Вислы до Невы;Vistula;Neva;
+pole-087;Q132947;Q656;из песка , Которых около Валдая , Раз десять в Питер;Valday;Saint Petersburg;
+pole-087;Q179751;Q10555398;С брегов Аракса до Кубани;Aras River;Kuban;
+pole-091;Q156557;Q103703;от Куры на Аргун;Kura River;Argun;
+mina-102;Q645;Q10555398;От Невы и до Кубани;Neva;Kuban;
+maik-324;Q545;Q34575;от Балтики и до Эгейских вод;Baltic Sea;Aegean Sea;
+maik-153;Q72425;Q72672;От Пуццоло до Сорренто;Pozzuoli;Sorrento;
+maik-496;Q46;Q645;"С широких врат в Европу ; а в Неву";Europe;Neva;wrong direction
+maik-332;Q182445;Q993;от Прута до Камчатки;Prut;Kamchatka Peninsula;
+maik-332;Q133274;Q515809;С высот Кремля и до высот Тайгета;Moscow Kremlin;Taygetus;
+surik-151;Q161994;Q156747;С Ромен до Полтавы;Romny;Poltava;
+zhuk-493;Q993;Q1653;От Камчатки до Дуная;Kamchatka Peninsula;Danube;
+zhuk-492;Q18869;Q5971;От Кавказа до Алтая;Caucasus;Altai Republic;
+zhuk-492;Q6862;Q40855;От Кавказа до Алтая , От Амура до Днепра;Amur river;Dnieper;
+zhuk-503;Q80344;Q80344;от Олимпа Олимпа , Или взлетал на Олимп;Mount Olympus;Mount Olympus;same place
+pu3-403;Q4462985;Q2214;От < Тригорского > на < Псков;Trigorskoe;Pskov;
+pu3-247;Q160173;Q35997;От Рущука до старой Смирны;Ruse;İzmir;
+pu3-247;Q45301;Q11585;От Рущука до старой Смирны , От Трапезунда до Тульчи;Trabzon;Tulcea;
+pu3-269;Q915;Q7835;от Перми до Тавриды;Perm;Crimea;
+pu3-251;Q1286;Q38;с Альпов он взирает На дно Италии;Alps;Italy;
+pu-coll-24;Q1287599;Q645;От Неглинной до Невы;Neglinnaya;Neva;
+pu2-310;Q13712;Q548;От Тибровых валов до Вислы;Tiber;Vistula;
+1860-124;Q205711;Q1899;От Соловок до Киева;Solovetsky Islands;Kyiv;
+vsolov-043;Q79;Q161750;от Египта до Памира;Egypt;Pamir Mountains;
+yaz-280;Q1653;Q156237;с войной кровавой На Дунай , на Буг;Danube;Western Bug;
+sl_179;Q14294;Q34589;Od Taga pa do Evfrata;Tagus River;Euphrates;
+sl_197;Q188736;Q14383;Od bistre Bosne do Savine;Bosnia;Sava;
+sl_239;Q5776;Q170516;Od Betlehema je trpljenja pot do Golgate;Bethlehem;Calvary;
+sl_720;Q546;Q53133;Od Trsta do Tržiča;Trieste;Monfalcone;
+sl_721;Q1024;Q13924;od Triglava do Jadrana;Triglav;Adriatic Sea;
+sl_723;Q1024;Q13924;od Triglava do Jadrana;Triglav;Adriatic Sea;repeated
+sl_741;Q546;Q53245;od Trsta do Čedada;Trieste;Cividale del Friuli;
+sl_827;Q287590;Q1579722;iz Launcestona do Sv. Helene;Launceston;St Helens;
+sl_1624;Q2256594;Q1699950;od Nabrežine daleč do Sesljana;Aurisina;Sistiana;
+sl_1628;Q807970;Q1699950;od Barkovlj do Sesljana;Barcola;Sistiana;
+sl_1652;Q202760;Q1288;od Soče do Karpatov;Soča;Carpathian Mountains;
+sl_1676;Q171009;Q202760;Od Drave sive do poskočne Soče;Drava;Soča;
+sl_2226;Q4165497;Q8011202;od Jesenic do Trbovelj;Jesenice;Trbovlje;
+sl_2226;Q8011202;Q610514;od Jesenic do Trbovelj in od Slovenskih goric do Borovelj;Trbovlje;Ferlach;remove
+sl_2226;Q281217;Q610514;od Slovenskih goric do Borovelj;Slovene Hills;Ferlach;
+sl_4622;Q53216;Q1024;Od Ogleja do Triglava;Aquileia;Triglav;
+sl_4788;Q171009;Q202760;od Drave tvoja je do Soče;Drava;Soča;
+sl_4806;Q437;Q2354591;iz Ljubljane pot do Šiške;Ljubljana;Šiška;
+sl_5091;Q554908;Q554011;od dutovelj do tomaja;Dutovlje;Tomaj;
+sl_5218;Q437;Q12958961;Od Ljubljane do Kočevja;Ljubljana;Kočevje;
+sl_5218;Q15861;Q948280;od Črnomlja do Gorice;Črnomelj;Gorica;
+sl_5218;Q1382;Q1754407;od Pirana do Predila;Piran;Predil Pass;
+sl_5224;Q15901;Q2418986;od Postojne do Šempasa;Postojna;Šempas;
+sl_5352;Q85;Q1587685;Od Kaire do Hartuma;Cairo;Hartum;
