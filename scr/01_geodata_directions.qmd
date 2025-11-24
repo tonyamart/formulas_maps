@@ -24,6 +24,20 @@ formulas <- read.csv("../data/formulas_table.csv")
 glimpse(formulas)
 ```
 
+Keep only ONE from-to direction per poem
+
+```{r}
+# formulas %>% 
+#   distinct() %>% nrow()
+# 
+# nrow(formulas)
+
+formulas <- formulas %>% 
+  distinct()
+
+# just removes 2 rows
+```
+
 N formulas per language
 
 ```{r, include=F, echo=T}
@@ -69,7 +83,8 @@ f_long %>%
   rename(from_to_count = n, 
          total_count = count, 
          rank_total = rank) %>% 
-  select(id, qid, lang, label, rank_ft, rank_total, from_to_count, total_count)
+  select(id, qid, lang, label, rank_ft, rank_total, from_to_count, total_count) %>% 
+  filter(!is.na(qid))
 
 rm(f_long, f_long_from, loc_freq)
 ```
@@ -78,45 +93,45 @@ It's a long table, just some observations:
 
 -   Czech:
 
-    -   top in both lists (top-20): Bohemian Forest, Prague, Tatra mountains, Danube, Moravia, Vltava, ROME (!) , Czechia, Elbe, Vienna;
+    -   top in both lists (top-20): Bohemian Forest, Prague, Tatra mountains, Danube, Moravia, Vltava, ROME (!) , Czechia, Elbe, Vyšehrad;
 
-    -   many mountains which is not the case for other corpora
+    -   many mountains which is not the case for other corpora (Tatra, Giant Mountains, Ural, Sněžka, Alps)
 
 -   DE:
 
     -   top-20 loc in both: Vienna, Rhine, Paris, Berlin
 
-    -   all other locs are quite rare if not in from_to; top from_to ranks are weird?? (Gotha, Eisenach, ALtona.. mb they come from some refrains, need to check that)
+    -   not many instances overall (only Vienna, Rhine and Paris apprear \> 2 times in from-to)
 
 -   EN:
 
-    -   England, France, Egypt (!), Spain, Rome
+    -   England, France, Egypt (!), Nile, River Thames, Rome, Ireland, Spain, India
 
     -   top-1 is Maine (?)
 
-    -   many frequent distant locations (china, nile); also not all top from_to locs are frequent
+    -   many frequent distant/non-european locations (china, nile);
 
 -   FR:
 
-    -   Paris, Rome, France, Kythira (wtf), Rhine;
+    -   Paris, Rome, Kythira (wtf);
 
-    -   top-3 locs are very highly cor within lists, overall cor is also not that bad; meaning from-to locs are important locs in general (eg Bordeau, Nice, Louvre Palace); some long-distance things in from-to also – Volga, Tiber
+    -   top-2 locs are very highly cor within lists, overall cor is non-existent; meaning from-to locs are important locs in general (eg Bordeau, Nice, Louvre Palace); some long-distance things in from-to also – Tiber, Ganges, Memphis, Volga, Cairo
 
 -   IT:
 
-    -   Alps, Apennninne Mountaints, Tiber (?)
+    -   Alps,
 
-    -   the rest from-to are strange places, mb Rhine & Seine are obvious but the rest are strange
+    -   too little data (all from-to freq is 2 or 1)
 
 -   RU:
 
-    -   Neva, Moscow, Rome (!), SPb, Crimea, Msc Kremlin, Siberia (21 total rank), Caucasus, Kyiv, Nile (lol), Volga
+    -   Neva, Moscow, SPb, Volga, Crimea, Msc Kremlin, Caucasus, Kyiv, Rome, Nile, Siberia (21 total rank)
 
-    -   very obvious places mostly within Russia, China is an exception, not than much west expansion visible in from-to from here
+    -   very obvious places mostly within Russia, exceptions: Alps, Caucasus, Kyiv, Rome, Nile, Vistula, Seine;
 
 -   SL:
 
-    -   Triglav, Soča, Ardiatic sea, Ljubljana, Trieste, Sava
+    -   Soča (from-to count: 3, else is 2 or less)
 
     -   most locs are some within Sl I guess + mostly single counts in from_to
 
@@ -221,7 +236,7 @@ dist_log <- formulas_d %>%
              x = dist_haversine, group = lang)) + 
   geom_jitter(alpha = 0.2, width = 0.2, colour = met.brewer("Cassatt2")[10]) + 
   geom_violin(fill = met.brewer("Cassatt2")[4], alpha = 0.7) + 
-  labs(x = "Distance (log scale)",
+  labs(x = "Distance, km (log scale)",
        y = "Corpus") + 
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14)) + 
@@ -232,24 +247,12 @@ dist_log
 
 ```{r, eval=F, include=F, echo=F}
 plot_grid(dist_raw, NULL, dist_log,
-          rel_widths = c(1, 0.03, 1), nrow = 1,
+          rel_widths = c(1, 0.05, 1), nrow = 1,
           labels = c("A", "B"), label_size = 18)
 
 
 ggsave("../plots/Fig_1.png", plot = last_plot(),
        bg = "white", dpi = 300, width = 12, height = 6)
-```
-
-```{r, eval=F, include=F, echo=F}
-
-# rivers formulas
-
-formulas_d %>% 
-  filter(lang %in% c("en", "ru", "fr")) %>% 
-  filter(from_type == "river" & to_type == "river") %>% 
-  group_by(lang) %>% 
-  slice_max(order_by = dist_haversine, n = 10) %>% 
-  select(text, from_placename, to_placename, dist_haversine)
 ```
 
 ### dist summary stats
@@ -331,6 +334,7 @@ This is how author's birth years are distributed, if we're only looking in our f
 
 ```{r, include=T, echo=F, warning=FALSE}
 formulas %>% 
+  filter(lang != "it") %>% 
   select(lang, year_birth) %>% 
   ggplot(aes(x = year_birth)) + 
   geom_density(fill = "lightseagreen") + 
@@ -360,7 +364,7 @@ dist_t_summary <- formulas_d %>%
 dist_t_summary
 ```
 
-```{r, include=T, echo=F, warning=F}
+```{r, include=T, echo=F, warning=F, message=F}
 dist_t_summary %>% 
   select(-number_formulas) %>% 
   pivot_longer(!lang_t) %>% 
@@ -370,7 +374,7 @@ dist_t_summary %>%
          lang_t = str_remove(lang_t, "^..."),
          lang_t = str_remove(lang_t, "—....$")) %>% 
   
-  #filter(lang == "cs") %>% 
+  filter(lang != "it") %>% 
   ggplot(aes(x = lang_t, y = value, group = name, colour = name)) +
   geom_line(aes(linewidth = number_formulas)) + 
   geom_hline(yintercept = 2000, lty = 2, colour = "darkblue") + 
@@ -387,13 +391,13 @@ dist_t_summary %>%
 
 -   Peaks details:
 
-    -   DE: peak period 1700-1749 is only 9 formulas, may be a random result
+    -   DE: peak period 1700-1749 is only 12 formulas, may be a random result
 
-    -   EN: authors born in 1750-1799: 40 formulas found; for 1800-1849 & 1850-1899 even more data (104 & 158 resp.) –\> these dist are really long on average;
+    -   EN: authors born in 1750-1799: 40 formulas found; for 1800-1849 & 1850-1899 even more data (101 & 143 resp.) –\> these dist are really long on average;
 
-    -   FR: low number of formulas for any period before 1750-1799; 1800-1849 has 200+ though, so also long;
+    -   FR: low number of formulas for any poet-birth period EXCEPT for 1800-1849;
 
-    -   RU: most formulas come from authors born in 18500-1899; but for 18c-authors there are 18 (1700-1749) and 24 (1750-1799) formulas respectively, so it actually can tell us something – like that these from-to mean/median distances are stable high
+    -   RU: most formulas come from authors born in 1850-1899 (69); for 18c-authors there are 15 (1700-1749) and 22 (1750-1799) formulas respectively, so it actually can tell us something – like that these from-to mean/median distances are stable high
 
 ### short vs long dist
 
@@ -401,6 +405,7 @@ Previous plot was just aggregating all distances based on 50-year period and cal
 
 ```{r, include=T, echo=F, warning=F}
 formulas_d %>% 
+  filter(lang != "it") %>% 
   mutate(dist_longer_1k = ifelse(dist_haversine > 1000, "yes", "no")) %>% 
   #filter(dist_longer_1k == "no") %>% 
   ggplot(aes(x = year_birth, y = dist_haversine, group = dist_longer_1k)) + 
@@ -415,19 +420,23 @@ formulas_d %>%
        x = "Author birth year")
 ```
 
+```{r}
+rm(dist_summary, dist_t_summary, loc_freq, dist_log, dist_raw)
+```
+
 For longer distances: everyone except EN and FR are usually below the 5k distances even for longer ones? ru is somewhere inbetween.
 
-So I guess what are the takeouts here:
+So I guess the takeouts are:
 
 -   the distribution of from-to distances is very unequal: we actually have more closer distances, when something like "from portugal to china" situations;
 
--   however the latter is characteristic at least for Eng, Fr, and mb Ru (not surprising but still); for Italy we have too little observations; German corpus look to me closer to Czech, than to the 'expansion' ones;
+-   however the latter is characteristic at least for Eng, Fr, and mb Ru (not surprising but still); for Italy we have too little observations; German corpus looks to me closer to Czech, than to the 'expansion' ones;
 
 -   I think we should consider dividing the distances in groups for sure, otherwise short distances are practically invisible;
 
 -   Question what I'm not sure about is the threshold between short/long distance though, should it be calculated for each country separately, or not, etc. FOR NOW I just used 1000km for all corpora.
 
-### Types: river –\> mountain
+# Types
 
 How distances are related to the types of locations in from-to formula?
 
@@ -438,7 +447,8 @@ total
 ```{r, include=T, echo=F}
 formulas_d %>% 
   mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
-  count(type_pair, sort = T)
+  count(type_pair, sort = T) %>% 
+  head(20)
 ```
 
 Add groups of shorter / longer distances (simple 1000 km threshold)
@@ -464,6 +474,8 @@ total_sl_lang %>%
 
 Similar picture to the above: younger literatures are more about closer distances (cs % short – 72%? sl — 87%), while others are more equal to 50/50
 
+### long/short dist ranks
+
 ```{r, include=T, echo=F}
 formulas_d %>% 
   mutate(type_pair = paste0(from_type, " --> ", to_type), 
@@ -473,21 +485,39 @@ formulas_d %>%
   #slice_max(order_by = n, n = 10) %>% 
   mutate(rank = row_number()) %>% select(-n) %>% 
   pivot_wider(names_from = dist_type, values_from = rank) %>% 
-  arrange(-desc(short))
+  arrange(-desc(short)) %>% head(20)
+
+formulas_d %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type), 
+         dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  count(type_pair, dist_type, sort = T) %>% 
+  group_by(dist_type) %>% 
+  #slice_max(order_by = n, n = 10) %>% 
+  mutate(rank = row_number()) %>% select(-n) %>% 
+  pivot_wider(names_from = dist_type, values_from = rank) %>% 
+  arrange(-desc(long)) %>% head(20)
 ```
 
-What I see here: ok basically city-city is a universal thing; mountain to mountain is probably strictly a Czech thing (see below); river-river is interestingly more like a long-distance thing, than sth else.
+Notes:
 
-Overall rank cor is not very bad, but ofc some things are really only about long distances (everything with continents) and some are only about shorter distances (mountain to sea and other way round (probably also czech feature)).
+-   city –\> city: is a universal thing, can be close, can be distant
+
+-   river –\> river: same but a bit more prevalent for long
+
+-   regions and countries not unexpectedly used for long distances
+
+-   villages & city parts are for short distances
 
 #### By language
 
 ```{r, include=T, echo=F}
 formulas %>% 
+  filter(lang != "it") %>% 
   mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
   group_by(lang) %>% 
   count(type_pair, sort = T) %>% 
-  slice_max(order_by = n, n = 5) %>% 
+  filter(n > 1) %>% 
+  slice_max(order_by = n, n = 10) %>% 
   ungroup() %>% 
   mutate(type_pair = paste0(type_pair, " (", n, ")")) %>% 
   group_by(lang) %>% 
@@ -503,27 +533,101 @@ formulas %>%
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
+  filter(lang != "it") %>% 
   mutate(type_pair = paste0(from_type, " --> ", to_type), 
          dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
   group_by(lang, dist_type) %>% 
   count(type_pair, sort = T) %>% 
+  filter(n > 1) %>% 
   slice_max(order_by = n, n = 5) %>% 
   ungroup() 
 ```
 
-Also a long table, some summary from me:
+Also a long table, a summary from me:
 
--   I don't take 'deafult' into account here: we should tag it manually to understand what it is;
+-   CZ: mountain-mountain is used both for long and short dist; river-river kind of too, but more for long;
+-   DE: same rates for city-city and river-river for both long and short
+-   EN: more countries (country-country or city-country); more river-river for shorter dist;
+-   FR: long dist for ancient city; shorter: city-city, river-river, city parts and regions
+-   RU: long - river-river, city-city; has some short dist for ancient city ? and mountains for short dist too
 
-<!-- -->
+### ancient cities
 
--   cs: some distinction that long distances are rather river-to-river, while short are mountain-to-mountain;
+```{r, include=T, echo=F}
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(from_type, "ancient")) %>% 
+  count(lang, from_placename, sort = T)
 
--   en: long dist are about sth\<-\>country; short include many rivers sometimes;
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(to_type, "ancient")) %>% 
+  count(lang, to_placename, sort = T)
 
--   fr: also a portion of long river-river distances;
+x <- formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(from_type, "ancient")) %>% 
+  count(lang, from_placename, sort = T) %>% 
+  rename(placename = from_placename)
 
--   ru: same as above;
+# grouped from and to placenames & filtered >1
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(to_type, "ancient")) %>% 
+  count(lang, to_placename, sort = T) %>% 
+  rename(placename = to_placename) %>% 
+  rbind(x) %>% 
+  group_by(lang, placename) %>% 
+  summarise(total_n = sum(n)) %>% 
+  arrange(desc(total_n)) %>% 
+  arrange(-desc(lang)) %>% 
+  filter(total_n > 1)
+```
+
+There are quite a lot of these ancient things, but they are mostly unique (sampled example)
+
+```{r, include=T, echo=F}
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type), 
+         dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  filter(str_detect(type_pair, "ancient")) %>% 
+  select(lang, type_pair, text, from_placename, to_placename, dist_type, dist_haversine) %>% 
+  sample_n(10)
+```
+
+### city parts
+
+```{r, include=T, echo=F}
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(from_type, "city part")) %>% 
+  count(lang, from_placename, sort = T)
+
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(to_type, "city part")) %>% 
+  count(lang, to_placename, sort = T)
+
+# traditions with most city parts present?
+x <- formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(from_type, "city part")) %>% 
+  select(lang, from_placename) %>% 
+  rename(placename = from_placename)
+
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  filter(str_detect(to_type, "city part")) %>% 
+  select(lang, to_placename) %>% 
+  rename(placename = to_placename) %>% 
+  rbind(x) %>% 
+  group_by(lang) %>% 
+  count(placename, sort = T) %>% 
+  filter(n > 1) %>% 
+  ungroup() %>% 
+  arrange(-desc(lang))
+```
 
 ### from-to places
 
@@ -536,7 +640,7 @@ formulas %>%
   head(20)
 ```
 
-By language
+By language (n \> 1)
 
 ```{r, include=T, echo=F}
 formulas %>% 
@@ -544,10 +648,39 @@ formulas %>%
   group_by(lang) %>% 
   count(from_to_pair, sort = T) %>% 
   slice_max(order_by = n, n = 5, with_ties = F) %>% 
+  filter(n > 1) %>% 
   knitr::kable()
 ```
 
-### 
+```{r, eval = F}
+formulas_d %>% 
+  filter(lang == "fr") %>% 
+  filter(from_placename == "Moscow Kremlin" | to_placename == "Moscow Kremlin")
+```
+
+### most from / to places
+
+Filter n \> 3 !
+
+```{r, include=T, echo=F}
+formulas %>% 
+  filter(lang != "it") %>% 
+  group_by(lang) %>% 
+  count(from_placename, from_type, sort = T) %>% 
+  slice_max(order_by = n, n = 5) %>% 
+  filter(n > 3)
+```
+
+```{r, include=T, echo=F}
+formulas %>% 
+  filter(lang != "it") %>% 
+  group_by(lang) %>% 
+  count(to_placename, to_type, sort = T) %>% 
+  slice_max(order_by = n, n = 5) %>% 
+  filter(n > 3)
+```
+
+test maps
 
 ```{r, eval=F}
 library(sf)
