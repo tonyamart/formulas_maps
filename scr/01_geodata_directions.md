@@ -164,13 +164,33 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
     5 cs    Od Hor Kuten veden k Praze    Kutná Hora     Prague                62.5 
     6 cs    od Baltu až k Adrii           Baltic Sea     Adriatic Sea        1725.  
 
+### proportion of dist \> 1000 in lang
+
+    # A tibble: 14 × 5
+       lang  dist_long     n n_total  perc
+       <chr> <chr>     <int>   <int> <dbl>
+     1 cs    long         90     308  29.2
+     2 cs    short       218     308  70.8
+     3 de    long         32      58  55.2
+     4 de    short        26      58  44.8
+     5 en    long        124     294  42.2
+     6 en    short       170     294  57.8
+     7 fr    long        108     217  49.8
+     8 fr    short       109     217  50.2
+     9 it    long         13      25  52  
+    10 it    short        12      25  48  
+    11 ru    long         93     162  57.4
+    12 ru    short        69     162  42.6
+    13 sl    long          3      22  13.6
+    14 sl    short        19      22  86.4
+
 ### distribution
 
 Poet’s mind is often flying not that far away?
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png)
-
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
     <ggplot2::labels> List of 2
      $ y    : chr "Dist Haversine (km)"
@@ -202,7 +222,7 @@ dist_raw <- formulas_d %>%
 dist_raw
 ```
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png)
 
 ``` r
 dist_log <- formulas_d %>% 
@@ -221,7 +241,7 @@ dist_log <- formulas_d %>%
 dist_log
 ```
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png)
 
 ### dist summary stats
 
@@ -243,21 +263,21 @@ Plot based on the groups long / short distances:
 I just wanted to see how these values are distributed, should we divide
 them in two groups
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png)
-
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png)
 
 Same grouping method for all: dist is short is \< 1000km, long if
 \>1000km
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png)
 
 #### Time: distances based on author birth year
 
 This is how author’s birth years are distributed, if we’re only looking
 in our formulas subset
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png)
 
 Add time period column & recalculate summary dist metrics: I aggregated
 based on the half-century periods the author was born. The question here
@@ -279,7 +299,7 @@ when from_to formula appears?
     10 en 1700—1749     3201.        701.       2773.               8
     # ℹ 20 more rows
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png)
 
 -   overall: we can see than Czech, German, & Slovenian from_to
     aggregated(!) distances are usually below 2k km; longest from-to are
@@ -315,7 +335,7 @@ author’s year birth)
 
     `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png)
 
 ``` r
 rm(dist_summary, dist_t_summary, loc_freq, dist_log, dist_raw)
@@ -609,16 +629,16 @@ unique (sampled example)
     # A tibble: 10 × 7
        lang  type_pair    text  from_placename to_placename dist_type dist_haversine
        <chr> <chr>        <chr> <chr>          <chr>        <chr>              <dbl>
-     1 fr    default -->… D' O… Assyrian Empi… Sheba        long             2301.  
-     2 fr    strait (wat… de l… Dardanelles    Cumae        long             1046.  
-     3 en    mountain --… From… Mount Carmel   Ptolemais    long             1318.  
-     4 fr    region --> … d' É… Epirus         Aetna        short             538.  
-     5 cs    ancient cit… Od A… Athens         Delphi       short             121.  
-     6 fr    ancient cit… De M… Memphis        Moscow       long             2927.  
-     7 en    city --> an… From… Beersheba      Dan          short             236.  
-     8 fr    ancient cit… de T… Thebes         Mantineia    long             1638.  
-     9 ru    ancient sit… из В… Bethany        Jerusalem    short               3.49
-    10 en    city --> an… From… Beersheba      Dan          short             236.  
+     1 fr    ancient cit… De T… Thebes         Rome         long              2577. 
+     2 en    ancient cit… from… Nicaea         River Trent  long              2707. 
+     3 ru    ancient cit… От В… Babylon        Bethlehem    short              873. 
+     4 ru    river --> a… От Н… Nile           Nineveh      long              1299. 
+     5 en    region --> … From… Arcadia        Calydon      short              104. 
+     6 en    ancient cit… From… Dan            Beersheba    short              236. 
+     7 fr    strait (wat… de l… Dardanelles    Cumae        long              1046. 
+     8 en    ancient cit… From… Mycenae        Corinth      short               27.6
+     9 fr    ancient cit… de B… Babylon        Rome         long              2996. 
+    10 cs    island --> … od L… Lesbos         Palmyra      long              1186. 
 
 ### city parts
 

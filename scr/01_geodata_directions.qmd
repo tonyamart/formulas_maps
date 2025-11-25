@@ -183,6 +183,21 @@ formulas_d <- formulas %>%
 head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
 ```
 
+### proportion of dist \> 1000 in lang
+
+```{r, include = T, echo = F}
+
+totals <- formulas_d %>% 
+  count(lang) %>% 
+  rename(n_total = n)
+
+formulas_d %>% 
+  mutate(dist_long = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  count(lang, dist_long) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(perc = round((n/n_total)*100, 1))
+```
+
 ### distribution
 
 Poet's mind is often flying not that far away?
@@ -727,7 +742,7 @@ head(freq_ranks, 20)
 cor(freq_ranks$rank_corpora[1:50], freq_ranks$rank_freq[1:50], method = "kendall")
 ```
 
-----
+------------------------------------------------------------------------
 
 test maps
 
