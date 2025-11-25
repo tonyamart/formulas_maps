@@ -1,6 +1,6 @@
 # 01 geodata exploration
 
-## Explore directions of from_to formula
+# Explore directions of from_to formula
 
 Read data as a table (flatted & merged json-s)
 
@@ -46,7 +46,7 @@ formulas <- formulas %>%
 
 N formulas per language
 
-### MF loc vs from_to loc
+## Most freq loc vs from_to loc
 
 Look if most most freq locations also appear in from_to formula
 
@@ -131,7 +131,7 @@ It’s a long table, just some observations:
     -   most locs are some within Sl I guess + mostly single counts in
         from_to
 
-## distances
+## Distances
 
 I calculated Haversine (bird/plane flight) distance between the
 from-\>to coordinates, the distance is in km.
@@ -164,9 +164,7 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
     5 cs    Od Hor Kuten veden k Praze    Kutná Hora     Prague                62.5 
     6 cs    od Baltu až k Adrii           Baltic Sea     Adriatic Sea        1725.  
 
-### analysis
-
-#### overall
+### distribution
 
 Poet’s mind is often flying not that far away?
 
@@ -351,7 +349,7 @@ So I guess the takeouts are:
 
 How distances are related to the types of locations in from-to formula?
 
-#### Overview
+### Overview
 
 total
 
@@ -462,7 +460,7 @@ Notes:
 
 -   villages & city parts are for short distances
 
-#### By language
+#### by language
 
 <table>
 <colgroup>
@@ -611,16 +609,16 @@ unique (sampled example)
     # A tibble: 10 × 7
        lang  type_pair    text  from_placename to_placename dist_type dist_haversine
        <chr> <chr>        <chr> <chr>          <chr>        <chr>              <dbl>
-     1 cs    ancient cit… z Tr… Troy           Italy        long              1183. 
-     2 sl    ancient cit… Od O… Aquileia       Triglav      short               77.2
-     3 de    region --> … Von … Sinai Peninsu… Thebes       short              438. 
-     4 ru    default -->… От К… Kyakhulay      Athens       long              2079. 
-     5 en    region --> … From… Mani Peninsula Thracia      short              661. 
-     6 de    ancient cit… Von … Cyrrhus        Rhine        long              2574. 
-     7 en    ancient cit… from… Babylon        Egypt        long              1611. 
-     8 en    ancient cit… from… Nicaea         River Trent  long              2707. 
-     9 cs    ancient cit… Od A… Athens         Delphi       short              121. 
-    10 fr    region --> … de G… Gilead         Sodom        short              154. 
+     1 fr    default -->… D' O… Assyrian Empi… Sheba        long             2301.  
+     2 fr    strait (wat… de l… Dardanelles    Cumae        long             1046.  
+     3 en    mountain --… From… Mount Carmel   Ptolemais    long             1318.  
+     4 fr    region --> … d' É… Epirus         Aetna        short             538.  
+     5 cs    ancient cit… Od A… Athens         Delphi       short             121.  
+     6 fr    ancient cit… De M… Memphis        Moscow       long             2927.  
+     7 en    city --> an… From… Beersheba      Dan          short             236.  
+     8 fr    ancient cit… de T… Thebes         Mantineia    long             1638.  
+     9 ru    ancient sit… из В… Bethany        Jerusalem    short               3.49
+    10 en    city --> an… From… Beersheba      Dan          short             236.  
 
 ### city parts
 
@@ -674,7 +672,9 @@ unique (sampled example)
     15 ru    Zemlyanoy Val Street     3
     16 ru    Sparrow Hills            2
 
-### from-to places
+## Places frequency
+
+### from-to formulas
 
 Just lists of real places, I’m not sure we need to think about this now
 (not too many observations also)
@@ -876,6 +876,81 @@ Filter n \> 3 !
     17 ru    Saint Petersburg city         4
     18 ru    Western Bug      river        4
 
+### most freq places in general
+
+General frequencies (highly dependent on N formulas from a language)
+
+             placename  n rank_freq
+    1  Bohemian Forest 47         1
+    2            Paris 28         2
+    3             Rome 28         3
+    4           Prague 26         4
+    5           Danube 24         5
+    6            Rhine 23         6
+    7       Baltic Sea 22         7
+    8  Tatra Mountains 20         8
+    9           Moscow 16         9
+    10    Adriatic Sea 15        10
+    11           Tiber 15        11
+    12           Volga 15        12
+    13            Alps 14        13
+    14         Moravia 14        14
+    15            Nile 14        15
+    16          Ganges 13        16
+    17 Giant Mountains 13        17
+    18     Tagus River 13        18
+    19           Egypt 12        19
+    20            Neva 12        20
+
+Placenames mentioned in all corpora + frequency
+
+                  placename           type n_corpora rank_corpora freq_abs
+    1  Carpathian Mountains       mountain         6            1       10
+    2                 Paris           city         6            2       28
+    3                 Rhine          river         6            3       23
+    4                  Rome           city         6            4       28
+    5                 Tiber          river         6            5       15
+    6                Athens   ancient city         5            6        7
+    7            Baltic Sea            sea         5            7       22
+    8                 Cairo           city         5            8        9
+    9                Danube          river         5            9       24
+    10            Euphrates          river         5           10        8
+    11               Ganges          river         5           11       13
+    12                 Nile          river         5           12       14
+    13          Tagus River          river         5           13       13
+    14                 Alps       mountain         4           14       14
+    15                 Asia      continent         4           15        5
+    16              Babylon   ancient city         4           16        7
+    17            Bethlehem           city         4           17        8
+    18          Dardanelles strait (water)         4           18        6
+    19                  Don          river         4           19        8
+    20                Egypt        country         4           20       12
+       rank_freq
+    1         23
+    2          2
+    3          6
+    4          3
+    5         11
+    6         41
+    7          7
+    8         28
+    9          5
+    10        36
+    11        16
+    12        15
+    13        18
+    14        13
+    15        61
+    16        42
+    17        31
+    18        55
+    19        33
+    20        19
+
+    [1] 0.557551
+
+------------------------------------------------------------------------
+
 test maps
 
 ``` r
@@ -941,8 +1016,6 @@ ggplot(world) +
                   aes(x = longitude, y = latitude, label = placename), 
                   size = 2.5, col = "black", fontface = "bold") 
 ```
-
-#### temporal
 
 ``` r
 dist_t_summary %>% 

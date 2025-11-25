@@ -4,7 +4,7 @@ format: md
 editor: visual
 ---
 
-## Explore directions of from_to formula
+# Explore directions of from_to formula
 
 ```{r, warning=F, include=F}
 library(tidyverse)
@@ -45,7 +45,7 @@ formulas %>%
   count(lang, sort = T)
 ```
 
-### MF loc vs from_to loc
+## Most freq loc vs from_to loc
 
 Look if most most freq locations also appear in from_to formula
 
@@ -135,7 +135,7 @@ It's a long table, just some observations:
 
     -   most locs are some within Sl I guess + mostly single counts in from_to
 
-## distances
+## Distances
 
 I calculated Haversine (bird/plane flight) distance between the from-\>to coordinates, the distance is in km.
 
@@ -183,9 +183,7 @@ formulas_d <- formulas %>%
 head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
 ```
 
-### analysis
-
-#### overall
+### distribution
 
 Poet's mind is often flying not that far away?
 
@@ -440,7 +438,7 @@ So I guess the takeouts are:
 
 How distances are related to the types of locations in from-to formula?
 
-#### Overview
+### Overview
 
 total
 
@@ -508,7 +506,7 @@ Notes:
 
 -   villages & city parts are for short distances
 
-#### By language
+#### by language
 
 ```{r, include=T, echo=F}
 formulas %>% 
@@ -629,7 +627,9 @@ formulas_d %>%
   arrange(-desc(lang))
 ```
 
-### from-to places
+## Places frequency
+
+### from-to formulas
 
 Just lists of real places, I'm not sure we need to think about this now (not too many observations also)
 
@@ -679,6 +679,55 @@ formulas %>%
   slice_max(order_by = n, n = 5) %>% 
   filter(n > 3)
 ```
+
+### most freq places in general
+
+General frequencies (highly dependent on N formulas from a language)
+
+```{r, include=T, echo=F}
+x <- formulas %>% 
+  select(from_placename, from_type) %>% 
+  rename(placename = from_placename,
+         type = from_type)
+
+places_freq <- formulas %>% 
+  select(to_placename, to_type) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  count(placename, sort = T) %>% 
+  mutate(rank_freq = row_number())
+
+head(places_freq, 20)
+```
+
+Placenames mentioned in all corpora + frequency
+
+```{r, include = T, echo = F}
+x <- formulas %>% 
+  select(from_placename, from_type, lang) %>% 
+  rename(placename = from_placename,
+         type = from_type) 
+
+freq_ranks <- formulas %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  distinct() %>% 
+  count(placename, type, sort = T) %>% 
+  rename(n_corpora = n) %>% 
+  mutate(rank_corpora = row_number()) %>% 
+  left_join(places_freq, by = "placename") %>% 
+  rename(freq_abs = n)
+  
+head(freq_ranks, 20)
+
+# ranks corr
+cor(freq_ranks$rank_corpora[1:50], freq_ranks$rank_freq[1:50], method = "kendall")
+```
+
+----
 
 test maps
 
@@ -757,8 +806,6 @@ ggplot(world) +
                   aes(x = longitude, y = latitude, label = placename), 
                   size = 2.5, col = "black", fontface = "bold") 
 ```
-
-#### temporal
 
 ```{r, eval=F}
 dist_t_summary %>% 
