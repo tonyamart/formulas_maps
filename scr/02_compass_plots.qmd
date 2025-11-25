@@ -4,12 +4,13 @@ format: md
 editor: visual
 ---
 
-## Compass plots
+# Compass plots
 
 ```{r, warning=F, include=F}
 library(tidyverse)
 library(geosphere)
 
+library(cowplot)
 library(MetBrewer)
 theme_set(theme_minimal())
 ```
@@ -34,7 +35,7 @@ formulas_d <- formulas %>%
 head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
 ```
 
-### calculate coordinates
+## calculate coordinates
 
 ```{r, eval = F, include = F, echo = F}
 # test sample
@@ -134,7 +135,7 @@ formulas_nc <- formulas_d %>%
 glimpse(formulas_nc)
 ```
 
-#### plot — all
+## plot — all
 
 ```{r, include=T, echo=F}
 #p_main <- 
@@ -180,11 +181,15 @@ ggsave("../plots/Fig_2.png", plot = last_plot(),
        width = 10, height = 10, bg = "white", dpi = 300)
 ```
 
-#### plot – river to river
+## loc types
+
+### river —\> river
 
 ```{r, include=T, echo=F}
 formulas_nc %>% 
-  #filter(lang != "it") %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_1k == "long") %>% 
+  
   filter(from_type == "river" & to_type == "river") %>% 
   
   ggplot() + 
@@ -209,7 +214,7 @@ formulas_nc %>%
   annotate("point", x = 0, y = 0, size = 1,
            fill = "white", colour = "white") + 
   
-  labs(title = "River to river directions") + 
+  labs(title = "River to river directions -- long") + 
   
   theme(plot.background = element_blank(),
         panel.grid.major = element_blank(),
@@ -221,19 +226,433 @@ formulas_nc %>%
   
 ```
 
-#### compass – 1 lang
+```{r, include=T, echo=F}
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_1k == "short") %>% 
+  
+  filter(from_type == "river" & to_type == "river") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "blue",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-15, 15)) + 
+  scale_y_continuous(limits = c(-15, 15)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  labs(title = "River to river directions -- short") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
 
-Use only ru corpus to look into different types of directions
+### city —\> city
+
+```{r, include=T, echo=F}
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_1k == "long") %>% 
+  
+  filter(from_type == "city" & to_type == "city") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "darkred",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-150, 150)) + 
+  scale_y_continuous(limits = c(-150, 150)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  labs(title = "City to city directions -- long") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
+
+```{r, include=T, echo=F}
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_1k == "short") %>% 
+  
+  filter(from_type == "city" & to_type == "city") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "darkred",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-15, 15)) + 
+  scale_y_continuous(limits = c(-15, 15)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  labs(title = "City to city directions -- short") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
+
+### country –\> country
+
+```{r, include=T, echo=F}
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_1k == "long") %>% 
+  
+  filter(from_type == "country" & to_type == "country") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "darkgreen",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-200, 200)) + 
+  scale_y_continuous(limits = c(-200, 200)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  labs(title = "Country to country directions -- long") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
+
+### mountain –\> mountain
+
+```{r, include=T, echo=F}
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_1k == "long") %>% 
+  
+  filter(from_type == "mountain" & to_type == "mountain") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "purple",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-200, 200)) + 
+  scale_y_continuous(limits = c(-200, 200)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  labs(title = "Mountain to mountain directions -- long") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
+
+### village (any)
+
+```{r, include=T, echo=F}
+formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_1k == "short") %>% 
+  
+  filter(from_type == "village" | to_type == "village") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "violet",
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~lang, ncol = 3) + 
+  scale_x_continuous(limits = c(-15, 15)) + 
+  scale_y_continuous(limits = c(-15, 15)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  labs(title = "From OR to village directions -- short") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold"))
+  
+```
+
+## compass – 1 lang
+
+Use only one corpus to look into different types of directions
+
+### cz
+
+```{r, include=T, echo=F}
+x <- formulas_nc %>% 
+  filter(lang == "cs") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  count(loc_type, sort = T) %>% 
+  filter(n > 4) %>% 
+  pull(loc_type)
+  
+x  
+
+formulas_nc %>% 
+  filter(lang == "cs") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  filter(loc_type %in% x) %>% 
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0,
+                   colour = loc_type
+                   ),
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~loc_type, ncol = 3) + 
+  scale_x_continuous(limits = c(-130, 130)) + 
+  scale_y_continuous(limits = c(-130, 130)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  # labs(title = "River to river") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold")) + 
+  labs(title = "Only CZ corpus",
+       subtitle = "(loc_type with n > 4)")
+  
+```
+
+NB here longest distances are not only river-river, but mountains
+
+### en
+
+```{r, include=T, echo=F}
+x <- formulas_nc %>% 
+  filter(lang == "en") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  count(loc_type, sort = T) %>% 
+  filter(n > 4) %>% 
+  pull(loc_type)
+  
+x  
+
+formulas_nc %>% 
+  filter(lang == "en") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  filter(loc_type %in% x) %>% 
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0,
+                   colour = loc_type
+                   ),
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~loc_type, ncol = 3) + 
+  scale_x_continuous(limits = c(-230, 230)) + 
+  scale_y_continuous(limits = c(-230, 230)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  # labs(title = "River to river") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold")) + 
+  labs(title = "Only EN corpus",
+       subtitle = "(loc_type with n > 4)")
+  
+```
+
+### fr
+
+```{r, include=T, echo=F}
+x <- formulas_nc %>% 
+  filter(lang == "fr") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  count(loc_type, sort = T) %>% 
+  filter(n > 3) %>% 
+  pull(loc_type)
+  
+x  
+
+formulas_nc %>% 
+  filter(lang == "fr") %>% 
+  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
+  filter(loc_type %in% x) %>% 
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0,
+                   colour = loc_type
+                   ),
+               arrow = arrow(length = unit(4, "pt"))) + 
+  facet_wrap(~loc_type, ncol = 3) + 
+  scale_x_continuous(limits = c(-150, 150)) + 
+  scale_y_continuous(limits = c(-150, 150)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  # labs(title = "River to river") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        #axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 12, face = "bold")) + 
+  labs(title = "Only FR corpus",
+       subtitle = "(loc_type with n > 3)")
+  
+```
+
+### ru
 
 ```{r, include=T, echo=F}
 x <- formulas_nc %>% 
   filter(lang == "ru") %>% 
   mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
   count(loc_type, sort = T) %>% 
-  filter(n > 5) %>% 
+  filter(n > 3) %>% 
   pull(loc_type)
   
-  
+x  
 
 formulas_nc %>% 
   filter(lang == "ru") %>% 
@@ -270,15 +689,16 @@ formulas_nc %>%
         #axis.text = element_blank(), 
         axis.title = element_blank(),
         strip.text.x = element_text(size = 12, face = "bold")) + 
-  labs(title = "Only ru corpus")
+  labs(title = "Only ru corpus",
+       subtitle = "(loc_type with n > 3)")
   
 ```
 
-### add short/long distances types
+## add short/long distances types
 
 two different plots for long & for short distances
 
-#### short dist closer look
+### short dist closer look
 
 ```{r, include=T, echo=F}
 p_short <- formulas_nc %>% 
@@ -327,7 +747,7 @@ ggsave("../plots/01_compass_dist_short.png", plot = last_plot(),
        width = 10, height = 8, bg = "white", dpi = 300)
 ```
 
-#### longer dist
+### longer dist
 
 ```{r, include=T, echo=F}
 p_long <- formulas_nc %>% 
