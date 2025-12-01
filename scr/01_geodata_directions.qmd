@@ -40,7 +40,7 @@ formulas <- formulas %>%
 
 N formulas per language
 
-```{r, include=F, echo=T}
+```{r, include=T, echo=F}
 formulas %>% 
   count(lang, sort = T)
 ```
@@ -714,6 +714,70 @@ places_freq <- formulas %>%
   mutate(rank_freq = row_number())
 
 head(places_freq, 20)
+```
+
+Types: natural vs political
+
+```{r}
+x <- formulas %>% 
+  select(from_placename, from_type, lang) %>% 
+  rename(placename = from_placename,
+         type = from_type)
+
+# look into types
+t <- formulas %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  pull(type) %>% unique
+
+# create a table for larger groupings:
+# whether the entity is natural or political
+# if it is water or not
+grouping <- tibble(type = t, 
+       group = c("p", "n", "n", "p", "n", "p", 
+                 "p", "p", "p", "n", "n", "p", 
+                 "p", "p", "n", "n", "p", "n",
+                 "n", "n", "n", "p"),
+       water = c(0, 1, 1, 0, 0, 0, 
+                 0, 0, 0, 0, 1, 0, 
+                 0, 0, 1, 0, 0, 0, 
+                 1, 0, 1, 0))
+
+types_groups <- formulas %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  left_join(grouping, by = "type")
+
+totals <- formulas %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  count(lang) %>% 
+  rename(total = n)
+
+types_groups %>% 
+  count(lang, group) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(perc = round((n/total)*100, 1)) %>% 
+  select(lang, group, perc) %>% 
+  mutate(group = ifelse(group == "n", "Natural", "Political")) %>% 
+  pivot_wider(names_from = group, values_from = perc)
+
+
+types_groups %>% 
+  count(lang, water) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(perc = round((n/total)*100, 1)) %>% 
+  select(lang, water, perc) %>% 
+  mutate(water = ifelse(water == 1, "Water", "Not water")) %>% 
+  pivot_wider(names_from = water, values_from = perc)
+
+rm(totals, types_groups, x)
 ```
 
 Placenames mentioned in all corpora + frequency

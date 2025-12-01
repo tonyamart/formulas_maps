@@ -46,6 +46,15 @@ formulas <- formulas %>%
 
 N formulas per language
 
+      lang   n
+    1   cs 308
+    2   en 294
+    3   fr 217
+    4   ru 162
+    5   de  58
+    6   it  25
+    7   sl  22
+
 ## Most freq loc vs from_to loc
 
 Look if most most freq locations also appear in from_to formula
@@ -629,16 +638,16 @@ unique (sampled example)
     # A tibble: 10 × 7
        lang  type_pair    text  from_placename to_placename dist_type dist_haversine
        <chr> <chr>        <chr> <chr>          <chr>        <chr>              <dbl>
-     1 fr    ancient cit… De T… Thebes         Rome         long              2577. 
-     2 en    ancient cit… from… Nicaea         River Trent  long              2707. 
-     3 ru    ancient cit… От В… Babylon        Bethlehem    short              873. 
-     4 ru    river --> a… От Н… Nile           Nineveh      long              1299. 
-     5 en    region --> … From… Arcadia        Calydon      short              104. 
-     6 en    ancient cit… From… Dan            Beersheba    short              236. 
-     7 fr    strait (wat… de l… Dardanelles    Cumae        long              1046. 
-     8 en    ancient cit… From… Mycenae        Corinth      short               27.6
-     9 fr    ancient cit… de B… Babylon        Rome         long              2996. 
-    10 cs    island --> … od L… Lesbos         Palmyra      long              1186. 
+     1 fr    ancient cit… de l… Thebes         Nineveh      long             1552.  
+     2 cs    ancient cit… z Tr… Troy           Italy        long             1183.  
+     3 de    city --> an… von … Rome           Ostia        short              22.0 
+     4 ru    default -->… От К… Kyakhulay      Athens       long             2079.  
+     5 en    ancient cit… from… Babylon        Egypt        long             1611.  
+     6 en    ancient cit… From… Babylon        Rome         long             2996.  
+     7 en    ancient cit… from… Dan            Beersheba    short             236.  
+     8 en    ancient cit… from… Nicaea         River Trent  long             2707.  
+     9 en    mountain --… From… Mount Carmel   Ptolemais    long             1318.  
+    10 cs    city --> an… z Be… Bethlehem      Calvary      short               8.55
 
 ### city parts
 
@@ -921,6 +930,95 @@ General frequencies (highly dependent on N formulas from a language)
     18     Tagus River 13        18
     19           Egypt 12        19
     20            Neva 12        20
+
+Types: natural vs political
+
+``` r
+x <- formulas %>% 
+  select(from_placename, from_type, lang) %>% 
+  rename(placename = from_placename,
+         type = from_type)
+
+# look into types
+t <- formulas %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  pull(type) %>% unique
+
+# create a table for larger groupings:
+# whether the entity is natural or political
+# if it is water or not
+grouping <- tibble(type = t, 
+       group = c("p", "n", "n", "p", "n", "p", 
+                 "p", "p", "p", "n", "n", "p", 
+                 "p", "p", "n", "n", "p", "n",
+                 "n", "n", "n", "p"),
+       water = c(0, 1, 1, 0, 0, 0, 
+                 0, 0, 0, 0, 1, 0, 
+                 0, 0, 1, 0, 0, 0, 
+                 1, 0, 1, 0))
+
+types_groups <- formulas %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  left_join(grouping, by = "type")
+
+totals <- formulas %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  count(lang) %>% 
+  rename(total = n)
+
+types_groups %>% 
+  count(lang, group) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(perc = round((n/total)*100, 1)) %>% 
+  select(lang, group, perc) %>% 
+  mutate(group = ifelse(group == "n", "Natural", "Political")) %>% 
+  pivot_wider(names_from = group, values_from = perc)
+```
+
+    # A tibble: 7 × 3
+      lang  Natural Political
+      <chr>   <dbl>     <dbl>
+    1 cs       45.5      54.5
+    2 de       27.6      72.4
+    3 en       25.2      74.8
+    4 fr       28.3      71.7
+    5 it       50        50  
+    6 ru       37        63  
+    7 sl       31.8      68.2
+
+``` r
+types_groups %>% 
+  count(lang, water) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(perc = round((n/total)*100, 1)) %>% 
+  select(lang, water, perc) %>% 
+  mutate(water = ifelse(water == 1, "Water", "Not water")) %>% 
+  pivot_wider(names_from = water, values_from = perc)
+```
+
+    # A tibble: 7 × 3
+      lang  `Not water` Water
+      <chr>       <dbl> <dbl>
+    1 cs           79.4  20.6
+    2 de           75    25  
+    3 en           82.5  17.5
+    4 fr           79.5  20.5
+    5 it           70    30  
+    6 ru           72.2  27.8
+    7 sl           79.5  20.5
+
+``` r
+rm(totals, types_groups, x)
+```
 
 Placenames mentioned in all corpora + frequency
 
