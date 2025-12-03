@@ -701,16 +701,18 @@ General frequencies (highly dependent on N formulas from a language)
 
 ```{r, include=T, echo=F}
 x <- formulas %>% 
-  select(from_placename, from_type) %>% 
-  rename(placename = from_placename,
+  select(from_id, from_placename, from_type) %>% 
+  rename(id = from_id,
+         placename = from_placename,
          type = from_type)
 
 places_freq <- formulas %>% 
-  select(to_placename, to_type) %>% 
-  rename(placename = to_placename,
+  select(to_id, to_placename, to_type) %>% 
+  rename(id = to_id, 
+         placename = to_placename,
          type = to_type) %>% 
   rbind(x) %>% 
-  count(placename, sort = T) %>% 
+  count(id, placename, sort = T) %>% 
   mutate(rank_freq = row_number())
 
 head(places_freq, 20)
@@ -808,95 +810,268 @@ cor(freq_ranks$rank_corpora[1:50], freq_ranks$rank_freq[1:50], method = "kendall
 
 ------------------------------------------------------------------------
 
-test maps
+## example: from Malta to Rome
 
-```{r, eval=F}
+Load pckg for maps
+
+```{r}
 library(sf)
+library(ggspatial)
 
 library(rnaturalearth)
 library(rnaturalearthdata)
 library(ggrepel)
 ```
 
-```{r, include=F, echo=F, eval=F}
+```{r}
+exmpl <- formulas_d %>% 
+   filter(str_detect(to_placename, "Rome")) %>% 
+   filter(str_detect(author_name, "Whittier")) # specific line in eng
+
+# exmpl <- formulas_d %>% 
+#   filter(str_detect(from_placename, "Rhine") & str_detect(to_placename, "Danube"))
+
+exmpl
+exmpl$text
+
+exmpl$dist_haversine
+
+exmpl %>% select(from_placename, from_longitude, from_latitude, 
+                 to_placename, to_longitude, to_latitude)
+
+```
+
+Basic map
+
+```{r}
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
 europe <- world[which(world$continent == "Europe"),]
 
+# europe <- world
+
+# from malta to rome
 ggplot(europe) +
-  geom_sf() +
-  coord_sf(xlim = c(-25, 50), ylim = c(35,70), expand = FALSE)
-
-```
-
-some x to y
-
-```{r, eval=F}
-f <- formulas %>% 
-  filter(lang == "sl") %>% 
-  #sample_n(10) %>% 
-  mutate(f_id = row_number()) %>% 
-  select(f_id, text,
-         from_placename, to_placename, 
-         from_latitude, to_latitude, 
-         from_longitude, to_longitude
-         ) 
-
-from <- f %>% 
-  select(f_id, text, from_placename, from_latitude, from_longitude) %>% 
-  rename(placename = from_placename,
-         latitude = from_latitude,
-         longitude = from_longitude)
-
-to <- f %>% 
-  select(f_id, text, to_placename, to_latitude, to_longitude) %>% 
-  rename(placename = to_placename,
-         latitude = to_latitude,
-         longitude = to_longitude)
-
-
-# merge in a longer table
-from_to <- rbind(from, to)
-
-
-glimpse(f)
-glimpse(from_to)
-
-# f
-# from_to
-
-err <- f[f$from_latitude == f$to_latitude| f$from_longitude == f$to_longitude, ]
-
-```
-
-```{r, eval=F}
-ggplot(world) +
-  geom_sf() +
-  coord_sf(xlim = c(-25, 90), ylim = c(-35,70), expand = FALSE) + 
-  geom_point(data = from_to, aes(x = longitude, y = latitude), size = 1, 
-       shape = 23, fill = "darkviolet") + 
-  geom_curve(data = f %>% 
-               filter(!f_id %in% err$f_id), 
+  geom_sf(fill = "#cbeedb"
+          ) +
+  coord_sf(xlim = c(5, 20), ylim = c(34,45), expand = FALSE) + 
+  
+  
+  geom_curve(data = exmpl,
              aes(x = from_longitude, y = from_latitude,
-                           xend = to_longitude, yend = to_latitude),
-             linewidth = 0.5, curvature = 0.2, 
-             colour = "darkviolet", alpha = 0.7) +
-  geom_text_repel(data = from_to, 
-                  aes(x = longitude, y = latitude, label = placename), 
-                  size = 2.5, col = "black", fontface = "bold") 
+                xend = to_longitude, yend = to_latitude),
+             linewidth = 3, curvature = 0.2,
+             colour = "slategrey", alpha = 0.9) +
+  
+  # malta label
+  geom_text_repel(data = exmpl,
+                  aes(x = from_longitude, y = from_latitude, label = from_placename),
+                  size = 14, col = "midnightblue", fontface = "bold",
+                  vjust = 1.5, 
+                  segment.color = "transparent") + 
+  
+  # rome label
+  geom_text_repel(data = exmpl,
+                  aes(x = to_longitude, y = to_latitude, label = to_placename),
+                  size = 14, col = "violetred4", fontface = "bold",
+                  vjust = 1,  box.padding = 0.7,
+                  segment.color = "transparent") + 
+  
+  # malta point
+  geom_point(data = exmpl, aes(x = from_longitude, y = from_latitude), 
+             size = 7, alpha = 0.9, color = "midnightblue") + 
+  
+  # rome point
+  geom_point(data = exmpl, aes(x = to_longitude, y = to_latitude), 
+             size = 7, alpha = 0.9, color = "violetred4") +
+  
+  
+  # annotation_scale(location = "bl", width_hint = 0.4) +
+  # annotation_north_arrow(location = "bl", which_north = "true", 
+  #       #pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
+  #       style = north_arrow_fancy_orienteering)
+  
+  theme(panel.grid.major = element_line(color = "grey60", 
+                                        #linetype = "dashed", 
+                                        size = 0.1),
+    panel.background = element_rect(fill = "aliceblue"))
 ```
 
-```{r, eval=F}
-dist_t_summary %>% 
-  select(-third_quant) %>% 
-  pivot_longer(!c(lang_t, number_formulas),
-               names_to = "type", values_to = "dist_km") %>% 
-  mutate(lang = str_extract(lang_t, "^.."), 
-         lang_t = str_remove(lang_t, "^..."),
-         author_birth_halfdecade = str_remove(lang_t, "—....$")) %>% 
-  filter(type != "dist_mean") %>% 
-  ggplot(aes(x = time, y = dist_km, 
-             group = lang, 
-             colour = lang)) + 
-  geom_line(aes(linewidth = number_formulas))
+Line plot
+
+```{r}
+
+exmpl %>% 
+  ggplot() + 
+  # geom_segment(aes(x = from_longitude, xend = to_longitude,
+  #                  y = from_latitude, yend = to_latitude),
+  #              color = "slategrey", linewidth = 4
+  #              ) +
+  geom_point(aes( x = from_longitude, y = from_latitude), 
+             color = "midnightblue", size = 10) + 
+  geom_point(aes( x = to_longitude, y = to_latitude), 
+             color = "violetred4", size = 10) + 
+  
+  geom_text(aes(x = from_longitude, y = from_latitude),
+            label = "Malta", color = "midnightblue",
+            size = 10, vjust = -1, hjust = -0.01) + 
+  geom_text(aes(x = to_longitude, y = to_latitude),
+            label = "Rome", color = "violetred4",
+            size = 10, vjust = -1, hjust = -0.01) + 
+  
+  expand_limits(x = c(10, 16), y = c(35, 45)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+  
+
+ggsave(file = "../plots/chr_lt/2_1.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 5, height = 2.6) 
+```
+
+Transposed
+
+```{r}
+exmpl %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  
+  ggplot() + 
+  
+  annotate("point", x = 0, y = 0, size = 200, 
+           alpha = 0.6, 
+           fill = met.brewer("Cassatt1")[5], 
+           colour = met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, linewidth = 2, colour = "white") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 2, colour = "white") +
+
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "slategrey", linewidth = 4) + 
+  
+  geom_point(aes(x = x1_0, y = y1_0), 
+             colour = "midnightblue", size = 10) + 
+  geom_point(aes(x = x2_0, y = y2_0), 
+             colour = "violetred4", size = 10) + 
+  geom_text(aes(x = x1_0, y = y1_0), 
+            colour ="midnightblue", label = "FROM\n(0, 0)",
+            vjust = -0.5, size = 10) + 
+  geom_text(aes(x = x2_0, y = y2_0), 
+            colour ="violetred4", label = "TO",
+            vjust = -1, size = 10) + 
+  expand_limits(x = c(-4.5, 1.5), y = c(-2, 8)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+  
+
+ggsave(file = "../plots/chr_lt/2_4.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 7, height = 4)
+  
+```
+
+```{r, eval=F, include=F}
+# from Rhine to Danube
+
+# ggplot(europe) +
+#   geom_sf() +
+#   coord_sf(xlim = c(5, 15), ylim = c(43,53), expand = FALSE) + 
+#   
+#   geom_point(data = exmpl, aes(x = from_longitude, y = from_latitude), 
+#              size = 4, alpha = 0.9, color = "steelblue4") + 
+#   geom_point(data = exmpl, aes(x = to_longitude, y = to_latitude), 
+#              size = 4, alpha = 0.9, color = "seagreen") +
+#   
+#   geom_curve(data = exmpl,
+#              aes(x = from_longitude, y = from_latitude,
+#                 xend = to_longitude, yend = to_latitude),
+#              linewidth = 1, curvature = 0.2,
+#              colour = "seagreen", alpha = 0.7) +
+#   geom_text_repel(data = exmpl,
+#                   aes(x = from_longitude, y = from_latitude, label = from_placename),
+#                   size = 7, col = "steelblue4", fontface = "bold") + 
+#   
+#   geom_text_repel(data = exmpl,
+#                   aes(x = to_longitude, y = to_latitude, label = to_placename),
+#                   size = 7, col = "seagreen", fontface = "bold",
+#                   vjust = 1,  box.padding = 0.5)
+```
+
+## Map: most frequent places
+
+```{r}
+loc_fr <- freq_ranks %>% 
+  filter(n_corpora > 3) %>% 
+  filter(placename == "Baltic Sea")
+
+loc_coord <- formulas %>% 
+  filter(from_placename %in% loc_fr$placename | to_placename %in% loc_fr$placename) 
+
+ggplot(europe) +
+  geom_sf(fill = "#cbeedb"
+          ) +
+  coord_sf(xlim = c(-15, 50), ylim = c(35,75), expand = FALSE) + 
+  
+  geom_curve(data = loc_coord,
+             aes(x = from_longitude, y = from_latitude,
+                xend = to_longitude, yend = to_latitude),
+             linewidth = 0.3, curvature = 0.2,
+             colour = "slategrey", alpha = 0.9) + 
+  
+  geom_point(data = loc_coord, aes(x = from_longitude, y = from_latitude), 
+             size = 2, alpha = 0.9, color = "midnightblue") + 
+  geom_point(data = loc_coord, aes(x = to_longitude, y = to_latitude), 
+             size = 2, alpha = 0.9, color = "violetred4") 
+```
+
+```{r}
+x <- formulas %>% 
+  select(from_id, from_placename, from_latitude, from_longitude, lang) %>% 
+  rename(id = from_id,
+         placename = from_placename,
+         lat = from_latitude,
+         long = from_longitude) 
+
+freq_ranks <-formulas %>% 
+  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
+  rename(id = to_id,
+         placename = to_placename,
+         lat = to_latitude,
+         long = to_longitude) %>% 
+  rbind(x) %>% 
+  distinct() %>% 
+  count(id, placename, sort = T) %>% 
+  rename(n_corpora = n) %>% 
+  filter(n_corpora > 4)
+
+pl_coord <- formulas %>% 
+  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
+  rename(id = to_id,
+         placename = to_placename,
+         lat = to_latitude,
+         long = to_longitude) %>% 
+  rbind(x) %>% 
+  select(-lang) %>% 
+  distinct() %>% 
+  filter(placename %in% freq_ranks$placename) 
+
+ggplot(world) +
+  geom_sf(#fill = "#cbeedb"
+          ) +
+  coord_sf(xlim = c(-15, 90), ylim = c(25,75), expand = FALSE) + 
+  
+  geom_point(data = pl_coord, aes(x = long, y = lat), 
+             size = 2, alpha = 0.9, color = "violetred") + 
+  geom_text_repel(data = pl_coord, 
+                  aes(x = long, y = lat, label = placename),
+                  size = 4, color = "midnightblue")
+
 ```
