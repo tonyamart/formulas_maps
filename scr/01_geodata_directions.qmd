@@ -810,7 +810,7 @@ cor(freq_ranks$rank_corpora[1:50], freq_ranks$rank_freq[1:50], method = "kendall
 
 ------------------------------------------------------------------------
 
-## example: from Malta to Rome
+## Map example: from Malta to Rome
 
 Load pckg for maps
 
