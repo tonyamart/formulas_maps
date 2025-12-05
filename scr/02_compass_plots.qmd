@@ -943,25 +943,26 @@ freq_ranks <- formulas_nc %>%
   distinct() %>% 
   count(placename, type, sort = T) %>% 
   rename(n_corpora = n) %>% 
-  filter(n_corpora > 3) %>% 
-  filter(placename %in% c(
-    "Baltic Sea", "Tagus River", "Paris", "Rome", "Athens", 
-    "Nile", "Euphrates", "Babylon", "Bethlehem", 
-    "Dardanelles", "Don", "Moscow"
-  )) 
+  filter(n_corpora > 3) # %>% 
+  # filter(placename %in% c(
+  #   "Baltic Sea", "Tagus River", "Paris", "Rome", "Athens", 
+  #   "Nile", "Euphrates", "Babylon", "Bethlehem", 
+  #   "Dardanelles", "Don", "Moscow"
+  # )) 
 
 freq_ranks
 
-freq_ranks$grouping <- c("center", "border", "center", "center", 
-                         "border", "border", "border", "border",
-                         "border", "border", "border", "border")
 
 loc_coord <- formulas_nc %>% 
   filter(from_placename %in% freq_ranks$placename) 
 
 freq_coord <- loc_coord %>% 
-  left_join(freq_ranks %>% select(placename, grouping) %>% 
-              rename(from_placename = placename)) # %>% 
+  left_join(freq_ranks %>% 
+              mutate(grouping = ifelse(placename %in% c("Paris", "Rome", "Vienna"),
+                                                    "center", "border")) %>% 
+              select(placename, grouping) %>% 
+              rename(from_placename = placename), 
+            by = "from_placename") # %>% 
   # left_join(freq_ranks %>% select(placename, grouping) %>% 
   #             rename(to_placename = placename,
   #                    grouping_t = grouping)) %>% 
@@ -1002,7 +1003,7 @@ pl_coord <- freq_coord %>%
 ggplot(world) +
   geom_sf(#fill = "#cbeedb"
           ) +
-  coord_sf(xlim = c(-15, 68), ylim = c(27,62), expand = FALSE) + 
+  coord_sf(xlim = c(-15, 80), ylim = c(27,62), expand = FALSE) + 
   
   geom_point(data = pl_coord, aes(x = long, y = lat), 
              size = 2, alpha = 0.9, color = "violetred") + 
@@ -1087,7 +1088,7 @@ freq_coord %>%
   # plot
   ggplot() + 
   
-  annotate("point", x = 0, y = 0, size = 100,
+  annotate("point", x = 0, y = 0, size = 120,
            alpha = 0.4,
            fill = met.brewer("Cassatt1")[5],
            colour = met.brewer("Cassatt1")[5]) +
@@ -1128,5 +1129,5 @@ freq_coord %>%
   
 ggsave(file = "../plots/chr_lt/3_1.png", plot = last_plot(), 
        bg = "transparent",
-       dpi = 300, width = 12, height = 17)
+       dpi = 300, width = 15, height = 39)
 ```
