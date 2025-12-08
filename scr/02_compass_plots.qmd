@@ -165,7 +165,7 @@ formulas_nc %>%
   geom_segment(aes(x = x1_0, xend = x2_0,
                    y = y1_0, yend = y2_0), 
                colour = met.brewer("Cassatt2")[9],
-               arrow = arrow(length = unit(4, "pt")),
+               arrow = arrow(length = unit(5, "pt")),
                alpha = 0.5) + 
   facet_wrap(~lang, ncol = 3) + 
   scale_x_continuous(limits = c(-230, 230)) + 
@@ -180,13 +180,15 @@ formulas_nc %>%
         panel.border = element_blank(), 
         #axis.text = element_blank(), 
         axis.title = element_blank(),
-        strip.text.x = element_text(size = 14, face = "bold"))
+        strip.text.x = element_text(size = 14, face = "bold"),
+        # spacing for slides
+        panel.spacing = unit(4, "lines"))
   
 ```
 
 ```{r, eval=F, inlude=F, echo=F}
-ggsave("../plots/Fig_2.png", plot = last_plot(), 
-       width = 10, height = 10, bg = "white", dpi = 300)
+ggsave("../plots/chr_lt/3_1.png", plot = last_plot(), 
+       width = 12, height = 10, bg = "white", dpi = 300)
 ```
 
 ## loc types

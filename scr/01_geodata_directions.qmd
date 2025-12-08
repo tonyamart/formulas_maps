@@ -852,38 +852,39 @@ europe <- world[which(world$continent == "Europe"),]
 
 # from malta to rome
 ggplot(europe) +
-  geom_sf(fill = "#cbeedb"
+  geom_sf(fill = "#cbeedb",
+          alpha = 0.5
           ) +
-  coord_sf(xlim = c(5, 20), ylim = c(34,45), expand = FALSE) + 
+  coord_sf(xlim = c(9, 18), ylim = c(34, 43), expand = FALSE) + 
   
   
   geom_curve(data = exmpl,
              aes(x = from_longitude, y = from_latitude,
                 xend = to_longitude, yend = to_latitude),
-             linewidth = 3, curvature = 0.2,
-             colour = "slategrey", alpha = 0.9) +
+             linewidth = 5, curvature = 0,
+             colour = "slategray1", alpha = 0.9) +
   
   # malta label
   geom_text_repel(data = exmpl,
                   aes(x = from_longitude, y = from_latitude, label = from_placename),
-                  size = 14, col = "midnightblue", fontface = "bold",
+                  size = 22, col = "slategray1", fontface = "bold",
                   vjust = 1.5, 
                   segment.color = "transparent") + 
   
   # rome label
   geom_text_repel(data = exmpl,
                   aes(x = to_longitude, y = to_latitude, label = to_placename),
-                  size = 14, col = "violetred4", fontface = "bold",
+                  size = 22, col = "pink2", fontface = "bold",
                   vjust = 1,  box.padding = 0.7,
                   segment.color = "transparent") + 
   
   # malta point
   geom_point(data = exmpl, aes(x = from_longitude, y = from_latitude), 
-             size = 7, alpha = 0.9, color = "midnightblue") + 
+             size = 14, alpha = 1, color = "slategray1") + 
   
   # rome point
   geom_point(data = exmpl, aes(x = to_longitude, y = to_latitude), 
-             size = 7, alpha = 0.9, color = "violetred4") +
+             size = 14, alpha = 1, color = "pink3") +
   
   
   # annotation_scale(location = "bl", width_hint = 0.4) +
@@ -894,7 +895,16 @@ ggplot(europe) +
   theme(panel.grid.major = element_line(color = "grey60", 
                                         #linetype = "dashed", 
                                         size = 0.1),
-    panel.background = element_rect(fill = "aliceblue"))
+    #panel.background = element_rect(fill = "aliceblue"))
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+
+ggsave(file = "../plots/chr_lt/2_1.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 6.5, height = 6.5) 
 ```
 
 Line plot
@@ -903,32 +913,35 @@ Line plot
 
 exmpl %>% 
   ggplot() + 
-  # geom_segment(aes(x = from_longitude, xend = to_longitude,
-  #                  y = from_latitude, yend = to_latitude),
-  #              color = "slategrey", linewidth = 4
-  #              ) +
+  geom_segment(aes(x = from_longitude, xend = to_longitude,
+                   y = from_latitude, yend = to_latitude),
+               color = "slategray3", linewidth = 4
+               ) +
   geom_point(aes( x = from_longitude, y = from_latitude), 
-             color = "midnightblue", size = 10) + 
+             color = "slategray1", size = 10) + 
   geom_point(aes( x = to_longitude, y = to_latitude), 
-             color = "violetred4", size = 10) + 
+             color = "pink3", size = 10) + 
   
   geom_text(aes(x = from_longitude, y = from_latitude),
-            label = "Malta", color = "midnightblue",
-            size = 10, vjust = -1, hjust = -0.01) + 
+            label = "Malta", color = "slategray1",
+            size = 16, vjust = -1, hjust = -0.01,
+            fontface = "bold") + 
   geom_text(aes(x = to_longitude, y = to_latitude),
-            label = "Rome", color = "violetred4",
-            size = 10, vjust = -1, hjust = -0.01) + 
+            label = "Rome", color = "pink3",
+            size = 16, vjust = -1, hjust = -0.01,
+            fontface = "bold") + 
   
-  expand_limits(x = c(10, 16), y = c(35, 45)) + 
+  expand_limits(x = c(10, 18), y = c(36, 44)) + 
   labs(x = "", y = "") + 
   theme(plot.background = element_rect(fill = "transparent",
                                        colour = NA_character_),
         panel.background = element_rect(fill = "transparent", 
-                                        colour = NA_character_))
+                                        colour = NA_character_),
+        axis.text = element_blank())
   
 
-ggsave(file = "../plots/chr_lt/2_1.png", plot = last_plot(), bg = "transparent",
-       dpi = 300, width = 5, height = 2.6) 
+ggsave(file = "../plots/chr_lt/2_2.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 5, height = 5) 
 ```
 
 Transposed
@@ -945,27 +958,83 @@ exmpl %>%
   
   annotate("point", x = 0, y = 0, size = 200, 
            alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
+           fill = "grey10", # met.brewer("Cassatt1")[5], 
+           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
   
-  geom_hline(yintercept = 0, lty = 2, linewidth = 2, colour = "white") + 
-  geom_vline(xintercept = 0, lty = 2, linewidth = 2, colour = "white") +
+  geom_hline(yintercept = 0, lty = 2, linewidth = 2, colour = "slategray4") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 2, colour = "slategray4") +
 
   geom_segment(aes(x = x1_0, xend = x2_0,
                    y = y1_0, yend = y2_0), 
-               colour = "slategrey", linewidth = 4) + 
+               colour = "slategray3", linewidth = 4) + 
   
   geom_point(aes(x = x1_0, y = y1_0), 
-             colour = "midnightblue", size = 10) + 
+             colour = "slategray1", size = 10) + 
   geom_point(aes(x = x2_0, y = y2_0), 
-             colour = "violetred4", size = 10) + 
+             colour = "pink3", size = 10) + 
   geom_text(aes(x = x1_0, y = y1_0), 
-            colour ="midnightblue", label = "FROM\n(0, 0)",
-            vjust = -0.5, size = 10) + 
+            colour ="slategray1", label = "FROM\n(0, 0)",
+            vjust = -0.5, size = 14,
+            fontface = "bold") + 
   geom_text(aes(x = x2_0, y = y2_0), 
-            colour ="violetred4", label = "TO",
-            vjust = -1, size = 10) + 
-  expand_limits(x = c(-4.5, 1.5), y = c(-2, 8)) + 
+            colour ="pink3", label = "TO",
+            vjust = -1, size = 14,
+            fontface = "bold") + 
+  expand_limits(x = c(-5, 3.5), y = c(-0.5, 8)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+  
+
+ggsave(file = "../plots/chr_lt/2_3.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 5, height = 5)
+  
+```
+
+Compass
+
+```{r}
+exmpl %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 140, 
+           alpha = 0.6, 
+           fill = "grey10", # met.brewer("Cassatt1")[5], 
+           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") +
+
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               arrow = arrow(length = unit(10, "pt")),
+               colour = "slategray2", linewidth = 3) + 
+  
+  annotate("point", x = 0, y = 0, size = 5,
+           fill = "slategray3", colour = "slategray3") + 
+  scale_x_continuous(limits = c(-7, 7)) + 
+  scale_y_continuous(limits = c(-7, 7)) + 
+  
+  # geom_point(aes(x = x1_0, y = y1_0), 
+  #            colour = "slategray1", size = 10) + 
+  # geom_point(aes(x = x2_0, y = y2_0), 
+  #            colour = "pink3", size = 10) + 
+  # geom_text(aes(x = x1_0, y = y1_0), 
+  #           colour ="slategray1", label = "FROM\n(0, 0)",
+  #           vjust = -0.5, size = 10,
+  #           fontface = "bold") + 
+  # geom_text(aes(x = x2_0, y = y2_0), 
+  #           colour ="pink3", label = "TO",
+  #           vjust = -1, size = 10,
+  #           fontface = "bold") + 
+  # expand_limits(x = c(-3, 1), y = c(-1.5, 8)) + 
   labs(x = "", y = "") + 
   theme(plot.background = element_rect(fill = "transparent",
                                        colour = NA_character_),
@@ -974,8 +1043,7 @@ exmpl %>%
   
 
 ggsave(file = "../plots/chr_lt/2_4.png", plot = last_plot(), bg = "transparent",
-       dpi = 300, width = 7, height = 4)
-  
+       dpi = 300, width = 5, height = 5)
 ```
 
 ```{r, eval=F, include=F}
