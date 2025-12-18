@@ -143,7 +143,7 @@ formulas_nc <- formulas_d %>%
 glimpse(formulas_nc)
 ```
 
-## plot — all
+## plot — all NB USE COORD_EQUAL !!!
 
 ```{r, include=T, echo=F}
 #p_main <- 
@@ -170,6 +170,7 @@ formulas_nc %>%
   facet_wrap(~lang, ncol = 3) + 
   scale_x_continuous(limits = c(-230, 230)) + 
   scale_y_continuous(limits = c(-230, 230)) + 
+  coord_equal() + 
   
   annotate("point", x = 0, y = 0, size = 1,
            fill = "white", colour = "white") + 

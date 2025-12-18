@@ -1,0 +1,288 @@
+---
+title: "03_directions_modelling"
+format: html
+editor: visual
+---
+
+## Directions modelling
+
+The notebook takes centralized geo-data from the from—to formulas and transform it to summarize major directions and their dependence on location types
+
+```{r}
+library(tidyverse)
+library(geosphere) # for Haversine dist calculation
+
+library(cowplot)
+library(MetBrewer)
+theme_set(theme_minimal())
+```
+
+```{r, include=T, echo=F}
+formulas <- read.csv("../data/formulas_table.csv")
+glimpse(formulas)
+
+formulas_d <- formulas %>% 
+  filter(lang != "it") %>% 
+  rowwise() %>% 
+  mutate(dist_haversine = distHaversine(
+    c(from_longitude, from_latitude),
+    c(to_longitude, to_latitude)) 
+      / 1000) %>% 
+  ungroup() %>% 
+  # make numbers human-readable
+  mutate(dist_haversine = round(dist_haversine, digits = 3),
+         dist_longer_1k = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  distinct() %>%  # remove duplicated from-to from the same poem
+  
+  # calculate new coordinates
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) 
+
+head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
+
+rm(formulas)
+```
+
+## types edit
+
+Create larger groups for location types
+
+```{r}
+unique(c(formulas_d$from_type, formulas_d$to_type))
+
+types_groups <- tibble(type_original = unique(c(formulas_d$from_type, formulas_d$to_type)),
+       type_grouped = c("water", "other", "land", 
+                        "city", "water", "mountain", 
+                        "country", "water", "settlement", 
+                        "city", "settlement", "city", 
+                        "water", "land", "land", 
+                        "land", "mountain", "water", 
+                        "settlement", "water", "mountain", 
+                        "settlement"), 
+       type_major = c("natural", "natural", "natural", 
+                      "political", "natural", "natural", 
+                      "political", "natural", "political", 
+                      "political", "political", "political", 
+                      "natural", "natural", "political", 
+                      "natural", "natural", "natural", 
+                      "political", "natural", "natural", 
+                      "political"))
+
+# attach to the main table for from- and to-locs
+formulas_d <- formulas_d %>% 
+  left_join(types_groups %>% 
+              rename(
+                from_type = type_original,
+                from_type_group = type_grouped,
+                from_type_major = type_major),
+            by = "from_type") %>% 
+  left_join(types_groups %>% 
+              rename(
+                to_type = type_original,
+                to_type_group = type_grouped,
+                to_type_major = type_major),
+            by = "to_type") 
+```
+
+```{r}
+glimpse(formulas_d)
+```
+
+```{r}
+formulas_d %>% count(from_type_group)
+formulas_d %>% count(to_type_group)
+
+formulas_d %>% count(from_type_major)
+formulas_d %>% count(to_type_major)
+```
+
+## Angle calculation
+
+The idea is to calculate the angle between the clock handle to 12 o'clock (north) and the from-to vector. The default calculation start counting angle from the x-axis (east) & counter-clockwise. So there are some additional steps to calculate this as if we had a clock, that NORTH=0°
+
+### Sanity check
+
+```{r}
+t <- formulas_d %>% 
+  mutate(angle_east_deg = atan2(y2_0, x2_0) * 180 / pi,
+         angle_north_deg = (90 - angle_east_deg + 360) %% 360) %>% 
+  filter(dist_longer_1k == "long") %>% 
+  sample_n(6)
+
+t
+
+t %>% 
+  ggplot() + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "lightblue", 
+             linewidth = .5) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "lightblue", 
+             linewidth = .5) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0)) + 
+  geom_point(aes(x = rep(0, 6), y = rep(0, 6))) + 
+  
+  geom_text(aes(x = x2_0+10, y = y2_0+10, label = round(angle_north_deg)),
+            colour = "lightpink") + 
+  facet_wrap(~doc_key, scales = "fixed") + 
+
+  scale_x_continuous(limits = c(-90, 90)) +
+  scale_y_continuous(limits = c(-90, 90)) +
+  coord_equal()
+```
+
+```{r}
+t
+```
+
+```{r}
+(90 - (atan2(13, -18) * 180 / pi) + 360) %% 360
+```
+
+Calculate angles
+
+```{r}
+formulas_d <- formulas_d %>% 
+  mutate(angle_east_deg = atan2(y2_0, x2_0) * 180 / pi,
+         angle_north_deg = (90 - angle_east_deg + 360) %% 360) 
+```
+
+## Compass labels
+
+Use `case_when`\`for separate into N, NE, E, SE, S, SW, W, NW groups, 45 degrees each.
+
+```{r}
+formulas_d <- formulas_d %>% 
+  mutate(
+    compass = case_when(
+      angle_north_deg < 22.5 | angle_north_deg >= 337.5 ~ "N",
+      angle_north_deg < 67.5  ~ "NE",
+      angle_north_deg < 112.5 ~ "E",
+      angle_north_deg < 157.5 ~ "SE",
+      angle_north_deg < 202.5 ~ "S",
+      angle_north_deg < 247.5 ~ "SW",
+      angle_north_deg < 292.5 ~ "W",
+      TRUE                    ~ "NW"
+    )
+  )
+```
+
+### compass viz
+
+```{r}
+# factor level order
+formulas_d <- formulas_d %>% 
+  mutate(
+    compass = factor(
+      compass,
+      levels = c("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+    )
+  )
+```
+
+```{r}
+totals <- formulas_d %>% 
+  count(lang, dist_longer_1k) %>% 
+  mutate(lang_d = paste0(lang, "_", dist_longer_1k)) %>% 
+  rename(total_f = n)
+
+totals
+
+x <- formulas_d %>% 
+  #group_by(lang, dist_longer_1k) %>% 
+  mutate(lang_d = paste0(lang, "_", dist_longer_1k)) %>% 
+  group_by(lang_d) %>% 
+  count(compass) %>% 
+  left_join(totals, by = "lang_d") %>% 
+  mutate(perc = (n / total_f)) %>% 
+  ungroup() %>% 
+  mutate(value = 1)  
+  
+x
+```
+
+```{r}
+x %>% 
+  filter(dist_longer_1k == "long" & lang != "it") %>% 
+  ggplot(aes(x = compass, y = value)) + 
+  geom_col(width = 1,
+           position = "fill", colour = "white",
+           fill = "midnightblue",
+           aes(alpha = perc)) + 
+  facet_wrap(~lang_d) + 
+  geom_hline(yintercept = 1.0, colour = "midnightblue", alpha = 0.5) + 
+  theme(
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    axis.text.y = element_blank(),
+    strip.text = element_text(face = "bold", size = 12)
+    ) + 
+  coord_polar(start = -pi/8) 
+```
+
+```{r}
+x %>% 
+  filter(dist_longer_1k == "short" & lang != "it") %>% 
+  ggplot(aes(x = compass, y = value)) + 
+  geom_col(width = 1,
+           position = "fill", colour = "white",
+           fill = "plum4",
+           aes(alpha = perc)) + 
+  facet_wrap(~lang_d) + 
+  geom_hline(yintercept = 1.0, colour = "plum4", alpha = 0.5) + 
+  theme(
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    axis.text.y = element_blank(),
+    strip.text = element_text(face = "bold", size = 12)
+    ) + 
+  coord_polar(start = -pi/8) 
+```
+
+## Model
+
+This is the resulting data that can be used for the model:
+
+`angle_north_deg` is the angle used for the compass, `compass` column is for the labels.
+
+Columns `from/to_type_group` and `from/to_type_major` contain the labels for groups (city, water, etc.) and binary classes as natural/political
+
+```{r}
+glimpse(formulas_d)
+```
+
+```{r}
+formulas_d %>% count(from_type_group)
+```
+
+```{r}
+formulas_d %>% count(from_type_major)
+```
+
+Distribution of angle instances
+
+```{r}
+formulas_d %>% 
+  ggplot(aes(x = round(angle_north_deg,0))) + geom_bar() + 
+  facet_wrap(~lang)
+```
+
+Same but labels + types (for Czech)
+
+```{r}
+formulas_d %>% 
+  filter(lang == "cs") %>% 
+  group_by(dist_longer_1k) %>% 
+  count(compass) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = compass, y = n, fill = compass)) + 
+  geom_col() + 
+  facet_wrap(~dist_longer_1k, ncol = 1) + 
+  scale_fill_manual(values = c(rev(met.brewer("Cassatt1"))[1:2],
+                               rev(met.brewer("Cassatt1"))[5:7],
+                               (met.brewer("Cassatt1"))[4:8]))
+```
