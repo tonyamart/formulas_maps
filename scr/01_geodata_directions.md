@@ -173,25 +173,7 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
     5 cs    Od Hor Kuten veden k Praze    Kutná Hora     Prague                62.5 
     6 cs    od Baltu až k Adrii           Baltic Sea     Adriatic Sea        1725.  
 
-### proportion of dist \> 1000 in lang
-
-    # A tibble: 14 × 5
-       lang  dist_long     n n_total  perc
-       <chr> <chr>     <int>   <int> <dbl>
-     1 cs    long         90     308  29.2
-     2 cs    short       218     308  70.8
-     3 de    long         32      58  55.2
-     4 de    short        26      58  44.8
-     5 en    long        124     294  42.2
-     6 en    short       170     294  57.8
-     7 fr    long        108     217  49.8
-     8 fr    short       109     217  50.2
-     9 it    long         13      25  52  
-    10 it    short        12      25  48  
-    11 ru    long         93     162  57.4
-    12 ru    short        69     162  42.6
-    13 sl    long          3      22  13.6
-    14 sl    short        19      22  86.4
+### proportion of dist \> mean
 
 ### distribution
 
@@ -199,14 +181,12 @@ Poet’s mind is often flying not that far away?
 
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png)
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png)
-
     <ggplot2::labels> List of 2
      $ y    : chr "Dist Haversine (km)"
      $ title: chr "Distribution of all distances"
 
-What I see here: most of the distances are actually very small; but for
-some traditions there are quite a portion of longer ones.
+Most of the distances are actually very small; but for some traditions
+there are quite a portion of longer ones.
 
 The problem is the threshold here: would we want to divide into
 short/long groups based on any corpus-related number (mean/med dist?
@@ -231,7 +211,7 @@ dist_raw <- formulas_d %>%
 dist_raw
 ```
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
 ``` r
 dist_log <- formulas_d %>% 
@@ -250,7 +230,7 @@ dist_log <- formulas_d %>%
 dist_log
 ```
 
-![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png)
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png)
 
 ### dist summary stats
 
@@ -267,10 +247,29 @@ Calculate mean & median dist for each corpus + 3rd quantile
     6 ru        2551.      1478.        4112.
     7 sl        1321.        90.9        418.
 
+Attach means & medians and add grouping lables: if grouped to short/long
+based on the means in each language, proportion of short/long is almost
+the same, about 30/70
+
+    # A tibble: 12 × 5
+       lang  dist_long     n n_total  perc
+       <chr> <chr>     <int>   <int> <dbl>
+     1 cs    long         86     308  27.9
+     2 cs    short       222     308  72.1
+     3 de    long         16      58  27.6
+     4 de    short        42      58  72.4
+     5 en    long         92     294  31.3
+     6 en    short       202     294  68.7
+     7 fr    long         62     217  28.6
+     8 fr    short       155     217  71.4
+     9 ru    long         54     162  33.3
+    10 ru    short       108     162  66.7
+    11 sl    long          3      22  13.6
+    12 sl    short        19      22  86.4
+
 Plot based on the groups long / short distances:
 
-I just wanted to see how these values are distributed, should we divide
-them in two groups
+how these values are distributed, should we divide them in two groups
 
 ![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png)
 
@@ -638,16 +637,16 @@ unique (sampled example)
     # A tibble: 10 × 7
        lang  type_pair    text  from_placename to_placename dist_type dist_haversine
        <chr> <chr>        <chr> <chr>          <chr>        <chr>              <dbl>
-     1 fr    ancient cit… de l… Thebes         Nineveh      long             1552.  
-     2 cs    ancient cit… z Tr… Troy           Italy        long             1183.  
-     3 de    city --> an… von … Rome           Ostia        short              22.0 
-     4 ru    default -->… От К… Kyakhulay      Athens       long             2079.  
-     5 en    ancient cit… from… Babylon        Egypt        long             1611.  
-     6 en    ancient cit… From… Babylon        Rome         long             2996.  
-     7 en    ancient cit… from… Dan            Beersheba    short             236.  
-     8 en    ancient cit… from… Nicaea         River Trent  long             2707.  
-     9 en    mountain --… From… Mount Carmel   Ptolemais    long             1318.  
-    10 cs    city --> an… z Be… Bethlehem      Calvary      short               8.55
+     1 sl    city --> an… Od B… Bethlehem      Calvary      short               8.55
+     2 fr    ancient cit… de M… Memphis        Saint-Mandé  long             3226.  
+     3 cs    ancient cit… Od A… Athens         Delphi       short             121.  
+     4 fr    ancient cit… De T… Thebes         Rome         long             2577.  
+     5 ru    river --> a… От Н… Nile           Nineveh      long             1299.  
+     6 fr    ancient cit… De S… Sparta         Attica Regi… short             152.  
+     7 ru    mountain --… с на… Mount Olympus  Troy         short             332.  
+     8 en    country -->… From… India          Babylon      long             3931.  
+     9 fr    ancient cit… de T… Troy           Memphis      long             1214.  
+    10 en    river --> a… From… Jordan River   Bethphage    short              29.2 
 
 ### city parts
 
@@ -909,27 +908,27 @@ Filter n \> 3 !
 
 General frequencies (highly dependent on N formulas from a language)
 
-             placename  n rank_freq
-    1  Bohemian Forest 47         1
-    2            Paris 28         2
-    3             Rome 28         3
-    4           Prague 26         4
-    5           Danube 24         5
-    6            Rhine 23         6
-    7       Baltic Sea 22         7
-    8  Tatra Mountains 20         8
-    9           Moscow 16         9
-    10    Adriatic Sea 15        10
-    11           Tiber 15        11
-    12           Volga 15        12
-    13            Alps 14        13
-    14         Moravia 14        14
-    15            Nile 14        15
-    16          Ganges 13        16
-    17 Giant Mountains 13        17
-    18     Tagus River 13        18
-    19           Egypt 12        19
-    20            Neva 12        20
+            id       placename  n rank_freq
+    1  Q157290 Bohemian Forest 47         1
+    2     Q220            Rome 28         2
+    3      Q90           Paris 28         3
+    4    Q1085          Prague 26         4
+    5    Q1653          Danube 24         5
+    6     Q584           Rhine 23         6
+    7     Q545      Baltic Sea 22         7
+    8  Q194263 Tatra Mountains 20         8
+    9     Q649          Moscow 16         9
+    10  Q13712           Tiber 15        10
+    11  Q13924    Adriatic Sea 15        11
+    12    Q626           Volga 15        12
+    13   Q1286            Alps 14        13
+    14   Q3392            Nile 14        14
+    15  Q43266         Moravia 14        15
+    16  Q14294     Tagus River 13        16
+    17 Q214644 Giant Mountains 13        17
+    18   Q5089          Ganges 13        18
+    19   Q1741          Vienna 12        19
+    20    Q645            Neva 12        20
 
 Types: natural vs political
 
@@ -1022,130 +1021,421 @@ rm(totals, types_groups, x)
 
 Placenames mentioned in all corpora + frequency
 
-                  placename           type n_corpora rank_corpora freq_abs
-    1  Carpathian Mountains       mountain         6            1       10
-    2                 Paris           city         6            2       28
-    3                 Rhine          river         6            3       23
-    4                  Rome           city         6            4       28
-    5                 Tiber          river         6            5       15
-    6                Athens   ancient city         5            6        7
-    7            Baltic Sea            sea         5            7       22
-    8                 Cairo           city         5            8        9
-    9                Danube          river         5            9       24
-    10            Euphrates          river         5           10        8
-    11               Ganges          river         5           11       13
-    12                 Nile          river         5           12       14
-    13          Tagus River          river         5           13       13
-    14                 Alps       mountain         4           14       14
-    15                 Asia      continent         4           15        5
-    16              Babylon   ancient city         4           16        7
-    17            Bethlehem           city         4           17        8
-    18          Dardanelles strait (water)         4           18        6
-    19                  Don          river         4           19        8
-    20                Egypt        country         4           20       12
+    Warning in left_join(., places_freq, by = "placename"): Detected an unexpected many-to-many relationship between `x` and `y`.
+    ℹ Row 145 of `x` matches multiple rows in `y`.
+    ℹ Row 62 of `y` matches multiple rows in `x`.
+    ℹ If a many-to-many relationship is expected, set `relationship =
+      "many-to-many"` to silence this warning.
+
+                  placename           type n_corpora rank_corpora     id freq_abs
+    1  Carpathian Mountains       mountain         6            1  Q1288       10
+    2                 Paris           city         6            2    Q90       28
+    3                 Rhine          river         6            3   Q584       23
+    4                  Rome           city         6            4   Q220       28
+    5                 Tiber          river         6            5 Q13712       15
+    6                Athens   ancient city         5            6  Q1524        7
+    7            Baltic Sea            sea         5            7   Q545       22
+    8                 Cairo           city         5            8    Q85        9
+    9                Danube          river         5            9  Q1653       24
+    10            Euphrates          river         5           10 Q34589        8
+    11               Ganges          river         5           11  Q5089       13
+    12                 Nile          river         5           12  Q3392       14
+    13          Tagus River          river         5           13 Q14294       13
+    14                 Alps       mountain         4           14  Q1286       14
+    15                 Asia      continent         4           15    Q48        5
+    16              Babylon   ancient city         4           16  Q5684        7
+    17            Bethlehem           city         4           17  Q5776        8
+    18          Dardanelles strait (water)         4           18  Q6514        6
+    19                  Don          river         4           19  Q1229        8
+    20                Egypt        country         4           20    Q79       12
        rank_freq
     1         23
-    2          2
+    2          3
     3          6
-    4          3
-    5         11
-    6         41
+    4          2
+    5         10
+    6         43
     7          7
-    8         28
+    8         30
     9          5
     10        36
-    11        16
-    12        15
-    13        18
+    11        18
+    12        14
+    13        16
     14        13
-    15        61
-    16        42
-    17        31
-    18        55
-    19        33
-    20        19
+    15        71
+    16        48
+    17        37
+    18        58
+    19        32
+    20        21
 
-    [1] 0.557551
+    [1] 0.515102
 
 ------------------------------------------------------------------------
 
-test maps
+## Map example: from Malta to Rome
+
+Load pckg for maps
 
 ``` r
 library(sf)
+```
+
+    Warning: package 'sf' was built under R version 4.5.2
+
+    Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
+
+``` r
+library(ggspatial)
 
 library(rnaturalearth)
 library(rnaturalearthdata)
+```
+
+
+    Attaching package: 'rnaturalearthdata'
+
+    The following object is masked from 'package:rnaturalearth':
+
+        countries110
+
+``` r
 library(ggrepel)
 ```
 
-some x to y
-
 ``` r
-f <- formulas %>% 
-  filter(lang == "sl") %>% 
-  #sample_n(10) %>% 
-  mutate(f_id = row_number()) %>% 
-  select(f_id, text,
-         from_placename, to_placename, 
-         from_latitude, to_latitude, 
-         from_longitude, to_longitude
-         ) 
+exmpl <- formulas_d %>% 
+   filter(str_detect(to_placename, "Rome")) %>% 
+   filter(str_detect(author_name, "Whittier")) # specific line in eng
 
-from <- f %>% 
-  select(f_id, text, from_placename, from_latitude, from_longitude) %>% 
-  rename(placename = from_placename,
-         latitude = from_latitude,
-         longitude = from_longitude)
+# exmpl <- formulas_d %>% 
+#   filter(str_detect(from_placename, "Rhine") & str_detect(to_placename, "Danube"))
 
-to <- f %>% 
-  select(f_id, text, to_placename, to_latitude, to_longitude) %>% 
-  rename(placename = to_placename,
-         latitude = to_latitude,
-         longitude = to_longitude)
-
-
-# merge in a longer table
-from_to <- rbind(from, to)
-
-
-glimpse(f)
-glimpse(from_to)
-
-# f
-# from_to
-
-err <- f[f$from_latitude == f$to_latitude| f$from_longitude == f$to_longitude, ]
+exmpl
 ```
 
+    # A tibble: 1 × 19
+      lang  doc_key            from_id to_id text  author_name year_birth year_death
+      <chr> <chr>              <chr>   <chr> <chr> <chr>            <int>      <int>
+    1 en    whittier-songsOfL… Q233    Q220  From… Whittier, …       1807       1892
+    # ℹ 11 more variables: from_placename <chr>, from_latitude <dbl>,
+    #   from_longitude <dbl>, from_type <chr>, from_type_d <chr>,
+    #   to_placename <chr>, to_latitude <dbl>, to_longitude <dbl>, to_type <chr>,
+    #   to_type_d <chr>, dist_haversine <dbl>
+
 ``` r
-ggplot(world) +
-  geom_sf() +
-  coord_sf(xlim = c(-25, 90), ylim = c(-35,70), expand = FALSE) + 
-  geom_point(data = from_to, aes(x = longitude, y = latitude), size = 1, 
-       shape = 23, fill = "darkviolet") + 
-  geom_curve(data = f %>% 
-               filter(!f_id %in% err$f_id), 
+exmpl$text
+```
+
+    [1] "From Malta 's temples to the gates of Rome"
+
+``` r
+exmpl$dist_haversine
+```
+
+    [1] 691.395
+
+``` r
+exmpl %>% select(from_placename, from_longitude, from_latitude, 
+                 to_placename, to_longitude, to_latitude)
+```
+
+    # A tibble: 1 × 6
+      from_placename from_longitude from_latitude to_placename to_longitude
+      <chr>                   <dbl>         <dbl> <chr>               <dbl>
+    1 Malta                    14.5          35.9 Rome                 12.5
+    # ℹ 1 more variable: to_latitude <dbl>
+
+Basic map
+
+``` r
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+europe <- world[which(world$continent == "Europe"),]
+
+# europe <- world
+
+# from malta to rome
+ggplot(europe) +
+  geom_sf(fill = "#cbeedb",
+          alpha = 0.5
+          ) +
+  coord_sf(xlim = c(9, 18), ylim = c(34, 43), expand = FALSE) + 
+  
+  
+  geom_curve(data = exmpl,
              aes(x = from_longitude, y = from_latitude,
-                           xend = to_longitude, yend = to_latitude),
-             linewidth = 0.5, curvature = 0.2, 
-             colour = "darkviolet", alpha = 0.7) +
-  geom_text_repel(data = from_to, 
-                  aes(x = longitude, y = latitude, label = placename), 
-                  size = 2.5, col = "black", fontface = "bold") 
+                xend = to_longitude, yend = to_latitude),
+             linewidth = 5, curvature = 0,
+             colour = "slategray1", alpha = 0.9) +
+  
+  # malta label
+  geom_text_repel(data = exmpl,
+                  aes(x = from_longitude, y = from_latitude, label = from_placename),
+                  size = 22, col = "slategray1", fontface = "bold",
+                  vjust = 1.5, 
+                  segment.color = "transparent") + 
+  
+  # rome label
+  geom_text_repel(data = exmpl,
+                  aes(x = to_longitude, y = to_latitude, label = to_placename),
+                  size = 22, col = "pink2", fontface = "bold",
+                  vjust = 1,  box.padding = 0.7,
+                  segment.color = "transparent") + 
+  
+  # malta point
+  geom_point(data = exmpl, aes(x = from_longitude, y = from_latitude), 
+             size = 14, alpha = 1, color = "slategray1") + 
+  
+  # rome point
+  geom_point(data = exmpl, aes(x = to_longitude, y = to_latitude), 
+             size = 14, alpha = 1, color = "pink3") +
+  
+  
+  # annotation_scale(location = "bl", width_hint = 0.4) +
+  # annotation_north_arrow(location = "bl", which_north = "true", 
+  #       #pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
+  #       style = north_arrow_fancy_orienteering)
+  
+  theme(panel.grid.major = element_line(color = "grey60", 
+                                        #linetype = "dashed", 
+                                        size = 0.1),
+    #panel.background = element_rect(fill = "aliceblue"))
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
 ```
 
+    Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+    ℹ Please use the `linewidth` argument instead.
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-42-1.png)
+
 ``` r
-dist_t_summary %>% 
-  select(-third_quant) %>% 
-  pivot_longer(!c(lang_t, number_formulas),
-               names_to = "type", values_to = "dist_km") %>% 
-  mutate(lang = str_extract(lang_t, "^.."), 
-         lang_t = str_remove(lang_t, "^..."),
-         author_birth_halfdecade = str_remove(lang_t, "—....$")) %>% 
-  filter(type != "dist_mean") %>% 
-  ggplot(aes(x = time, y = dist_km, 
-             group = lang, 
-             colour = lang)) + 
-  geom_line(aes(linewidth = number_formulas))
+ggsave(file = "../plots/chr_lt/2_1.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 6.5, height = 6.5) 
 ```
+
+Line plot
+
+``` r
+exmpl %>% 
+  ggplot() + 
+  geom_segment(aes(x = from_longitude, xend = to_longitude,
+                   y = from_latitude, yend = to_latitude),
+               color = "slategray3", linewidth = 4
+               ) +
+  geom_point(aes( x = from_longitude, y = from_latitude), 
+             color = "slategray1", size = 10) + 
+  geom_point(aes( x = to_longitude, y = to_latitude), 
+             color = "pink3", size = 10) + 
+  
+  geom_text(aes(x = from_longitude, y = from_latitude),
+            label = "Malta", color = "slategray1",
+            size = 16, vjust = -1, hjust = -0.01,
+            fontface = "bold") + 
+  geom_text(aes(x = to_longitude, y = to_latitude),
+            label = "Rome", color = "pink3",
+            size = 16, vjust = -1, hjust = -0.01,
+            fontface = "bold") + 
+  
+  expand_limits(x = c(10, 18), y = c(36, 44)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_),
+        axis.text = element_blank())
+```
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-43-1.png)
+
+``` r
+ggsave(file = "../plots/chr_lt/2_2.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 5, height = 5) 
+```
+
+Transposed
+
+``` r
+exmpl %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  
+  ggplot() + 
+  
+  annotate("point", x = 0, y = 0, size = 200, 
+           alpha = 0.6, 
+           fill = "grey10", # met.brewer("Cassatt1")[5], 
+           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, linewidth = 2, colour = "slategray4") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 2, colour = "slategray4") +
+
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "slategray3", linewidth = 4) + 
+  
+  geom_point(aes(x = x1_0, y = y1_0), 
+             colour = "slategray1", size = 10) + 
+  geom_point(aes(x = x2_0, y = y2_0), 
+             colour = "pink3", size = 10) + 
+  geom_text(aes(x = x1_0, y = y1_0), 
+            colour ="slategray1", label = "FROM\n(0, 0)",
+            vjust = -0.5, size = 14,
+            fontface = "bold") + 
+  geom_text(aes(x = x2_0, y = y2_0), 
+            colour ="pink3", label = "TO",
+            vjust = -1, size = 14,
+            fontface = "bold") + 
+  expand_limits(x = c(-5, 3.5), y = c(-0.5, 8)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+```
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-44-1.png)
+
+``` r
+ggsave(file = "../plots/chr_lt/2_3.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 5, height = 5)
+```
+
+Compass
+
+``` r
+exmpl %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 140, 
+           alpha = 0.6, 
+           fill = "grey10", # met.brewer("Cassatt1")[5], 
+           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") +
+
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               arrow = arrow(length = unit(10, "pt")),
+               colour = "slategray2", linewidth = 3) + 
+  
+  annotate("point", x = 0, y = 0, size = 5,
+           fill = "slategray3", colour = "slategray3") + 
+  scale_x_continuous(limits = c(-7, 7)) + 
+  scale_y_continuous(limits = c(-7, 7)) + 
+  
+  # geom_point(aes(x = x1_0, y = y1_0), 
+  #            colour = "slategray1", size = 10) + 
+  # geom_point(aes(x = x2_0, y = y2_0), 
+  #            colour = "pink3", size = 10) + 
+  # geom_text(aes(x = x1_0, y = y1_0), 
+  #           colour ="slategray1", label = "FROM\n(0, 0)",
+  #           vjust = -0.5, size = 10,
+  #           fontface = "bold") + 
+  # geom_text(aes(x = x2_0, y = y2_0), 
+  #           colour ="pink3", label = "TO",
+  #           vjust = -1, size = 10,
+  #           fontface = "bold") + 
+  # expand_limits(x = c(-3, 1), y = c(-1.5, 8)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+```
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-45-1.png)
+
+``` r
+ggsave(file = "../plots/chr_lt/2_4.png", plot = last_plot(), bg = "transparent",
+       dpi = 300, width = 5, height = 5)
+```
+
+## Map: most frequent places
+
+``` r
+loc_fr <- freq_ranks %>% 
+  filter(n_corpora > 3) %>% 
+  filter(placename == "Baltic Sea")
+
+loc_coord <- formulas %>% 
+  filter(from_placename %in% loc_fr$placename | to_placename %in% loc_fr$placename) 
+
+ggplot(europe) +
+  geom_sf(fill = "#cbeedb"
+          ) +
+  coord_sf(xlim = c(-15, 50), ylim = c(35,75), expand = FALSE) + 
+  
+  geom_curve(data = loc_coord,
+             aes(x = from_longitude, y = from_latitude,
+                xend = to_longitude, yend = to_latitude),
+             linewidth = 0.3, curvature = 0.2,
+             colour = "slategrey", alpha = 0.9) + 
+  
+  geom_point(data = loc_coord, aes(x = from_longitude, y = from_latitude), 
+             size = 2, alpha = 0.9, color = "midnightblue") + 
+  geom_point(data = loc_coord, aes(x = to_longitude, y = to_latitude), 
+             size = 2, alpha = 0.9, color = "violetred4") 
+```
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-47-1.png)
+
+``` r
+x <- formulas %>% 
+  select(from_id, from_placename, from_latitude, from_longitude, lang) %>% 
+  rename(id = from_id,
+         placename = from_placename,
+         lat = from_latitude,
+         long = from_longitude) 
+
+freq_ranks <-formulas %>% 
+  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
+  rename(id = to_id,
+         placename = to_placename,
+         lat = to_latitude,
+         long = to_longitude) %>% 
+  rbind(x) %>% 
+  distinct() %>% 
+  count(id, placename, sort = T) %>% 
+  rename(n_corpora = n) %>% 
+  filter(n_corpora > 4)
+
+pl_coord <- formulas %>% 
+  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
+  rename(id = to_id,
+         placename = to_placename,
+         lat = to_latitude,
+         long = to_longitude) %>% 
+  rbind(x) %>% 
+  select(-lang) %>% 
+  distinct() %>% 
+  filter(placename %in% freq_ranks$placename) 
+
+ggplot(world) +
+  geom_sf(#fill = "#cbeedb"
+          ) +
+  coord_sf(xlim = c(-15, 90), ylim = c(25,75), expand = FALSE) + 
+  
+  geom_point(data = pl_coord, aes(x = long, y = lat), 
+             size = 2, alpha = 0.9, color = "violetred") + 
+  geom_text_repel(data = pl_coord, 
+                  aes(x = long, y = lat, label = placename),
+                  size = 4, color = "midnightblue")
+```
+
+![](01_geodata_directions.markdown_strict_files/figure-markdown_strict/unnamed-chunk-48-1.png)
