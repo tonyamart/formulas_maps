@@ -41,6 +41,16 @@ formulas_d <- formulas %>%
          dist_longer_1k = ifelse(dist_haversine > 1000, "long", "short")) 
 
 head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
+
+# add mean dist for long/short grouping
+dist_summary <- formulas_d %>% 
+  group_by(lang) %>% 
+  summarise(mean_dist = mean(dist_haversine),
+            .groups = "drop")
+
+formulas_d <- formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_longer_mean = ifelse(dist_haversine > mean_dist, "long", "short"))
 ```
 
 ## calculate coordinates
@@ -143,17 +153,22 @@ formulas_nc <- formulas_d %>%
 glimpse(formulas_nc)
 ```
 
-## plot — all NB USE COORD_EQUAL !!!
+## Fig. 3: long
+
+```{r, eval=F, echo=F}
+lang_labels <- tibble(
+  lang = c("cs", "de", "en", "fr", "ru", "sl"),
+  lang_full = c("Czech", "German", "English", "French", "Russian", "Slovenian")
+)
+```
 
 ```{r, include=T, echo=F}
-#p_main <- 
-  
-formulas_nc %>% 
-  filter(lang != "it") %>% 
+p_main <- formulas_nc %>% 
+  filter(lang != "it" & dist_longer_mean == "long") %>% 
   
   ggplot() + 
   annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.4, 
+           alpha = 0.6, 
            fill = met.brewer("Cassatt1")[5], 
            colour = met.brewer("Cassatt1")[5]) + 
   
@@ -165,7 +180,8 @@ formulas_nc %>%
   geom_segment(aes(x = x1_0, xend = x2_0,
                    y = y1_0, yend = y2_0), 
                colour = met.brewer("Cassatt2")[9],
-               arrow = arrow(length = unit(5, "pt")),
+               arrow = arrow(length = unit(7, "pt")),
+               linewidth = 1,
                alpha = 0.5) + 
   facet_wrap(~lang, ncol = 3) + 
   scale_x_continuous(limits = c(-230, 230)) + 
@@ -179,17 +195,28 @@ formulas_nc %>%
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.border = element_blank(), 
-        #axis.text = element_blank(), 
+        axis.text = element_blank(), 
         axis.title = element_blank(),
-        strip.text.x = element_text(size = 14, face = "bold"),
+        strip.text.x = element_text(size = 20, face = "bold"),
         # spacing for slides
-        panel.spacing = unit(4, "lines"))
-  
+        panel.spacing = unit(1, "lines"))
+
+p_main
 ```
 
 ```{r, eval=F, inlude=F, echo=F}
-ggsave("../plots/chr_lt/3_1.png", plot = last_plot(), 
-       width = 12, height = 10, bg = "white", dpi = 300)
+# ggsave("../plots/Fig_2.png", plot = last_plot(), 
+#        width = 12, height = 10, bg = "white", dpi = 300)
+
+# to save together with the pizza-plot:
+# load the plot from scr 03 !
+
+plot_grid(p_main, NA, long_dist_pizza,
+          nrow = 1, rel_widths = c(1, 0.1, 1),
+          labels = c("A", "", "B"), label_size = 36)
+
+ggsave("../plots/paper/Fig_3.png", plot = last_plot(),
+       width = 20, height = 7, bg = "white", dpi = 300)
 ```
 
 ## loc types
@@ -711,6 +738,8 @@ two different plots for long & for short distances
 
 ### short dist closer look
 
+#### 1000 km threshold
+
 ```{r, include=T, echo=F}
 p_short <- formulas_nc %>% 
   filter(lang != "it") %>% 
@@ -733,6 +762,8 @@ p_short <- formulas_nc %>%
                arrow = arrow(length = unit(4, "pt")),
                alpha = 0.5) + 
   # facet_wrap(~lang, ncol = 1) + 
+  coord_equal() + 
+  
   scale_x_continuous(limits = c(-15, 15)) + 
   scale_y_continuous(limits = c(-15, 15)) + 
   
@@ -756,6 +787,66 @@ p1 <- p_short + facet_wrap(~lang, ncol = 1)
 ```{r, eval=F, inlude=F, echo=F}
 ggsave("../plots/01_compass_dist_short.png", plot = last_plot(), 
        width = 10, height = 8, bg = "white", dpi = 300)
+```
+
+# Fig. 4
+
+#### short dist based on mean
+
+```{r, include=T, echo=F}
+p_short <- formulas_nc %>% 
+  filter(lang != "it") %>% 
+  filter(dist_longer_mean == "short") %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 100, 
+           alpha = 0.4, 
+           fill = met.brewer("Cassatt2")[4], 
+           colour = met.brewer("Cassatt2")[4]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  geom_vline(xintercept = 0, lty = 2, colour = "white", 
+             linewidth = 1) + 
+  
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = met.brewer("Cassatt2")[9],
+               arrow = arrow(length = unit(4, "pt")),
+               linewidth = 1,
+               alpha = 0.5) + 
+  coord_equal() + 
+  
+  # facet_wrap(~lang, ncol = 1) + 
+  scale_x_continuous(limits = c(-33, 33)) + 
+  scale_y_continuous(limits = c(-33, 33)) + 
+  
+  annotate("point", x = 0, y = 0, size = 1,
+           fill = "white", colour = "white") + 
+  
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(), 
+        axis.text = element_blank(), 
+        axis.title = element_blank(),
+        strip.text.x = element_text(size = 14, face = "bold")) + 
+  # labs(title = "Short distances (dist < mean_dist_lang)") + 
+  facet_wrap(~lang, ncol = 3)
+
+p_short
+```
+
+```{r, eval = F, echo = F, include = F}
+# to save together with the pizza-plot:
+# load the plot from scr 03 !
+
+plot_grid(p_short, NA, short_dist_pizza,
+          nrow = 1, rel_widths = c(1, 0.1, 1),
+          labels = c("A", "", "B"), label_size = 36)
+
+ggsave("../plots/paper/Fig_4.png", plot = last_plot(),
+       width = 20, height = 7, bg = "white", dpi = 300)
 ```
 
 ### longer dist
@@ -782,6 +873,8 @@ p_long <- formulas_nc %>%
                arrow = arrow(length = unit(4, "pt")), 
                alpha = 0.5) + 
 
+  coord_equal() +
+  
   scale_x_continuous(limits = c(-230, 230)) + 
   scale_y_continuous(limits = c(-230, 230)) + 
   

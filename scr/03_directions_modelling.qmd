@@ -185,16 +185,24 @@ formulas_d <- formulas_d %>%
 ```
 
 ```{r}
+dist_mean <- formulas_d %>% 
+  group_by(lang) %>% 
+  summarise(dist_mean = mean(dist_haversine),
+            .groups = "drop")
+
 totals <- formulas_d %>% 
-  count(lang, dist_longer_1k) %>% 
-  mutate(lang_d = paste0(lang, "_", dist_longer_1k)) %>% 
+  left_join(dist_mean, by = "lang") %>% 
+  mutate(dist_longer_mean = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  count(lang, dist_longer_mean) %>% 
+  mutate(lang_d = paste0(lang, "_", dist_longer_mean)) %>% 
   rename(total_f = n)
 
 totals
 
 x <- formulas_d %>% 
-  #group_by(lang, dist_longer_1k) %>% 
-  mutate(lang_d = paste0(lang, "_", dist_longer_1k)) %>% 
+  left_join(dist_mean, by = "lang") %>% 
+  mutate(dist_longer_mean = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(lang_d = paste0(lang, "_", dist_longer_mean)) %>% 
   group_by(lang_d) %>% 
   count(compass) %>% 
   left_join(totals, by = "lang_d") %>% 
@@ -206,41 +214,55 @@ x
 ```
 
 ```{r}
-x %>% 
-  filter(dist_longer_1k == "long" & lang != "it") %>% 
+long_dist_pizza <- x %>% 
+  filter(dist_longer_mean == "long" & lang != "it") %>% 
   ggplot(aes(x = compass, y = value)) + 
-  geom_col(width = 1,
+    geom_col(width = 1,
            position = "fill", colour = "white",
-           fill = "midnightblue",
+           fill = met.brewer("Cassatt1")[8],
            aes(alpha = perc)) + 
-  facet_wrap(~lang_d) + 
-  geom_hline(yintercept = 1.0, colour = "midnightblue", alpha = 0.5) + 
-  theme(
-    panel.grid = element_blank(),
-    axis.title = element_blank(),
-    axis.text.y = element_blank(),
-    strip.text = element_text(face = "bold", size = 12)
-    ) + 
-  coord_polar(start = -pi/8) 
+    facet_wrap(~lang) + 
+    labs(alpha = "%") + 
+    geom_hline(yintercept = 1.0, colour = met.brewer("Cassatt1")[8], alpha = 0.5) + 
+    theme(
+      panel.grid = element_blank(),
+      axis.title = element_blank(),
+      axis.text.y = element_blank(),
+      strip.text = element_text(face = "bold", size = 20),
+      #legend.position = "bottom",
+      legend.text = element_text(size = 14),
+      legend.title = element_text(size = 14),
+      axis.text.x = element_text(face = "bold", size = 12)
+      ) + 
+    coord_polar(start = -pi/8) 
+
+long_dist_pizza
 ```
 
 ```{r}
-x %>% 
-  filter(dist_longer_1k == "short" & lang != "it") %>% 
+short_dist_pizza <- x %>% 
+  filter(dist_longer_mean == "short" & lang != "it") %>% 
   ggplot(aes(x = compass, y = value)) + 
   geom_col(width = 1,
            position = "fill", colour = "white",
-           fill = "plum4",
+           fill = met.brewer("Cassatt2")[3],
            aes(alpha = perc)) + 
-  facet_wrap(~lang_d) + 
-  geom_hline(yintercept = 1.0, colour = "plum4", alpha = 0.5) + 
+  facet_wrap(~lang) + 
+  labs(alpha = "%") +
+  geom_hline(yintercept = 1.0, colour = met.brewer("Cassatt2")[3], alpha = 0.5) + 
   theme(
-    panel.grid = element_blank(),
-    axis.title = element_blank(),
-    axis.text.y = element_blank(),
-    strip.text = element_text(face = "bold", size = 12)
-    ) + 
+      panel.grid = element_blank(),
+      axis.title = element_blank(),
+      axis.text.y = element_blank(),
+      strip.text = element_text(face = "bold", size = 20),
+      #legend.position = "bottom",
+      legend.text = element_text(size = 14),
+      legend.title = element_text(size = 14),
+      axis.text.x = element_text(face = "bold", size = 12)
+      ) + 
   coord_polar(start = -pi/8) 
+
+short_dist_pizza
 ```
 
 ## Model

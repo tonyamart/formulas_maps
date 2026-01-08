@@ -17,7 +17,7 @@ theme_set(theme_minimal())
 library(geosphere) # distHavestine()
 ```
 
-Read data as a table (flatted & merged json-s)
+Read data as a table (flatted, merged, and manually cleaned json-s)
 
 ```{r}
 formulas <- read.csv("../data/formulas_table.csv")
@@ -33,7 +33,8 @@ Keep only ONE from-to direction per poem
 # nrow(formulas)
 
 formulas <- formulas %>% 
-  distinct()
+  distinct() %>% 
+  filter(lang != "it")
 
 # just removes 2 rows
 ```
@@ -69,7 +70,7 @@ f_long_from <- formulas %>%
 f_long <- f_long_from %>% 
   rbind(formulas %>% select(lang, to_id) %>% rename(qid = to_id))
 
-f_long %>% 
+f_long_t <- f_long %>% 
   group_by(lang) %>% 
   count(qid, sort = T) %>% 
   mutate(rank_ft = row_number()) %>% 
@@ -86,7 +87,33 @@ f_long %>%
   select(id, qid, lang, label, rank_ft, rank_total, from_to_count, total_count) %>% 
   filter(!is.na(qid))
 
-rm(f_long, f_long_from, loc_freq)
+f_long_t
+
+kcor <- (c(cor(f_long_t %>% filter(lang == "cs") %>% pull(rank_ft), 
+      f_long_t %>% filter(lang == "cs") %>% pull(rank_total),
+          method = "kendall"),
+  cor(f_long_t %>% filter(lang == "de") %>% pull(rank_ft), 
+      f_long_t %>% filter(lang == "de") %>% pull(rank_total),
+          method = "kendall"),
+  cor(f_long_t %>% filter(lang == "en") %>% pull(rank_ft), 
+      f_long_t %>% filter(lang == "en") %>% pull(rank_total),
+          method = "kendall"),
+  cor(f_long_t %>% filter(lang == "fr") %>% pull(rank_ft), 
+      f_long_t %>% filter(lang == "fr") %>% pull(rank_total),
+          method = "kendall"),
+  cor(f_long_t %>% filter(lang == "ru") %>% pull(rank_ft), 
+      f_long_t %>% filter(lang == "ru") %>% pull(rank_total),
+          method = "kendall"),
+  cor(f_long_t %>% filter(lang == "sl") %>% pull(rank_ft), 
+      f_long_t %>% filter(lang == "sl") %>% pull(rank_total),
+          method = "kendall")))
+
+tibble(lang = c("cs", "de", "en", "fr", "ru", "sl"),
+       kendall_cor = round(kcor, 3))
+
+mean(kcor)
+
+rm(f_long, f_long_from, loc_freq, f_long_t, kcor)
 ```
 
 It's a long table, just some observations:
@@ -183,15 +210,266 @@ formulas_d <- formulas %>%
 head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
 ```
 
-### proportion of dist \> mean 
+# Fig 1: Example
 
-```{r, include = F, echo = F}
-totals <- formulas_d %>% 
-  count(lang) %>% 
-  rename(n_total = n)
+Load pckg for maps
+
+```{r}
+library(sf)
+library(ggspatial)
+
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(ggrepel)
 ```
 
-### distribution
+```{r}
+exmpl <- formulas_d %>% 
+   filter(str_detect(to_placename, "Rome")) %>% 
+   filter(str_detect(author_name, "Whittier")) # specific line in eng
+
+# exmpl <- formulas_d %>% 
+#   filter(str_detect(from_placename, "Rhine") & str_detect(to_placename, "Danube"))
+
+exmpl
+exmpl$text
+
+exmpl$dist_haversine
+
+exmpl %>% select(from_placename, from_longitude, from_latitude, 
+                 to_placename, to_longitude, to_latitude)
+
+exmpl %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  select(from_placename, from_longitude, from_latitude, 
+                 to_placename, to_longitude, to_latitude,
+         x1_0, y1_0, x2_0, y2_0)
+```
+
+Basic map
+
+```{r}
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+europe <- world[which(world$continent == "Europe"),]
+
+# europe <- world
+
+# from malta to rome
+map_1 <- ggplot(europe) +
+  geom_sf(fill = "#cbeedb",
+          alpha = 0.5
+          ) +
+  coord_sf(xlim = c(9, 18), ylim = c(34, 43), expand = FALSE) + 
+  
+  geom_curve(data = exmpl,
+             aes(x = from_longitude, y = from_latitude,
+                xend = to_longitude, yend = to_latitude),
+             linewidth = 5, curvature = 0,
+             colour = "slategray3", alpha = 0.9) +
+  
+  # malta label
+  geom_text_repel(data = exmpl,
+                  aes(x = from_longitude, y = from_latitude, label = from_placename),
+                  size = 14, col = met.brewer("Cassatt2")[8], fontface = "bold",
+                  vjust = 1.5, 
+                  segment.color = "transparent") + 
+  
+  # rome label
+  geom_text_repel(data = exmpl,
+                  aes(x = to_longitude, y = to_latitude, label = to_placename),
+                  size = 14, col = met.brewer("Cassatt2")[3], fontface = "bold",
+                  vjust = 1,  box.padding = 0.7,
+                  segment.color = "transparent") + 
+  
+  # malta point
+  geom_point(data = exmpl, aes(x = from_longitude, y = from_latitude), 
+             size = 12, alpha = 1, color = met.brewer("Cassatt2")[8]) + 
+  
+  # rome point
+  geom_point(data = exmpl, aes(x = to_longitude, y = to_latitude), 
+             size = 12, alpha = 1, color = met.brewer("Cassatt2")[3]) +
+  
+  
+  # annotation_scale(location = "bl", width_hint = 0.4) +
+  # annotation_north_arrow(location = "bl", which_north = "true", 
+  #       #pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
+  #       style = north_arrow_fancy_orienteering)
+  
+  theme(panel.grid.major = element_line(color = "grey60", 
+                                        #linetype = "dashed", 
+                                        size = 0.1),
+    #panel.background = element_rect(fill = "aliceblue"))
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+
+map_1
+
+# ggsave(file = "../plots/chr_lt/2_1.png", plot = last_plot(), bg = "transparent",
+#        dpi = 300, width = 6.5, height = 6.5) 
+```
+
+Map 2: no background line plot
+
+```{r}
+map_2 <- exmpl %>% 
+  ggplot() + 
+  geom_segment(aes(x = from_longitude, xend = to_longitude,
+                   y = from_latitude, yend = to_latitude),
+               color = "slategray3", linewidth = 4
+               ) +
+  geom_point(aes( x = from_longitude, y = from_latitude), 
+             color = met.brewer("Cassatt2")[8], size = 10) + 
+  geom_point(aes( x = to_longitude, y = to_latitude), 
+             color = met.brewer("Cassatt2")[3], size = 10) + 
+  
+  geom_text(aes(x = from_longitude, y = from_latitude),
+            label = "FROM(35.88, 14.5)", color = met.brewer("Cassatt2")[8],
+            size = 10, vjust = -1, hjust = -0.01,
+            fontface = "bold") + 
+  geom_text(aes(x = to_longitude, y = to_latitude),
+            label = "TO(41.89, 12.48)", color = met.brewer("Cassatt2")[3],
+            size = 10, vjust = -1, hjust = -0.01,
+            fontface = "bold") + 
+  coord_equal() + 
+  expand_limits(x = c(14, 23), y = c(35, 44)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_),
+        axis.text = element_blank())
+
+map_2  
+
+# ggsave(file = "../plots/chr_lt/2_2.png", plot = last_plot(), bg = "transparent",
+#        dpi = 300, width = 5, height = 5) 
+```
+
+Map 3: transposed
+
+```{r}
+map_3 <- exmpl %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  
+  ggplot() + 
+  
+  annotate("point", x = 0, y = 0, size = 200, 
+           alpha = 0.4, 
+           fill = "grey10", # met.brewer("Cassatt1")[5], 
+           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, linewidth = 2, colour = "slategray3") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 2, colour = "slategray3") +
+
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               colour = "slategray2", linewidth = 4) + 
+  
+  geom_point(aes(x = x1_0, y = y1_0), 
+             colour = met.brewer("Cassatt2")[8], size = 10) + 
+  geom_point(aes(x = x2_0, y = y2_0), 
+             colour = met.brewer("Cassatt2")[3], size = 10) + 
+  geom_text(aes(x = x1_0, y = y1_0), 
+            colour = met.brewer("Cassatt2")[8], label = "FROM\n(0, 0)",
+            vjust = -0.5, size = 10,
+            fontface = "bold") + 
+  geom_text(aes(x = x2_0, y = y2_0), 
+            colour = met.brewer("Cassatt2")[3], label = "TO",
+            vjust = -1, size = 10,
+            fontface = "bold") + 
+  expand_limits(x = c(-5, 4), y = c(-0.5, 8.5)) + 
+  coord_equal() + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+  
+map_3
+
+# ggsave(file = "../plots/chr_lt/2_3.png", plot = last_plot(), bg = "transparent",
+#        dpi = 300, width = 5, height = 5)
+  
+```
+
+Map 4: Clock plot:
+
+```{r}
+map_4 <- exmpl %>% 
+  mutate(x1_0 = 0.0,
+         y1_0 = 0.0,
+         
+         x2_0 = to_longitude - from_longitude,
+         y2_0 = to_latitude - from_latitude) %>% 
+  
+  ggplot() + 
+  annotate("point", x = 0, y = 0, size = 140, 
+           alpha = 0.4, 
+           fill = "grey10", # met.brewer("Cassatt1")[5], 
+           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
+  
+  geom_hline(yintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") + 
+  geom_vline(xintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") +
+
+  geom_segment(aes(x = x1_0, xend = x2_0,
+                   y = y1_0, yend = y2_0), 
+               arrow = arrow(length = unit(10, "pt")),
+               colour = "slategray2", linewidth = 3) + 
+  coord_equal() + 
+  annotate("point", x = 0, y = 0, size = 7,
+           fill = "slategray2", colour = "slategray2") + 
+  scale_x_continuous(limits = c(-7, 7)) + 
+  scale_y_continuous(limits = c(-7, 7)) + 
+  
+  # geom_point(aes(x = x1_0, y = y1_0), 
+  #            colour = "slategray1", size = 10) + 
+  # geom_point(aes(x = x2_0, y = y2_0), 
+  #            colour = "pink3", size = 10) + 
+  # geom_text(aes(x = x1_0, y = y1_0), 
+  #           colour ="slategray1", label = "FROM\n(0, 0)",
+  #           vjust = -0.5, size = 10,
+  #           fontface = "bold") + 
+  # geom_text(aes(x = x2_0, y = y2_0), 
+  #           colour ="pink3", label = "TO",
+  #           vjust = -1, size = 10,
+  #           fontface = "bold") + 
+  # expand_limits(x = c(-3, 1), y = c(-1.5, 8)) + 
+  labs(x = "", y = "") + 
+  theme(plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+  
+map_4
+
+# ggsave(file = "../plots/chr_lt/2_4.png", plot = last_plot(), bg = "transparent",
+#        dpi = 300, width = 5, height = 5)
+```
+
+```{r}
+plot_grid(map_1, map_2, map_3, map_4,
+          nrow = 1,
+          labels = c("1", "2", "3", "4"), label_size = 36)
+
+
+ggsave("../plots/paper/Fig_1.png", plot = last_plot(),
+       bg = "white", dpi = 300, width = 20, height = 5)
+```
+
+# Dist distribution
 
 Poet's mind is often flying not that far away?
 
@@ -208,7 +486,7 @@ Most of the distances are actually very small; but for some traditions there are
 
 The problem is the threshold here: would we want to divide into short/long groups based on any corpus-related number (mean/med dist? country size? which country then), or to set an arbitrary baseline like everything less then 1000km is a small distance, and anything longer – is long?
 
-### Figure 1: dist distribution
+# Fig 2: dist distribution
 
 ```{r}
 dist_raw <- formulas_d %>% 
@@ -219,8 +497,8 @@ dist_raw <- formulas_d %>%
   geom_violin(fill = met.brewer("Cassatt2")[4], alpha = 0.7) + 
   labs(y = "Distance (km)",
        x = "Corpus") + 
-  theme(axis.text = element_text(size = 12),
-        axis.title = element_text(size = 14))
+  theme(axis.text = element_text(size = 10),
+        axis.title = element_text(size = 12))
 
 dist_raw
 ```
@@ -235,8 +513,8 @@ dist_log <- formulas_d %>%
   geom_violin(fill = met.brewer("Cassatt2")[4], alpha = 0.7) + 
   labs(x = "Distance, km (log scale)",
        y = "Corpus") + 
-  theme(axis.text = element_text(size = 12),
-        axis.title = element_text(size = 14)) + 
+  theme(axis.text = element_text(size = 10),
+        axis.title = element_text(size = 12)) + 
   scale_x_log10()
 
 dist_log
@@ -244,12 +522,12 @@ dist_log
 
 ```{r, eval=F, include=F, echo=F}
 plot_grid(dist_raw, NULL, dist_log,
-          rel_widths = c(1, 0.05, 1), nrow = 1,
-          labels = c("A", "B"), label_size = 18)
+          rel_widths = c(1, 0.1, 1), nrow = 1,
+          labels = c("A", "", "B"), label_size = 16)
 
 
-ggsave("../plots/Fig_1.png", plot = last_plot(),
-       bg = "white", dpi = 300, width = 12, height = 6)
+ggsave("../plots/paper/Fig_2.png", plot = last_plot(),
+       bg = "white", dpi = 300, width = 7, height = 4)
 ```
 
 ### dist summary stats
@@ -270,6 +548,11 @@ dist_summary
 Attach means & medians and add grouping lables: if grouped to short/long based on the means in each language, proportion of short/long is almost the same, about 30/70
 
 ```{r, include = T, echo = F}
+
+totals <- formulas_d %>% 
+  count(lang) %>% 
+  rename(n_total = n)
+
 formulas_d %>% 
   filter(lang != "it") %>% 
   left_join(dist_summary, by = "lang") %>% 
@@ -277,6 +560,28 @@ formulas_d %>%
   count(lang, dist_long) %>% 
   left_join(totals, by = "lang") %>% 
   mutate(perc = round((n/n_total)*100, 1))
+```
+
+\% longer than 1000 km
+
+```{r}
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_long = ifelse(dist_haversine > 800, "long", "short")) %>% 
+  count(lang, dist_long) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(perc = round((n/n_total)*100, 1))
+```
+
+Longest distances:
+
+```{r}
+formulas_d %>% 
+  arrange(desc(dist_haversine)) %>% 
+  head(20) %>% 
+  select(lang, text, from_type, to_type, from_placename, to_placename, dist_haversine)
+
 ```
 
 Plot based on the groups long / short distances:
@@ -322,129 +627,6 @@ formulas_d %>%
   labs(title = "Grouped dist distribution: distances longer than 1000km")
 ```
 
-#### Time: distances based on author birth year
-
-```{r, include = F, echo=F}
-
-# check birth year missing data
-
-totals <- formulas %>% 
-  count(lang) %>% 
-  rename(total_n = n)
-
-formulas_d %>% 
-  select(lang, year_birth, dist_haversine) %>% 
-  filter(!is.na(year_birth)) %>% 
-  count(lang) %>% 
-  left_join(totals, by = "lang")
-```
-
-This is how author's birth years are distributed, if we're only looking in our formulas subset
-
-```{r, include=T, echo=F, warning=FALSE}
-formulas %>% 
-  filter(lang != "it") %>% 
-  select(lang, year_birth) %>% 
-  ggplot(aes(x = year_birth)) + 
-  geom_density(fill = "lightseagreen") + 
-  facet_wrap(~lang) + 
-  geom_vline(xintercept = seq(1600, 1900, 50), 
-             lty = 2, colour = "darkblue") + 
-  labs(title = "Formulas found per 50 years period",
-       subtitle = "Year of author birth is used")
-```
-
-Add time period column & recalculate summary dist metrics: I aggregated based on the half-century periods the author was born. The question here was: do authors born in quite distant times uses different distances when from_to formula appears?
-
-```{r, include=T, echo=F}
-dist_t_summary <- formulas_d %>% 
-  filter(!is.na(year_birth)) %>% 
-  mutate(period_birth = floor(year_birth/50)*50,
-         period_end = period_birth + 49,
-         period = paste0(period_birth, "—", period_end),
-         lang_t = paste0(lang, " ", period)) %>% 
-  group_by(lang_t) %>% 
-  summarise(dist_mean = mean(dist_haversine),
-            dist_median = median(dist_haversine),
-            third_quant = quantile(dist_haversine, 0.75),
-            number_formulas = n()) %>% 
-  ungroup() 
-
-dist_t_summary
-```
-
-```{r, include=T, echo=F, warning=F, message=F}
-dist_t_summary %>% 
-  select(-number_formulas) %>% 
-  pivot_longer(!lang_t) %>% 
-  left_join(dist_t_summary %>% select(lang_t, number_formulas)) %>% 
-  filter(number_formulas > 4) %>% # filter out period if less than [5 formulas found 
-  mutate(lang = str_extract(lang_t, "^.."), 
-         lang_t = str_remove(lang_t, "^..."),
-         lang_t = str_remove(lang_t, "—....$")) %>% 
-  
-  filter(lang != "it") %>% 
-  ggplot(aes(x = lang_t, y = value, group = name, colour = name)) +
-  geom_line(aes(linewidth = number_formulas)) + 
-  geom_hline(yintercept = 2000, lty = 2, colour = "darkblue") + 
-  facet_wrap(~lang, scales = "free_x") + 
-  labs(y = "dist in km",
-       title = "Temporal distribution of distances in from_to formulas",
-       subtitle = "x axis: 50-years chunks based on the author's birth year\n(i.e., 1750: aggregated value for authors born between 1750 and 1799") + 
-  theme(legend.position = "bottom")
-```
-
--   overall: we can see than Czech, German, & Slovenian from_to aggregated(!) distances are usually below 2k km; longest from-to are en, fr, and somewhat ru;
-
--   NB: my 2000 km threshold is absolutely arbitrary; also, I removed periods with less than 5 formulas;
-
--   Peaks details:
-
-    -   DE: peak period 1700-1749 is only 12 formulas, may be a random result
-
-    -   EN: authors born in 1750-1799: 40 formulas found; for 1800-1849 & 1850-1899 even more data (101 & 143 resp.) –\> these dist are really long on average;
-
-    -   FR: low number of formulas for any poet-birth period EXCEPT for 1800-1849;
-
-    -   RU: most formulas come from authors born in 1850-1899 (69); for 18c-authors there are 15 (1700-1749) and 22 (1750-1799) formulas respectively, so it actually can tell us something – like that these from-to mean/median distances are stable high
-
-### short vs long dist
-
-Previous plot was just aggregating all distances based on 50-year period and calculated means etc. Here I did not do any aggregation, but divided the observations in two groups (\> or \<1000km distance). Then I put everything on roughly the same timeline (no aggregation, just formulas + author's year birth)
-
-```{r, include=T, echo=F, warning=F}
-formulas_d %>% 
-  filter(lang != "it") %>% 
-  mutate(dist_longer_1k = ifelse(dist_haversine > 1000, "yes", "no")) %>% 
-  #filter(dist_longer_1k == "no") %>% 
-  ggplot(aes(x = year_birth, y = dist_haversine, group = dist_longer_1k)) + 
-  geom_point(aes(colour = dist_longer_1k), alpha = 0.5) + 
-  facet_wrap(~lang) + 
-  geom_smooth(aes(colour = dist_longer_1k, fill = dist_longer_1k)) + 
-  geom_hline(yintercept = 5000, lty = 2, colour = "darkblue") + 
-  
-  theme(legend.position = "bottom") + 
-  scale_y_continuous(limits = c(-1, 20000)) + 
-  labs(y = "Dist Haversine, km", 
-       x = "Author birth year")
-```
-
-```{r}
-rm(dist_summary, dist_t_summary, loc_freq, dist_log, dist_raw)
-```
-
-For longer distances: everyone except EN and FR are usually below the 5k distances even for longer ones? ru is somewhere inbetween.
-
-So I guess the takeouts are:
-
--   the distribution of from-to distances is very unequal: we actually have more closer distances, when something like "from portugal to china" situations;
-
--   however the latter is characteristic at least for Eng, Fr, and mb Ru (not surprising but still); for Italy we have too little observations; German corpus looks to me closer to Czech, than to the 'expansion' ones;
-
--   I think we should consider dividing the distances in groups for sure, otherwise short distances are practically invisible;
-
--   Question what I'm not sure about is the threshold between short/long distance though, should it be calculated for each country separately, or not, etc. FOR NOW I just used 1000km for all corpora.
-
 # Types
 
 How distances are related to the types of locations in from-to formula?
@@ -460,35 +642,144 @@ formulas_d %>%
   head(20)
 ```
 
+Larger groups
+
+```{r}
+unique(c(formulas_d$from_type, formulas_d$to_type))
+
+types_groups <- tibble(type_original = unique(c(formulas_d$from_type, formulas_d$to_type)),
+       type_grouped = c("water", "other", "land", 
+                        "city", "water", "mountain", 
+                        "country", "water", "settlement", 
+                        "city", "settlement", "city", 
+                        "water", "land", "land", 
+                        "land", "mountain", "water", 
+                        "settlement", "water", "mountain", 
+                        "settlement"), 
+       type_major = c("natural", "natural", "natural", 
+                      "political", "natural", "natural", 
+                      "political", "natural", "political", 
+                      "political", "political", "political", 
+                      "natural", "natural", "political", 
+                      "natural", "natural", "natural", 
+                      "political", "natural", "natural", 
+                      "political"))
+
+# attach to the main table for from- and to-locs
+formulas_d <- formulas_d %>% 
+  left_join(types_groups %>% 
+              rename(
+                from_type = type_original,
+                from_type_group = type_grouped,
+                from_type_major = type_major),
+            by = "from_type") %>% 
+  left_join(types_groups %>% 
+              rename(
+                to_type = type_original,
+                to_type_group = type_grouped,
+                to_type_major = type_major),
+            by = "to_type") 
+```
+
+```{r}
+formulas_d %>% count(from_type_group) %>% # pull(n) %>% sum()
+formulas_d %>% count(to_type_group) # %>% pull(n) %>% sum()
+
+formulas_d %>% count(from_type_major) # %>% pull(n) %>% sum()
+formulas_d %>% count(to_type_major) # %>% pull(n) %>% sum()
+```
+
+```{r}
+types_groups
+```
+
+Count 22 classes
+
+```{r}
+x <- formulas_d %>% select(from_type) %>% 
+  rename(to_type = from_type)
+
+formulas_d %>% 
+  select(to_type) %>% 
+  rbind(x) %>% 
+  count(to_type, sort = T)
+```
+
+```{r}
+x <- formulas_d %>% 
+  mutate(lang_type = paste0(lang, "_", from_type_major)) %>% 
+  count(lang_type)
+
+formulas_d %>% 
+  mutate(lang_type = paste0(lang, "_", to_type_major)) %>% 
+  count(lang_type) %>% 
+  rename(n_x = n) %>% 
+  left_join(x, by = "lang_type") %>% 
+  mutate(lang = str_extract(lang_type, "^\\w{2}")) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(n_total = n_total * 2, 
+         type_total = n_x + n,
+         type_perc = round((type_total / n_total) * 100, 1)) %>% 
+  select(lang_type, type_total, n_total, type_perc)
+```
+
+```{r}
+x <- formulas_d %>% 
+  filter(lang != "it") %>% 
+  mutate(lang_type = paste0(lang, "_", from_type_group)) %>% 
+  count(lang_type)
+
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  mutate(lang_type = paste0(lang, "_", to_type_group)) %>% 
+  count(lang_type) %>% 
+  rename(n_x = n) %>% 
+  left_join(x, by = "lang_type") %>% 
+  mutate(lang = str_extract(lang_type, "^\\w{2}")) %>% 
+  left_join(totals, by = "lang") %>% 
+  mutate(n_total = n_total * 2, 
+         type_total = n_x + n,
+         type_perc = round((type_total / n_total) * 100, 1)) %>% 
+  # group_by(lang) %>%
+  # summarise(total = sum(type_perc))
+  select(lang_type, type_total, n_total, type_perc)
+```
+
+### long / short  
+
 Add groups of shorter / longer distances (simple 1000 km threshold)
 
 ```{r, include=T, echo=F}
 total_sl <- formulas_d %>% 
-  mutate(dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  filter(lang != "it") %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
   count(dist_type, sort = T)
 
 total_sl_lang <- formulas_d %>% 
-  mutate(dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
   count(dist_type, lang, sort = T)
 
 total_sl
 
+total_sl_lang
+
 total_sl_lang %>% 
   pivot_wider(names_from = dist_type, values_from = n) %>% 
   left_join(totals, by = "lang") %>% 
-  mutate(perc_short = round((short/total_n)*100, 1),
-         perc_long = round((long/total_n)*100, 1)) %>% 
-  select(-total_n)
+  mutate(perc_short = round((short/n_total)*100, 1),
+         perc_long = round((long/n_total)*100, 1)) #%>% 
+  select(-n_total)
 ```
 
-Similar picture to the above: younger literatures are more about closer distances (cs % short – 72%? sl — 87%), while others are more equal to 50/50
-
-### long/short dist ranks
+#### dist ranks
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
-  mutate(type_pair = paste0(from_type, " --> ", to_type), 
-         dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
   count(type_pair, dist_type, sort = T) %>% 
   group_by(dist_type) %>% 
   #slice_max(order_by = n, n = 10) %>% 
@@ -497,8 +788,9 @@ formulas_d %>%
   arrange(-desc(short)) %>% head(20)
 
 formulas_d %>% 
-  mutate(type_pair = paste0(from_type, " --> ", to_type), 
-         dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
   count(type_pair, dist_type, sort = T) %>% 
   group_by(dist_type) %>% 
   #slice_max(order_by = n, n = 10) %>% 
@@ -507,21 +799,10 @@ formulas_d %>%
   arrange(-desc(long)) %>% head(20)
 ```
 
-Notes:
-
--   city –\> city: is a universal thing, can be close, can be distant
-
--   river –\> river: same but a bit more prevalent for long
-
--   regions and countries not unexpectedly used for long distances
-
--   villages & city parts are for short distances
-
 #### by language
 
 ```{r, include=T, echo=F}
 formulas %>% 
-  filter(lang != "it") %>% 
   mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
   group_by(lang) %>% 
   count(type_pair, sort = T) %>% 
@@ -542,23 +823,15 @@ formulas %>%
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
-  filter(lang != "it") %>% 
-  mutate(type_pair = paste0(from_type, " --> ", to_type), 
-         dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
   group_by(lang, dist_type) %>% 
   count(type_pair, sort = T) %>% 
   filter(n > 1) %>% 
   slice_max(order_by = n, n = 5) %>% 
   ungroup() 
 ```
-
-Also a long table, a summary from me:
-
--   CZ: mountain-mountain is used both for long and short dist; river-river kind of too, but more for long;
--   DE: same rates for city-city and river-river for both long and short
--   EN: more countries (country-country or city-country); more river-river for shorter dist;
--   FR: long dist for ancient city; shorter: city-city, river-river, city parts and regions
--   RU: long - river-river, city-city; has some short dist for ancient city ? and mountains for short dist too
 
 ### ancient cities
 
@@ -633,9 +906,18 @@ formulas_d %>%
   rbind(x) %>% 
   group_by(lang) %>% 
   count(placename, sort = T) %>% 
-  filter(n > 1) %>% 
+  # filter(n > 1) %>% 
   ungroup() %>% 
   arrange(-desc(lang))
+
+formulas_d %>% 
+  mutate(from_to_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(from_to_pair == "city part --> city part") %>% 
+  select(lang, text, from_placename, to_placename)
+
+formulas_d %>% 
+  filter(lang == "fr") %>% 
+  filter(from_placename == "Moscow Kremlin" | to_placename == "Moscow Kremlin")
 ```
 
 ## Places frequency
@@ -808,238 +1090,8 @@ cor(freq_ranks$rank_corpora[1:50], freq_ranks$rank_freq[1:50], method = "kendall
 
 ## Map example: from Malta to Rome
 
-Load pckg for maps
-
-```{r}
-library(sf)
-library(ggspatial)
-
-library(rnaturalearth)
-library(rnaturalearthdata)
-library(ggrepel)
-```
-
-```{r}
-exmpl <- formulas_d %>% 
-   filter(str_detect(to_placename, "Rome")) %>% 
-   filter(str_detect(author_name, "Whittier")) # specific line in eng
-
-# exmpl <- formulas_d %>% 
-#   filter(str_detect(from_placename, "Rhine") & str_detect(to_placename, "Danube"))
-
-exmpl
-exmpl$text
-
-exmpl$dist_haversine
-
-exmpl %>% select(from_placename, from_longitude, from_latitude, 
-                 to_placename, to_longitude, to_latitude)
-
-```
-
-Basic map
-
-```{r}
-world <- ne_countries(scale = "medium", returnclass = "sf")
-
-europe <- world[which(world$continent == "Europe"),]
-
-# europe <- world
-
-# from malta to rome
-ggplot(europe) +
-  geom_sf(fill = "#cbeedb",
-          alpha = 0.5
-          ) +
-  coord_sf(xlim = c(9, 18), ylim = c(34, 43), expand = FALSE) + 
-  
-  
-  geom_curve(data = exmpl,
-             aes(x = from_longitude, y = from_latitude,
-                xend = to_longitude, yend = to_latitude),
-             linewidth = 5, curvature = 0,
-             colour = "slategray1", alpha = 0.9) +
-  
-  # malta label
-  geom_text_repel(data = exmpl,
-                  aes(x = from_longitude, y = from_latitude, label = from_placename),
-                  size = 22, col = "slategray1", fontface = "bold",
-                  vjust = 1.5, 
-                  segment.color = "transparent") + 
-  
-  # rome label
-  geom_text_repel(data = exmpl,
-                  aes(x = to_longitude, y = to_latitude, label = to_placename),
-                  size = 22, col = "pink2", fontface = "bold",
-                  vjust = 1,  box.padding = 0.7,
-                  segment.color = "transparent") + 
-  
-  # malta point
-  geom_point(data = exmpl, aes(x = from_longitude, y = from_latitude), 
-             size = 14, alpha = 1, color = "slategray1") + 
-  
-  # rome point
-  geom_point(data = exmpl, aes(x = to_longitude, y = to_latitude), 
-             size = 14, alpha = 1, color = "pink3") +
-  
-  
-  # annotation_scale(location = "bl", width_hint = 0.4) +
-  # annotation_north_arrow(location = "bl", which_north = "true", 
-  #       #pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
-  #       style = north_arrow_fancy_orienteering)
-  
-  theme(panel.grid.major = element_line(color = "grey60", 
-                                        #linetype = "dashed", 
-                                        size = 0.1),
-    #panel.background = element_rect(fill = "aliceblue"))
-    axis.text = element_blank(),
-    axis.title = element_blank(),
-    plot.background = element_rect(fill = "transparent",
-                                       colour = NA_character_),
-        panel.background = element_rect(fill = "transparent", 
-                                        colour = NA_character_))
-
-ggsave(file = "../plots/chr_lt/2_1.png", plot = last_plot(), bg = "transparent",
-       dpi = 300, width = 6.5, height = 6.5) 
-```
-
-Line plot
-
 ```{r}
 
-exmpl %>% 
-  ggplot() + 
-  geom_segment(aes(x = from_longitude, xend = to_longitude,
-                   y = from_latitude, yend = to_latitude),
-               color = "slategray3", linewidth = 4
-               ) +
-  geom_point(aes( x = from_longitude, y = from_latitude), 
-             color = "slategray1", size = 10) + 
-  geom_point(aes( x = to_longitude, y = to_latitude), 
-             color = "pink3", size = 10) + 
-  
-  geom_text(aes(x = from_longitude, y = from_latitude),
-            label = "Malta", color = "slategray1",
-            size = 16, vjust = -1, hjust = -0.01,
-            fontface = "bold") + 
-  geom_text(aes(x = to_longitude, y = to_latitude),
-            label = "Rome", color = "pink3",
-            size = 16, vjust = -1, hjust = -0.01,
-            fontface = "bold") + 
-  
-  expand_limits(x = c(10, 18), y = c(36, 44)) + 
-  labs(x = "", y = "") + 
-  theme(plot.background = element_rect(fill = "transparent",
-                                       colour = NA_character_),
-        panel.background = element_rect(fill = "transparent", 
-                                        colour = NA_character_),
-        axis.text = element_blank())
-  
-
-ggsave(file = "../plots/chr_lt/2_2.png", plot = last_plot(), bg = "transparent",
-       dpi = 300, width = 5, height = 5) 
-```
-
-Transposed
-
-```{r}
-exmpl %>% 
-  mutate(x1_0 = 0.0,
-         y1_0 = 0.0,
-         
-         x2_0 = to_longitude - from_longitude,
-         y2_0 = to_latitude - from_latitude) %>% 
-  
-  ggplot() + 
-  
-  annotate("point", x = 0, y = 0, size = 200, 
-           alpha = 0.6, 
-           fill = "grey10", # met.brewer("Cassatt1")[5], 
-           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, linewidth = 2, colour = "slategray4") + 
-  geom_vline(xintercept = 0, lty = 2, linewidth = 2, colour = "slategray4") +
-
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "slategray3", linewidth = 4) + 
-  
-  geom_point(aes(x = x1_0, y = y1_0), 
-             colour = "slategray1", size = 10) + 
-  geom_point(aes(x = x2_0, y = y2_0), 
-             colour = "pink3", size = 10) + 
-  geom_text(aes(x = x1_0, y = y1_0), 
-            colour ="slategray1", label = "FROM\n(0, 0)",
-            vjust = -0.5, size = 14,
-            fontface = "bold") + 
-  geom_text(aes(x = x2_0, y = y2_0), 
-            colour ="pink3", label = "TO",
-            vjust = -1, size = 14,
-            fontface = "bold") + 
-  expand_limits(x = c(-5, 3.5), y = c(-0.5, 8)) + 
-  labs(x = "", y = "") + 
-  theme(plot.background = element_rect(fill = "transparent",
-                                       colour = NA_character_),
-        panel.background = element_rect(fill = "transparent", 
-                                        colour = NA_character_))
-  
-
-ggsave(file = "../plots/chr_lt/2_3.png", plot = last_plot(), bg = "transparent",
-       dpi = 300, width = 5, height = 5)
-  
-```
-
-Compass
-
-```{r}
-exmpl %>% 
-  mutate(x1_0 = 0.0,
-         y1_0 = 0.0,
-         
-         x2_0 = to_longitude - from_longitude,
-         y2_0 = to_latitude - from_latitude) %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 140, 
-           alpha = 0.6, 
-           fill = "grey10", # met.brewer("Cassatt1")[5], 
-           colour = "grey10") + #met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") + 
-  geom_vline(xintercept = 0, lty = 2, linewidth = 1.5, colour = "slategray3") +
-
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               arrow = arrow(length = unit(10, "pt")),
-               colour = "slategray2", linewidth = 3) + 
-  
-  annotate("point", x = 0, y = 0, size = 5,
-           fill = "slategray3", colour = "slategray3") + 
-  scale_x_continuous(limits = c(-7, 7)) + 
-  scale_y_continuous(limits = c(-7, 7)) + 
-  
-  # geom_point(aes(x = x1_0, y = y1_0), 
-  #            colour = "slategray1", size = 10) + 
-  # geom_point(aes(x = x2_0, y = y2_0), 
-  #            colour = "pink3", size = 10) + 
-  # geom_text(aes(x = x1_0, y = y1_0), 
-  #           colour ="slategray1", label = "FROM\n(0, 0)",
-  #           vjust = -0.5, size = 10,
-  #           fontface = "bold") + 
-  # geom_text(aes(x = x2_0, y = y2_0), 
-  #           colour ="pink3", label = "TO",
-  #           vjust = -1, size = 10,
-  #           fontface = "bold") + 
-  # expand_limits(x = c(-3, 1), y = c(-1.5, 8)) + 
-  labs(x = "", y = "") + 
-  theme(plot.background = element_rect(fill = "transparent",
-                                       colour = NA_character_),
-        panel.background = element_rect(fill = "transparent", 
-                                        colour = NA_character_))
-  
-
-ggsave(file = "../plots/chr_lt/2_4.png", plot = last_plot(), bg = "transparent",
-       dpi = 300, width = 5, height = 5)
 ```
 
 ```{r, eval=F, include=F}
@@ -1139,3 +1191,120 @@ ggplot(world) +
                   size = 4, color = "midnightblue")
 
 ```
+
+# not used
+
+#### Time: distances based on author birth year
+
+```{r, include = F, echo=F}
+
+# check birth year missing data
+
+totals <- formulas %>% 
+  count(lang) %>% 
+  rename(total_n = n)
+
+formulas_d %>% 
+  select(lang, year_birth, dist_haversine) %>% 
+  filter(!is.na(year_birth)) %>% 
+  count(lang) %>% 
+  left_join(totals, by = "lang")
+```
+
+This is how author's birth years are distributed, if we're only looking in our formulas subset
+
+```{r, include=T, echo=F, warning=FALSE}
+formulas %>% 
+  filter(lang != "it") %>% 
+  select(lang, year_birth) %>% 
+  ggplot(aes(x = year_birth)) + 
+  geom_density(fill = "lightseagreen") + 
+  facet_wrap(~lang) + 
+  geom_vline(xintercept = seq(1600, 1900, 50), 
+             lty = 2, colour = "darkblue") + 
+  labs(title = "Formulas found per 50 years period",
+       subtitle = "Year of author birth is used")
+```
+
+Add time period column & recalculate summary dist metrics: I aggregated based on the half-century periods the author was born. The question here was: do authors born in quite distant times uses different distances when from_to formula appears?
+
+```{r, include=T, echo=F}
+dist_t_summary <- formulas_d %>% 
+  filter(!is.na(year_birth)) %>% 
+  mutate(period_birth = floor(year_birth/50)*50,
+         period_end = period_birth + 49,
+         period = paste0(period_birth, "—", period_end),
+         lang_t = paste0(lang, " ", period)) %>% 
+  group_by(lang_t) %>% 
+  summarise(dist_mean = mean(dist_haversine),
+            dist_median = median(dist_haversine),
+            third_quant = quantile(dist_haversine, 0.75),
+            number_formulas = n()) %>% 
+  ungroup() 
+
+dist_t_summary
+```
+
+```{r, include=T, echo=F, warning=F, message=F}
+dist_t_summary %>% 
+  select(-number_formulas) %>% 
+  pivot_longer(!lang_t) %>% 
+  left_join(dist_t_summary %>% select(lang_t, number_formulas)) %>% 
+  filter(number_formulas > 4) %>% # filter out period if less than [5 formulas found 
+  mutate(lang = str_extract(lang_t, "^.."), 
+         lang_t = str_remove(lang_t, "^..."),
+         lang_t = str_remove(lang_t, "—....$")) %>% 
+  
+  filter(lang != "it") %>% 
+  ggplot(aes(x = lang_t, y = value, group = name, colour = name)) +
+  geom_line(aes(linewidth = number_formulas)) + 
+  geom_hline(yintercept = 2000, lty = 2, colour = "darkblue") + 
+  facet_wrap(~lang, scales = "free_x") + 
+  labs(y = "dist in km",
+       title = "Temporal distribution of distances in from_to formulas",
+       subtitle = "x axis: 50-years chunks based on the author's birth year\n(i.e., 1750: aggregated value for authors born between 1750 and 1799") + 
+  theme(legend.position = "bottom")
+```
+
+-   overall: we can see than Czech, German, & Slovenian from_to aggregated(!) distances are usually below 2k km; longest from-to are en, fr, and somewhat ru;
+
+-   NB: my 2000 km threshold is absolutely arbitrary; also, I removed periods with less than 5 formulas;
+
+-   Peaks details:
+
+    -   DE: peak period 1700-1749 is only 12 formulas, may be a random result
+
+    -   EN: authors born in 1750-1799: 40 formulas found; for 1800-1849 & 1850-1899 even more data (101 & 143 resp.) –\> these dist are really long on average;
+
+    -   FR: low number of formulas for any poet-birth period EXCEPT for 1800-1849;
+
+    -   RU: most formulas come from authors born in 1850-1899 (69); for 18c-authors there are 15 (1700-1749) and 22 (1750-1799) formulas respectively, so it actually can tell us something – like that these from-to mean/median distances are stable high
+
+### short vs long dist
+
+Previous plot was just aggregating all distances based on 50-year period and calculated means etc. Here I did not do any aggregation, but divided the observations in two groups (\> or \<1000km distance). Then I put everything on roughly the same timeline (no aggregation, just formulas + author's year birth)
+
+```{r, include=T, echo=F, warning=F}
+formulas_d %>% 
+  filter(lang != "it") %>% 
+  mutate(dist_longer_1k = ifelse(dist_haversine > 1000, "yes", "no")) %>% 
+  #filter(dist_longer_1k == "no") %>% 
+  ggplot(aes(x = year_birth, y = dist_haversine, group = dist_longer_1k)) + 
+  geom_point(aes(colour = dist_longer_1k), alpha = 0.5) + 
+  facet_wrap(~lang) + 
+  geom_smooth(aes(colour = dist_longer_1k, fill = dist_longer_1k)) + 
+  geom_hline(yintercept = 5000, lty = 2, colour = "darkblue") + 
+  
+  theme(legend.position = "bottom") + 
+  scale_y_continuous(limits = c(-1, 20000)) + 
+  labs(y = "Dist Haversine, km", 
+       x = "Author birth year")
+```
+
+```{r}
+rm(dist_summary, dist_t_summary, loc_freq, dist_log, dist_raw)
+```
+
+For longer distances: everyone except EN and FR are usually below the 5k distances even for longer ones? ru is somewhere inbetween.
+
+# 
