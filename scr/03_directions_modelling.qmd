@@ -6,7 +6,7 @@ editor: visual
 
 ## Directions modelling
 
-The notebook takes centralized geo-data from the from—to formulas and transform it to summarize major directions and their dependence on location types
+The notebook adds compass-like categories as N, NE, E, etc. and create viz to show the prevalent directions
 
 ```{r}
 library(tidyverse)
@@ -46,66 +46,13 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
 rm(formulas)
 ```
 
-## types edit
-
-Create larger groups for location types
-
-```{r}
-unique(c(formulas_d$from_type, formulas_d$to_type))
-
-types_groups <- tibble(type_original = unique(c(formulas_d$from_type, formulas_d$to_type)),
-       type_grouped = c("water", "other", "land", 
-                        "city", "water", "mountain", 
-                        "country", "water", "settlement", 
-                        "city", "settlement", "city", 
-                        "water", "land", "land", 
-                        "land", "mountain", "water", 
-                        "settlement", "water", "mountain", 
-                        "settlement"), 
-       type_major = c("natural", "natural", "natural", 
-                      "political", "natural", "natural", 
-                      "political", "natural", "political", 
-                      "political", "political", "political", 
-                      "natural", "natural", "political", 
-                      "natural", "natural", "natural", 
-                      "political", "natural", "natural", 
-                      "political"))
-
-# attach to the main table for from- and to-locs
-formulas_d <- formulas_d %>% 
-  left_join(types_groups %>% 
-              rename(
-                from_type = type_original,
-                from_type_group = type_grouped,
-                from_type_major = type_major),
-            by = "from_type") %>% 
-  left_join(types_groups %>% 
-              rename(
-                to_type = type_original,
-                to_type_group = type_grouped,
-                to_type_major = type_major),
-            by = "to_type") 
-```
-
-```{r}
-glimpse(formulas_d)
-```
-
-```{r}
-formulas_d %>% count(from_type_group)
-formulas_d %>% count(to_type_group)
-
-formulas_d %>% count(from_type_major)
-formulas_d %>% count(to_type_major)
-```
-
-## Angle calculation
+# Angle calculation
 
 The idea is to calculate the angle between the clock handle to 12 o'clock (north) and the from-to vector. The default calculation start counting angle from the x-axis (east) & counter-clockwise. So there are some additional steps to calculate this as if we had a clock, that NORTH=0°
 
-### Sanity check
+```{r, include = F, echo = F, eval = F}
+# Sanity check
 
-```{r}
 t <- formulas_d %>% 
   mutate(angle_east_deg = atan2(y2_0, x2_0) * 180 / pi,
          angle_north_deg = (90 - angle_east_deg + 360) %% 360) %>% 
@@ -135,11 +82,7 @@ t %>%
   coord_equal()
 ```
 
-```{r}
-t
-```
-
-```{r}
+```{r, eval=F, include=F}
 (90 - (atan2(13, -18) * 180 / pi) + 360) %% 360
 ```
 
@@ -155,7 +98,7 @@ formulas_d <- formulas_d %>%
 
 Use `case_when`\`for separate into N, NE, E, SE, S, SW, W, NW groups, 45 degrees each.
 
-```{r}
+```{r, include=F, echo=T}
 formulas_d <- formulas_d %>% 
   mutate(
     compass = case_when(
@@ -173,7 +116,7 @@ formulas_d <- formulas_d %>%
 
 ### compass viz
 
-```{r}
+```{r, include=F, echo=F}
 # factor level order
 formulas_d <- formulas_d %>% 
   mutate(
@@ -184,7 +127,9 @@ formulas_d <- formulas_d %>%
   )
 ```
 
-```{r}
+Transformation of directions to compass view
+
+```{r, include=T, echo=T}
 dist_mean <- formulas_d %>% 
   group_by(lang) %>% 
   summarise(dist_mean = mean(dist_haversine),
@@ -197,7 +142,7 @@ totals <- formulas_d %>%
   mutate(lang_d = paste0(lang, "_", dist_longer_mean)) %>% 
   rename(total_f = n)
 
-totals
+# totals
 
 x <- formulas_d %>% 
   left_join(dist_mean, by = "lang") %>% 
@@ -210,8 +155,12 @@ x <- formulas_d %>%
   ungroup() %>% 
   mutate(value = 1)  
   
-x
+x %>% head()
 ```
+
+# Fig. 3b
+
+Long distances compasses
 
 ```{r}
 long_dist_pizza <- x %>% 
@@ -239,6 +188,10 @@ long_dist_pizza <- x %>%
 long_dist_pizza
 ```
 
+# Fig. 4b
+
+Short distances
+
 ```{r}
 short_dist_pizza <- x %>% 
   filter(dist_longer_mean == "short" & lang != "it") %>% 
@@ -263,48 +216,4 @@ short_dist_pizza <- x %>%
   coord_polar(start = -pi/8) 
 
 short_dist_pizza
-```
-
-## Model
-
-This is the resulting data that can be used for the model:
-
-`angle_north_deg` is the angle used for the compass, `compass` column is for the labels.
-
-Columns `from/to_type_group` and `from/to_type_major` contain the labels for groups (city, water, etc.) and binary classes as natural/political
-
-```{r}
-glimpse(formulas_d)
-```
-
-```{r}
-formulas_d %>% count(from_type_group)
-```
-
-```{r}
-formulas_d %>% count(from_type_major)
-```
-
-Distribution of angle instances
-
-```{r}
-formulas_d %>% 
-  ggplot(aes(x = round(angle_north_deg,0))) + geom_bar() + 
-  facet_wrap(~lang)
-```
-
-Same but labels + types (for Czech)
-
-```{r}
-formulas_d %>% 
-  filter(lang == "cs") %>% 
-  group_by(dist_longer_1k) %>% 
-  count(compass) %>% 
-  ungroup() %>% 
-  ggplot(aes(x = compass, y = n, fill = compass)) + 
-  geom_col() + 
-  facet_wrap(~dist_longer_1k, ncol = 1) + 
-  scale_fill_manual(values = c(rev(met.brewer("Cassatt1"))[1:2],
-                               rev(met.brewer("Cassatt1"))[5:7],
-                               (met.brewer("Cassatt1"))[4:8]))
 ```

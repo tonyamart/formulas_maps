@@ -1,10 +1,10 @@
 ---
-title: "02 compass plots"
+title: "02 clock plots"
 format: md
 editor: visual
 ---
 
-# Compass plots
+# Clock / compass plots
 
 ```{r, warning=F, include=F}
 library(tidyverse)
@@ -48,9 +48,12 @@ dist_summary <- formulas_d %>%
   summarise(mean_dist = mean(dist_haversine),
             .groups = "drop")
 
+# final cleaning & additions
 formulas_d <- formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
-  mutate(dist_longer_mean = ifelse(dist_haversine > mean_dist, "long", "short"))
+  mutate(dist_longer_mean = ifelse(dist_haversine > mean_dist, "long", "short")) %>% 
+  filter(lang != "it") %>% 
+  distinct()
 ```
 
 ## calculate coordinates
@@ -153,7 +156,9 @@ formulas_nc <- formulas_d %>%
 glimpse(formulas_nc)
 ```
 
-## Fig. 3: long
+# Long distances
+
+## Fig. 3
 
 ```{r, eval=F, echo=F}
 lang_labels <- tibble(
@@ -219,526 +224,11 @@ ggsave("../plots/paper/Fig_3.png", plot = last_plot(),
        width = 20, height = 7, bg = "white", dpi = 300)
 ```
 
-## loc types
-
-### river —\> river
-
-```{r, include=T, echo=F}
-formulas_nc %>% 
-  filter(lang != "it") %>% 
-  filter(dist_longer_1k == "long") %>% 
-  
-  filter(from_type == "river" & to_type == "river") %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "darkblue",
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-100, 100)) + 
-  scale_y_continuous(limits = c(-100, 100)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  labs(title = "River to river directions -- long") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
-  
-```
-
-```{r, include=T, echo=F}
-formulas_nc %>% 
-  filter(lang != "it") %>% 
-  filter(dist_longer_1k == "short") %>% 
-  
-  filter(from_type == "river" & to_type == "river") %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "blue",
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-15, 15)) + 
-  scale_y_continuous(limits = c(-15, 15)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  labs(title = "River to river directions -- short") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
-  
-```
-
-### city —\> city
-
-```{r, include=T, echo=F}
-formulas_nc %>% 
-  filter(lang != "it") %>% 
-  filter(dist_longer_1k == "long") %>% 
-  
-  filter(from_type == "city" & to_type == "city") %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "darkred",
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-150, 150)) + 
-  scale_y_continuous(limits = c(-150, 150)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  labs(title = "City to city directions -- long") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
-  
-```
-
-```{r, include=T, echo=F}
-formulas_nc %>% 
-  filter(lang != "it") %>% 
-  filter(dist_longer_1k == "short") %>% 
-  
-  filter(from_type == "city" & to_type == "city") %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "darkred",
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-15, 15)) + 
-  scale_y_continuous(limits = c(-15, 15)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  labs(title = "City to city directions -- short") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
-  
-```
-
-### country –\> country
-
-```{r, include=T, echo=F}
-formulas_nc %>% 
-  filter(lang != "it") %>% 
-  filter(dist_longer_1k == "long") %>% 
-  
-  filter(from_type == "country" & to_type == "country") %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "darkgreen",
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-200, 200)) + 
-  scale_y_continuous(limits = c(-200, 200)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  labs(title = "Country to country directions -- long") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
-  
-```
-
-### mountain –\> mountain
-
-```{r, include=T, echo=F}
-formulas_nc %>% 
-  filter(lang != "it") %>% 
-  filter(dist_longer_1k == "long") %>% 
-  
-  filter(from_type == "mountain" & to_type == "mountain") %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "purple",
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-200, 200)) + 
-  scale_y_continuous(limits = c(-200, 200)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  labs(title = "Mountain to mountain directions -- long") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
-  
-```
-
-### village (any)
-
-```{r, include=T, echo=F}
-formulas_nc %>% 
-  filter(lang != "it") %>% 
-  filter(dist_longer_1k == "short") %>% 
-  
-  filter(from_type == "village" | to_type == "village") %>% 
-  
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = "violet",
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~lang, ncol = 3) + 
-  scale_x_continuous(limits = c(-15, 15)) + 
-  scale_y_continuous(limits = c(-15, 15)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  labs(title = "From OR to village directions -- short") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold"))
-  
-```
-
-## compass – 1 lang
-
-Use only one corpus to look into different types of directions
-
-### cz
-
-```{r, include=T, echo=F}
-x <- formulas_nc %>% 
-  filter(lang == "cs") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  count(loc_type, sort = T) %>% 
-  filter(n > 4) %>% 
-  pull(loc_type)
-  
-x  
-
-formulas_nc %>% 
-  filter(lang == "cs") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  filter(loc_type %in% x) %>% 
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0,
-                   colour = loc_type
-                   ),
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~loc_type, ncol = 3) + 
-  scale_x_continuous(limits = c(-130, 130)) + 
-  scale_y_continuous(limits = c(-130, 130)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  # labs(title = "River to river") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold")) + 
-  labs(title = "Only CZ corpus",
-       subtitle = "(loc_type with n > 4)")
-  
-```
-
-NB here longest distances are not only river-river, but mountains
-
-### en
-
-```{r, include=T, echo=F}
-x <- formulas_nc %>% 
-  filter(lang == "en") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  count(loc_type, sort = T) %>% 
-  filter(n > 4) %>% 
-  pull(loc_type)
-  
-x  
-
-formulas_nc %>% 
-  filter(lang == "en") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  filter(loc_type %in% x) %>% 
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0,
-                   colour = loc_type
-                   ),
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~loc_type, ncol = 3) + 
-  scale_x_continuous(limits = c(-230, 230)) + 
-  scale_y_continuous(limits = c(-230, 230)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  # labs(title = "River to river") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold")) + 
-  labs(title = "Only EN corpus",
-       subtitle = "(loc_type with n > 4)")
-  
-```
-
-### fr
-
-```{r, include=T, echo=F}
-x <- formulas_nc %>% 
-  filter(lang == "fr") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  count(loc_type, sort = T) %>% 
-  filter(n > 3) %>% 
-  pull(loc_type)
-  
-x  
-
-formulas_nc %>% 
-  filter(lang == "fr") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  filter(loc_type %in% x) %>% 
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0,
-                   colour = loc_type
-                   ),
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~loc_type, ncol = 3) + 
-  scale_x_continuous(limits = c(-150, 150)) + 
-  scale_y_continuous(limits = c(-150, 150)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  # labs(title = "River to river") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold")) + 
-  labs(title = "Only FR corpus",
-       subtitle = "(loc_type with n > 3)")
-  
-```
-
-### ru
-
-```{r, include=T, echo=F}
-x <- formulas_nc %>% 
-  filter(lang == "ru") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  count(loc_type, sort = T) %>% 
-  filter(n > 3) %>% 
-  pull(loc_type)
-  
-x  
-
-formulas_nc %>% 
-  filter(lang == "ru") %>% 
-  mutate(loc_type = paste0(from_type, " --> ", to_type)) %>% 
-  filter(loc_type %in% x) %>% 
-  ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.6, 
-           fill = met.brewer("Cassatt1")[5], colour = met.brewer("Cassatt1")[5]) + 
-  
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0,
-                   colour = loc_type
-                   ),
-               arrow = arrow(length = unit(4, "pt"))) + 
-  facet_wrap(~loc_type, ncol = 3) + 
-  scale_x_continuous(limits = c(-230, 230)) + 
-  scale_y_continuous(limits = c(-230, 230)) + 
-  
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  # labs(title = "River to river") + 
-  
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        #axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 12, face = "bold")) + 
-  labs(title = "Only ru corpus",
-       subtitle = "(loc_type with n > 3)")
-  
-```
-
-## add short/long distances types
+# short distances
 
 two different plots for long & for short distances
 
-### short dist closer look
-
-#### 1000 km threshold
+1000 km threshold
 
 ```{r, include=T, echo=F}
 p_short <- formulas_nc %>% 
@@ -789,9 +279,7 @@ ggsave("../plots/01_compass_dist_short.png", plot = last_plot(),
        width = 10, height = 8, bg = "white", dpi = 300)
 ```
 
-# Fig. 4
-
-#### short dist based on mean
+## Fig. 4: short dist based on mean
 
 ```{r, include=T, echo=F}
 p_short <- formulas_nc %>% 
@@ -849,66 +337,211 @@ ggsave("../plots/paper/Fig_4.png", plot = last_plot(),
        width = 20, height = 7, bg = "white", dpi = 300)
 ```
 
-### longer dist
+# Fig. 5: most common places
+
+Most common places, map background & transparent compases
+
+```{r}
+x <- formulas_nc %>% 
+  select(from_placename, from_type, lang) %>% 
+  rename(placename = from_placename,
+         type = from_type) 
+
+freq_ranks <- formulas_nc %>% 
+  select(to_placename, to_type, lang) %>% 
+  rename(placename = to_placename,
+         type = to_type) %>% 
+  rbind(x) %>% 
+  distinct() %>% 
+  count(placename, type, sort = T) %>% 
+  rename(n_corpora = n) %>% 
+  filter(n_corpora > 3) # %>% 
+  # filter(placename %in% c(
+  #   "Baltic Sea", "Tagus River", "Paris", "Rome", "Athens", 
+  #   "Nile", "Euphrates", "Babylon", "Bethlehem", 
+  #   "Dardanelles", "Don", "Moscow"
+  # )) 
+
+freq_ranks
+```
+
+```{r, include = F, echo = F}
+# get locations data for the map
+# select only FROM locations for the viz
+loc_coord <- formulas_nc %>% 
+  filter(from_placename %in% freq_ranks$placename) 
+
+freq_coord <- loc_coord %>% 
+  left_join(freq_ranks %>% 
+              mutate(grouping = ifelse(placename %in% c("Paris", "Rome", "Vienna"),
+                                                    "center", "border")) %>% 
+              select(placename, grouping) %>% 
+              rename(from_placename = placename), 
+            by = "from_placename") # %>% 
+  # left_join(freq_ranks %>% select(placename, grouping) %>% 
+  #             rename(to_placename = placename,
+  #                    grouping_t = grouping)) %>% 
+  # mutate(grouping = ifelse(is.na(grouping), grouping_t, grouping)) %>% 
+  # select(-grouping_t)
+
+freq_coord
+```
+
+## map
+
+Locations mentioned in 4 or 5 corpora
+
+```{r, include = T, echp = F}
+# load map
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# europe <- world[which(world$continent == "Europe"),]
+
+
+x <- freq_coord %>% 
+  select(from_id, from_placename, from_latitude, from_longitude, lang) %>% 
+  rename(id = from_id,
+         placename = from_placename,
+         lat = from_latitude,
+         long = from_longitude) 
+
+
+pl_coord <- freq_coord %>% 
+  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
+  rename(id = to_id,
+         placename = to_placename,
+         lat = to_latitude,
+         long = to_longitude) %>% 
+  rbind(x) %>% 
+  select(-lang) %>% 
+  distinct() %>% 
+  filter(placename %in% freq_ranks$placename) 
+
+ggplot(world) +
+  geom_sf(#fill = "#cbeedb"
+          ) +
+  coord_sf(xlim = c(-15, 80), ylim = c(27,62), expand = FALSE) + 
+  
+  geom_point(data = pl_coord, aes(x = long, y = lat), 
+             size = 2, alpha = 0.9, color = "violetred") + 
+  geom_text_repel(data = pl_coord, 
+                  aes(x = long, y = lat, label = placename),
+                  size = 4, color = "midnightblue")
+
+```
+
+Background map for the plot
 
 ```{r, include=T, echo=F}
-p_long <- formulas_nc %>% 
+ggplot(world) +
+  geom_sf(fill = "cornsilk1",
+          color = "cornsilk4",
+          linewidth = 1
+          ) +
+  coord_sf(xlim = c(-15, 68), ylim = c(27,62), expand = FALSE) + 
+  
+  geom_point(data = pl_coord, aes(x = long, y = lat),
+             size = 1, alpha = 0.9, color = "violetred4") + 
+  theme(panel.grid.major = element_line(color = "grey60", 
+                                        #linetype = "dashed", 
+                                        linewidth = 0.1), 
+        panel.background = element_rect(fill = "aliceblue"),
+        panel.border = element_rect(color = "grey60"))  
+  
+
+# ggsave(file = "../plots/3.png", plot = last_plot(), 
+#        bg = "white",
+#        dpi = 300, width = 20, height = 10)
+```
+
+## compasses
+
+Only compasses for the places appeared in 4 or 5 corpora
+
+```{r, eval=F, echo=F}
+glimpse(freq_coord)
+```
+
+```{r, eval = F, echo = F}
+freq_coord %>% 
+  mutate(base_place = ifelse(from_placename %in% freq_ranks$placename, 
+                             from_placename, to_placename)) %>% 
+  count(base_place, sort = T)
+```
+
+```{r, include=T, echo=T}
+
+fixed_length <- 100
+
+freq_coord %>% 
+  # filter only from places
   filter(lang != "it") %>% 
-  filter(dist_longer_1k == "long") %>% 
+  mutate(base_place = ifelse(from_placename %in% freq_ranks$placename, 
+                             from_placename, "")) %>% 
+  filter(base_place != "") %>% 
   
+  # distances (clock handle) length normalization:
+  # calculate vector length (hypotenuse) & normalize it
+  mutate(
+    # hypotenuse
+    vec_len = sqrt(x2_0^2 + y2_0^2),
+    
+    # norm
+    x2_norm = (x2_0 / vec_len) * fixed_length,
+    y2_norm = (y2_0 / vec_len) * fixed_length
+         ) %>% 
+  
+  # plot
   ggplot() + 
-  annotate("point", x = 0, y = 0, size = 100, 
-           alpha = 0.4, 
-           fill = met.brewer("Cassatt1")[5], 
-           colour = met.brewer("Cassatt1")[5]) + 
   
+  annotate("point", x = 0, y = 0, size = 120,
+           alpha = 0.4,
+           fill = met.brewer("Cassatt1")[5],
+           colour = met.brewer("Cassatt1")[5]) +
+
   geom_hline(yintercept = 0, lty = 2, colour = "white", 
              linewidth = 1) + 
   geom_vline(xintercept = 0, lty = 2, colour = "white", 
              linewidth = 1) + 
   
-  geom_segment(aes(x = x1_0, xend = x2_0,
-                   y = y1_0, yend = y2_0), 
-               colour = met.brewer("Cassatt2")[9],
-               arrow = arrow(length = unit(4, "pt")), 
-               alpha = 0.5) + 
-
-  coord_equal() +
+  geom_segment(aes(x = x1_0, xend = x2_norm,
+                   y = y1_0, yend = y2_norm,
+                   color = grouping), 
+               #colour = met.brewer("Cassatt2")[9],
+               arrow = arrow(length = unit(7, "pt")),
+               size = 2,
+               alpha = 1) + 
+  coord_equal() + 
+  facet_wrap(~base_place, ncol = 3) + 
+  scale_color_manual(values = c(met.brewer("Cassatt2")[9], 
+                                met.brewer("Cassatt1")[1])) +
+  scale_x_continuous(limits = c(-120, 120)) + 
+  scale_y_continuous(limits = c(-120, 120)) + 
   
-  scale_x_continuous(limits = c(-230, 230)) + 
-  scale_y_continuous(limits = c(-230, 230)) + 
+  annotate("point", x = 0, y = 0, size = 7,
+           fill = "violetred4", colour = "violetred4") + 
   
-  annotate("point", x = 0, y = 0, size = 1,
-           fill = "white", colour = "white") + 
-  
-  theme(plot.background = element_blank(),
+  theme(# plot.background = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.border = element_blank(), 
-        #axis.text = element_blank(), 
+        axis.text = element_blank(), 
         axis.title = element_blank(),
-        strip.text.x = element_text(size = 14, face = "bold")) + 
-  labs(title = "Long distances (>1000 km)")
-
-
-p_long + facet_wrap(~lang, ncol = 3)  
-
-p2 <-  p_long + facet_wrap(~lang, ncol = 1)
+        strip.text.x = element_text(size = 14, face = "bold"), 
+        
+        plot.background = element_rect(fill = "transparent",
+                                       colour = NA_character_),
+        panel.background = element_rect(fill = "transparent", 
+                                        colour = NA_character_))
+  
+# ggsave(file = "../plots/3_1.png", plot = last_plot(),
+#        bg = "transparent",
+#        dpi = 300, width = 15, height = 39)
 ```
 
-```{r, eval=F, inlude=F, echo=F}
-ggsave("../plots/02_compass_dist_long.png", plot = last_plot(), 
-       width = 15, height = 11, bg = "white", dpi = 300)
-```
+---
 
-Merge two plots in one
-
-```{r, eval=F, include=F, echo=F}
-plot_grid(p1, p2)
-
-ggsave("../plots/Fig_3.png", plot = last_plot(), 
-       bg = "white", dpi = 300, width = 8, height = 20)
-```
+## Additional
 
 ### Directions in time
 
@@ -996,15 +629,6 @@ time_plot(corpus = "fr",
           point_size = 80) + labs(title = "FR")
 ```
 
-IT: the only case of reducing the scope of from-to
-
-```{r, include=T, echo=F}
-time_plot(corpus = "it", 
-          lim_x1 = -150, lim_x2 = 150, 
-          lim_y1 = -150, lim_y2 = 150,
-          point_size = 80) + labs(title = "IT")
-```
-
 RU: horizontal expansion + caucasus?
 
 ```{r, include=T, echo=F}
@@ -1021,209 +645,4 @@ time_plot(corpus = "sl",
           lim_x1 = -15, lim_x2 = 15, 
           lim_y1 = -15, lim_y2 = 15,
           point_size = 80) + labs(title = "SL")
-```
-
-# most freq places
-
-```{r}
-x <- formulas_nc %>% 
-  select(from_placename, from_type, lang) %>% 
-  rename(placename = from_placename,
-         type = from_type) 
-
-freq_ranks <- formulas_nc %>% 
-  select(to_placename, to_type, lang) %>% 
-  rename(placename = to_placename,
-         type = to_type) %>% 
-  rbind(x) %>% 
-  distinct() %>% 
-  count(placename, type, sort = T) %>% 
-  rename(n_corpora = n) %>% 
-  filter(n_corpora > 3) # %>% 
-  # filter(placename %in% c(
-  #   "Baltic Sea", "Tagus River", "Paris", "Rome", "Athens", 
-  #   "Nile", "Euphrates", "Babylon", "Bethlehem", 
-  #   "Dardanelles", "Don", "Moscow"
-  # )) 
-
-freq_ranks
-
-
-loc_coord <- formulas_nc %>% 
-  filter(from_placename %in% freq_ranks$placename) 
-
-freq_coord <- loc_coord %>% 
-  left_join(freq_ranks %>% 
-              mutate(grouping = ifelse(placename %in% c("Paris", "Rome", "Vienna"),
-                                                    "center", "border")) %>% 
-              select(placename, grouping) %>% 
-              rename(from_placename = placename), 
-            by = "from_placename") # %>% 
-  # left_join(freq_ranks %>% select(placename, grouping) %>% 
-  #             rename(to_placename = placename,
-  #                    grouping_t = grouping)) %>% 
-  # mutate(grouping = ifelse(is.na(grouping), grouping_t, grouping)) %>% 
-  # select(-grouping_t)
-
-freq_coord
-```
-
-## map
-
-```{r}
-# load map
-world <- ne_countries(scale = "medium", returnclass = "sf")
-
-# europe <- world[which(world$continent == "Europe"),]
-
-
-x <- freq_coord %>% 
-  select(from_id, from_placename, from_latitude, from_longitude, lang) %>% 
-  rename(id = from_id,
-         placename = from_placename,
-         lat = from_latitude,
-         long = from_longitude) 
-
-
-pl_coord <- freq_coord %>% 
-  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
-  rename(id = to_id,
-         placename = to_placename,
-         lat = to_latitude,
-         long = to_longitude) %>% 
-  rbind(x) %>% 
-  select(-lang) %>% 
-  distinct() %>% 
-  filter(placename %in% freq_ranks$placename) 
-
-ggplot(world) +
-  geom_sf(#fill = "#cbeedb"
-          ) +
-  coord_sf(xlim = c(-15, 80), ylim = c(27,62), expand = FALSE) + 
-  
-  geom_point(data = pl_coord, aes(x = long, y = lat), 
-             size = 2, alpha = 0.9, color = "violetred") + 
-  geom_text_repel(data = pl_coord, 
-                  aes(x = long, y = lat, label = placename),
-                  size = 4, color = "midnightblue")
-
-```
-
-Volga instead of Moscow
-
-check compasses & change colours on compasses (borders / centers wrong direction) – leave only Rome as center?
-
-prob make compasses for all loc in 4+ corp & try
-
-```{r}
-ggplot(world) +
-  geom_sf(fill = "cornsilk1",
-          color = "cornsilk4",
-          linewidth = 1
-          ) +
-  coord_sf(xlim = c(-15, 68), ylim = c(27,62), expand = FALSE) + 
-  
-  geom_point(data = pl_coord, aes(x = long, y = lat),
-             size = 1, alpha = 0.9, color = "violetred4") + 
-  theme(panel.grid.major = element_line(color = "grey60", 
-                                        #linetype = "dashed", 
-                                        linewidth = 0.1), 
-        panel.background = element_rect(fill = "aliceblue"),
-        panel.border = element_rect(color = "grey60"))  
-  
-  # geom_text_repel(data = pl_coord, 
-  #                 aes(x = long, y = lat, label = placename),
-  #                 size = 4, color = "midnightblue")
-  #annotation_scale(location = "bl", width_hint = 0.2) # +
-  # annotation_north_arrow(location = "bl", which_north = "true", 
-  #        pad_x = unit(0.75, "in"), pad_y = unit(0.5, "in"),
-  #        width = unit(1, "cm"), height = unit(1, "cm"), 
-  #        style = north_arrow_fancy_orienteering)
-
-ggsave(file = "../plots/chr_lt/3_0.png", plot = last_plot(), 
-       bg = "white",
-       dpi = 300, width = 20, height = 10)
-```
-
-## compasses
-
-Only compasses for the places appeared in all 6 or 5 corpora
-
-```{r}
-glimpse(freq_coord)
-```
-
-```{r}
-freq_coord %>% 
-  mutate(base_place = ifelse(from_placename %in% freq_ranks$placename, 
-                             from_placename, to_placename)) %>% 
-  count(base_place, sort = T)
-```
-
-```{r}
-
-fixed_length <- 100
-
-freq_coord %>% 
-  # filter only from places
-  filter(lang != "it") %>% 
-  mutate(base_place = ifelse(from_placename %in% freq_ranks$placename, 
-                             from_placename, "")) %>% 
-  filter(base_place != "") %>% 
-  
-  # calculate vector length (hypotenuse) & normalize it
-  mutate(
-    # hypotenuse
-    vec_len = sqrt(x2_0^2 + y2_0^2),
-    
-    # norm
-    x2_norm = (x2_0 / vec_len) * fixed_length,
-    y2_norm = (y2_0 / vec_len) * fixed_length
-         ) %>% 
-  
-  # plot
-  ggplot() + 
-  
-  annotate("point", x = 0, y = 0, size = 120,
-           alpha = 0.4,
-           fill = met.brewer("Cassatt1")[5],
-           colour = met.brewer("Cassatt1")[5]) +
-
-  geom_hline(yintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  geom_vline(xintercept = 0, lty = 2, colour = "white", 
-             linewidth = 1) + 
-  
-  geom_segment(aes(x = x1_0, xend = x2_norm,
-                   y = y1_0, yend = y2_norm,
-                   color = grouping), 
-               #colour = met.brewer("Cassatt2")[9],
-               arrow = arrow(length = unit(7, "pt")),
-               size = 2,
-               alpha = 1) + 
-  facet_wrap(~base_place, ncol = 3) + 
-  scale_color_manual(values = c(met.brewer("Cassatt2")[9], 
-                                met.brewer("Cassatt1")[1])) +
-  scale_x_continuous(limits = c(-120, 120)) + 
-  scale_y_continuous(limits = c(-120, 120)) + 
-  
-  annotate("point", x = 0, y = 0, size = 7,
-           fill = "violetred4", colour = "violetred4") + 
-  
-  theme(# plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(), 
-        axis.text = element_blank(), 
-        axis.title = element_blank(),
-        strip.text.x = element_text(size = 14, face = "bold"), 
-        
-        plot.background = element_rect(fill = "transparent",
-                                       colour = NA_character_),
-        panel.background = element_rect(fill = "transparent", 
-                                        colour = NA_character_))
-  
-ggsave(file = "../plots/chr_lt/3_1.png", plot = last_plot(), 
-       bg = "transparent",
-       dpi = 300, width = 15, height = 39)
 ```

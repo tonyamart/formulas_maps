@@ -26,7 +26,7 @@ glimpse(formulas)
 
 Keep only ONE from-to direction per poem
 
-```{r}
+```{r, include=F, echo=F}
 # formulas %>% 
 #   distinct() %>% nrow()
 # 
@@ -34,9 +34,7 @@ Keep only ONE from-to direction per poem
 
 formulas <- formulas %>% 
   distinct() %>% 
-  filter(lang != "it")
-
-# just removes 2 rows
+  filter(lang != "it") 
 ```
 
 N formulas per language
@@ -252,7 +250,7 @@ exmpl %>%
 
 Basic map
 
-```{r}
+```{r, include=F, echo=F}
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
 europe <- world[which(world$continent == "Europe"),]
@@ -319,7 +317,7 @@ map_1
 
 Map 2: no background line plot
 
-```{r}
+```{r, include=F, echo=F}
 map_2 <- exmpl %>% 
   ggplot() + 
   geom_segment(aes(x = from_longitude, xend = to_longitude,
@@ -356,7 +354,7 @@ map_2
 
 Map 3: transposed
 
-```{r}
+```{r, include=F, echo=F}
 map_3 <- exmpl %>% 
   mutate(x1_0 = 0.0,
          y1_0 = 0.0,
@@ -407,7 +405,7 @@ map_3
 
 Map 4: Clock plot:
 
-```{r}
+```{r, include=F, echo=F}
 map_4 <- exmpl %>% 
   mutate(x1_0 = 0.0,
          y1_0 = 0.0,
@@ -459,13 +457,13 @@ map_4
 #        dpi = 300, width = 5, height = 5)
 ```
 
-```{r}
+```{r, eval = F, include = F, echo = F}
 plot_grid(map_1, map_2, map_3, map_4,
           nrow = 1,
           labels = c("1", "2", "3", "4"), label_size = 36)
 
 
-ggsave("../plots/paper/Fig_1.png", plot = last_plot(),
+ggsave("../plots/Fig_1.png", plot = last_plot(),
        bg = "white", dpi = 300, width = 20, height = 5)
 ```
 
@@ -477,7 +475,7 @@ Poet's mind is often flying not that far away?
 formulas_d %>% 
   #filter(lang == "sl") %>% 
   ggplot(aes(x = lang, y = dist_haversine, group = lang)) + 
-  geom_jitter(alpha = 0.2, width = 0.2) #+
+  geom_jitter(alpha = 0.2, width = 0.2) +
   labs(title = "Distribution of all distances",
        y = "Dist Haversine (km)")
 ```
@@ -488,7 +486,7 @@ The problem is the threshold here: would we want to divide into short/long group
 
 # Fig 2: dist distribution
 
-```{r}
+```{r, include=T, echo=F}
 dist_raw <- formulas_d %>% 
   filter(lang != "it") %>% 
   filter(dist_haversine > 0) %>% 
@@ -503,7 +501,7 @@ dist_raw <- formulas_d %>%
 dist_raw
 ```
 
-```{r}
+```{r, include=T, echo=F}
 dist_log <- formulas_d %>% 
   filter(lang != "it") %>% 
   filter(dist_haversine > 0) %>% 
@@ -526,7 +524,7 @@ plot_grid(dist_raw, NULL, dist_log,
           labels = c("A", "", "B"), label_size = 16)
 
 
-ggsave("../plots/paper/Fig_2.png", plot = last_plot(),
+ggsave("../plots/Fig_2.png", plot = last_plot(),
        bg = "white", dpi = 300, width = 7, height = 4)
 ```
 
@@ -564,7 +562,7 @@ formulas_d %>%
 
 \% longer than 1000 km
 
-```{r}
+```{r, include=T, echo=F}
 formulas_d %>% 
   filter(lang != "it") %>% 
   left_join(dist_summary, by = "lang") %>% 
@@ -574,21 +572,20 @@ formulas_d %>%
   mutate(perc = round((n/n_total)*100, 1))
 ```
 
-Longest distances:
+The longest distances examples:
 
-```{r}
+```{r, include=T, echo=F}
 formulas_d %>% 
   arrange(desc(dist_haversine)) %>% 
-  head(20) %>% 
+  head(10) %>% 
   select(lang, text, from_type, to_type, from_placename, to_placename, dist_haversine)
 
 ```
 
-Plot based on the groups long / short distances:
+```{r, include=F, echo=F, eval = F}
+# Plots based on the groups long / short distances:
+# how these values are distributed, should we divide them in two groups
 
-how these values are distributed, should we divide them in two groups
-
-```{r, include=T, echo=F}
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_longer_mean = ifelse(dist_haversine > dist_mean, "yes", "no")
@@ -601,7 +598,7 @@ formulas_d %>%
   labs(title = "Grouping based on: distances longer than median")
 ```
 
-```{r, include=T, echo=F}
+```{r, include=F, echo=F, eval = F}
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_longer_3qu = ifelse(dist_haversine > third_quant, "yes", "no")
@@ -613,9 +610,9 @@ formulas_d %>%
   labs(title = "Grouping based on: distances longer than 3rd quant limit")
 ```
 
-Same grouping method for all: dist is short is \< 1000km, long if \>1000km
+```{r, include=F, echo=F, eval = F}
+# Same grouping method for all: dist is short is < 1000km, long if >1000km
 
-```{r, include=T, echo=F}
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_longer_1000 = ifelse(dist_haversine > 1000, "yes", "no")
@@ -633,7 +630,7 @@ How distances are related to the types of locations in from-to formula?
 
 ### Overview
 
-total
+Total
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
@@ -642,9 +639,9 @@ formulas_d %>%
   head(20)
 ```
 
-Larger groups
+Create larger groups
 
-```{r}
+```{r, include=F, echo=F}
 unique(c(formulas_d$from_type, formulas_d$to_type))
 
 types_groups <- tibble(type_original = unique(c(formulas_d$from_type, formulas_d$to_type)),
@@ -681,21 +678,21 @@ formulas_d <- formulas_d %>%
             by = "to_type") 
 ```
 
-```{r}
-formulas_d %>% count(from_type_group) %>% # pull(n) %>% sum()
+```{r, eval = F}
+formulas_d %>% count(from_type_group) # pull(n) %>% sum()
 formulas_d %>% count(to_type_group) # %>% pull(n) %>% sum()
 
 formulas_d %>% count(from_type_major) # %>% pull(n) %>% sum()
 formulas_d %>% count(to_type_major) # %>% pull(n) %>% sum()
 ```
 
-```{r}
+```{r, include=T, echo=T}
 types_groups
 ```
 
 Count 22 classes
 
-```{r}
+```{r, include=T, echo=F}
 x <- formulas_d %>% select(from_type) %>% 
   rename(to_type = from_type)
 
@@ -705,7 +702,7 @@ formulas_d %>%
   count(to_type, sort = T)
 ```
 
-```{r}
+```{r, include=T, echo=F}
 x <- formulas_d %>% 
   mutate(lang_type = paste0(lang, "_", from_type_major)) %>% 
   count(lang_type)
@@ -723,7 +720,9 @@ formulas_d %>%
   select(lang_type, type_total, n_total, type_perc)
 ```
 
-```{r}
+6 classes distribution
+
+```{r, include=T, echo=F}
 x <- formulas_d %>% 
   filter(lang != "it") %>% 
   mutate(lang_type = paste0(lang, "_", from_type_group)) %>% 
@@ -745,35 +744,11 @@ formulas_d %>%
   select(lang_type, type_total, n_total, type_perc)
 ```
 
-### long / short  
-
-Add groups of shorter / longer distances (simple 1000 km threshold)
-
-```{r, include=T, echo=F}
-total_sl <- formulas_d %>% 
-  filter(lang != "it") %>% 
-  left_join(dist_summary, by = "lang") %>% 
-  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
-  count(dist_type, sort = T)
-
-total_sl_lang <- formulas_d %>% 
-  left_join(dist_summary, by = "lang") %>% 
-  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
-  count(dist_type, lang, sort = T)
-
-total_sl
-
-total_sl_lang
-
-total_sl_lang %>% 
-  pivot_wider(names_from = dist_type, values_from = n) %>% 
-  left_join(totals, by = "lang") %>% 
-  mutate(perc_short = round((short/n_total)*100, 1),
-         perc_long = round((long/n_total)*100, 1)) #%>% 
-  select(-n_total)
-```
+### long / short
 
 #### dist ranks
+
+The most frequent types of connection for short and long distances (based on the mean)
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
@@ -783,7 +758,8 @@ formulas_d %>%
   count(type_pair, dist_type, sort = T) %>% 
   group_by(dist_type) %>% 
   #slice_max(order_by = n, n = 10) %>% 
-  mutate(rank = row_number()) %>% select(-n) %>% 
+  mutate(rank = row_number()) %>% 
+  select(-n) %>% 
   pivot_wider(names_from = dist_type, values_from = rank) %>% 
   arrange(-desc(short)) %>% head(20)
 
@@ -794,9 +770,92 @@ formulas_d %>%
   count(type_pair, dist_type, sort = T) %>% 
   group_by(dist_type) %>% 
   #slice_max(order_by = n, n = 10) %>% 
-  mutate(rank = row_number()) %>% select(-n) %>% 
+  mutate(rank = row_number()) %>% 
+  select(-n) %>% 
   pivot_wider(names_from = dist_type, values_from = rank) %>% 
   arrange(-desc(long)) %>% head(20)
+```
+
+Villages distances
+
+```{r, include=T, echo=F}
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(type_pair == "village --> village") %>% 
+  slice_max(dist_haversine, n = 10) %>% 
+  select(lang, dist_haversine, text, from_placename, to_placename)
+
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(type_pair == "village --> village") %>% 
+  pull(dist_haversine) %>% 
+  median()
+```
+
+### median and mean distances by top-5 patterns
+
+```{r, include = T, echo = F}
+# ranks in short distances types
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(dist_type == "short") %>% 
+  count(type_pair, sort = T) %>% 
+  head(7)
+
+top_short_types <- formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(dist_type == "short") %>% 
+  count(type_pair, sort = T) %>% 
+  head(7) %>% 
+  pull(type_pair)
+
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(dist_type == "short") %>% 
+  filter(type_pair %in% top_short_types) %>% 
+  group_by(type_pair) %>% 
+  summarise(mean_dist = mean(dist_haversine),
+            med_dist = median(dist_haversine))
+```
+
+```{r, include = T, echo = F}
+# ranks in long distances types
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(dist_type == "long") %>% 
+  count(type_pair, sort = T) %>% 
+  head(7)
+
+top_short_types <- formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(dist_type == "long") %>% 
+  count(type_pair, sort = T) %>% 
+  head(7) %>% 
+  pull(type_pair)
+
+formulas_d %>% 
+  left_join(dist_summary, by = "lang") %>% 
+  mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
+  mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
+  filter(dist_type == "long") %>% 
+  filter(type_pair %in% top_short_types) %>% 
+  group_by(type_pair) %>% 
+  summarise(mean_dist = mean(dist_haversine),
+            med_dist = median(dist_haversine))
 ```
 
 #### by language
@@ -945,7 +1004,7 @@ formulas %>%
   knitr::kable()
 ```
 
-```{r, eval = F}
+```{r, eval = F, echo = F}
 formulas_d %>% 
   filter(lang == "fr") %>% 
   filter(from_placename == "Moscow Kremlin" | to_placename == "Moscow Kremlin")
@@ -996,203 +1055,36 @@ places_freq <- formulas %>%
 head(places_freq, 20)
 ```
 
-Types: natural vs political
+Locations mentioned in the most of corpora (either from or to)
 
 ```{r}
-x <- formulas %>% 
-  select(from_placename, from_type, lang) %>% 
-  rename(placename = from_placename,
-         type = from_type)
-
-# look into types
-t <- formulas %>% 
-  select(to_placename, to_type, lang) %>% 
-  rename(placename = to_placename,
-         type = to_type) %>% 
-  rbind(x) %>% 
-  pull(type) %>% unique
-
-# create a table for larger groupings:
-# whether the entity is natural or political
-# if it is water or not
-grouping <- tibble(type = t, 
-       group = c("p", "n", "n", "p", "n", "p", 
-                 "p", "p", "p", "n", "n", "p", 
-                 "p", "p", "n", "n", "p", "n",
-                 "n", "n", "n", "p"),
-       water = c(0, 1, 1, 0, 0, 0, 
-                 0, 0, 0, 0, 1, 0, 
-                 0, 0, 1, 0, 0, 0, 
-                 1, 0, 1, 0))
-
-types_groups <- formulas %>% 
-  select(to_placename, to_type, lang) %>% 
-  rename(placename = to_placename,
-         type = to_type) %>% 
-  rbind(x) %>% 
-  left_join(grouping, by = "type")
-
-totals <- formulas %>% 
-  select(to_placename, to_type, lang) %>% 
-  rename(placename = to_placename,
-         type = to_type) %>% 
-  rbind(x) %>% 
-  count(lang) %>% 
-  rename(total = n)
-
-types_groups %>% 
-  count(lang, group) %>% 
-  left_join(totals, by = "lang") %>% 
-  mutate(perc = round((n/total)*100, 1)) %>% 
-  select(lang, group, perc) %>% 
-  mutate(group = ifelse(group == "n", "Natural", "Political")) %>% 
-  pivot_wider(names_from = group, values_from = perc)
-
-
-types_groups %>% 
-  count(lang, water) %>% 
-  left_join(totals, by = "lang") %>% 
-  mutate(perc = round((n/total)*100, 1)) %>% 
-  select(lang, water, perc) %>% 
-  mutate(water = ifelse(water == 1, "Water", "Not water")) %>% 
-  pivot_wider(names_from = water, values_from = perc)
-
-rm(totals, types_groups, x)
-```
-
-Placenames mentioned in all corpora + frequency
-
-```{r, include = T, echo = F}
-x <- formulas %>% 
-  select(from_placename, from_type, lang) %>% 
-  rename(placename = from_placename,
+x <- formulas_d %>% 
+  select(from_id, from_placename, from_type, lang) %>% 
+  rename(id = from_id,
+         placename = from_placename,
          type = from_type) 
 
-freq_ranks <- formulas %>% 
-  select(to_placename, to_type, lang) %>% 
-  rename(placename = to_placename,
+freq_ranks <- formulas_d %>% 
+  select(to_id, to_placename, to_type, lang) %>% 
+  rename(id = to_id, 
+         placename = to_placename,
          type = to_type) %>% 
   rbind(x) %>% 
   distinct() %>% 
-  count(placename, type, sort = T) %>% 
+  count(id, placename, type, sort = T) %>% 
   rename(n_corpora = n) %>% 
-  mutate(rank_corpora = row_number()) %>% 
-  left_join(places_freq, by = "placename") %>% 
-  rename(freq_abs = n)
-  
-head(freq_ranks, 20)
+  filter(n_corpora > 3) %>% 
+  arrange(-desc(placename)) %>% 
+  arrange(desc(n_corpora)) %>% 
+  # attach abs freq
+  left_join(places_freq %>% select(id, n), by = "id")
 
-# ranks corr
-cor(freq_ranks$rank_corpora[1:50], freq_ranks$rank_freq[1:50], method = "kendall")
+freq_ranks
 ```
 
 ------------------------------------------------------------------------
 
-## Map example: from Malta to Rome
-
-```{r}
-
-```
-
-```{r, eval=F, include=F}
-# from Rhine to Danube
-
-# ggplot(europe) +
-#   geom_sf() +
-#   coord_sf(xlim = c(5, 15), ylim = c(43,53), expand = FALSE) + 
-#   
-#   geom_point(data = exmpl, aes(x = from_longitude, y = from_latitude), 
-#              size = 4, alpha = 0.9, color = "steelblue4") + 
-#   geom_point(data = exmpl, aes(x = to_longitude, y = to_latitude), 
-#              size = 4, alpha = 0.9, color = "seagreen") +
-#   
-#   geom_curve(data = exmpl,
-#              aes(x = from_longitude, y = from_latitude,
-#                 xend = to_longitude, yend = to_latitude),
-#              linewidth = 1, curvature = 0.2,
-#              colour = "seagreen", alpha = 0.7) +
-#   geom_text_repel(data = exmpl,
-#                   aes(x = from_longitude, y = from_latitude, label = from_placename),
-#                   size = 7, col = "steelblue4", fontface = "bold") + 
-#   
-#   geom_text_repel(data = exmpl,
-#                   aes(x = to_longitude, y = to_latitude, label = to_placename),
-#                   size = 7, col = "seagreen", fontface = "bold",
-#                   vjust = 1,  box.padding = 0.5)
-```
-
-## Map: most frequent places
-
-```{r}
-loc_fr <- freq_ranks %>% 
-  filter(n_corpora > 3) %>% 
-  filter(placename == "Baltic Sea")
-
-loc_coord <- formulas %>% 
-  filter(from_placename %in% loc_fr$placename | to_placename %in% loc_fr$placename) 
-
-ggplot(europe) +
-  geom_sf(fill = "#cbeedb"
-          ) +
-  coord_sf(xlim = c(-15, 50), ylim = c(35,75), expand = FALSE) + 
-  
-  geom_curve(data = loc_coord,
-             aes(x = from_longitude, y = from_latitude,
-                xend = to_longitude, yend = to_latitude),
-             linewidth = 0.3, curvature = 0.2,
-             colour = "slategrey", alpha = 0.9) + 
-  
-  geom_point(data = loc_coord, aes(x = from_longitude, y = from_latitude), 
-             size = 2, alpha = 0.9, color = "midnightblue") + 
-  geom_point(data = loc_coord, aes(x = to_longitude, y = to_latitude), 
-             size = 2, alpha = 0.9, color = "violetred4") 
-```
-
-```{r}
-x <- formulas %>% 
-  select(from_id, from_placename, from_latitude, from_longitude, lang) %>% 
-  rename(id = from_id,
-         placename = from_placename,
-         lat = from_latitude,
-         long = from_longitude) 
-
-freq_ranks <-formulas %>% 
-  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
-  rename(id = to_id,
-         placename = to_placename,
-         lat = to_latitude,
-         long = to_longitude) %>% 
-  rbind(x) %>% 
-  distinct() %>% 
-  count(id, placename, sort = T) %>% 
-  rename(n_corpora = n) %>% 
-  filter(n_corpora > 4)
-
-pl_coord <- formulas %>% 
-  select(to_id, to_placename, to_latitude, to_longitude, lang) %>% 
-  rename(id = to_id,
-         placename = to_placename,
-         lat = to_latitude,
-         long = to_longitude) %>% 
-  rbind(x) %>% 
-  select(-lang) %>% 
-  distinct() %>% 
-  filter(placename %in% freq_ranks$placename) 
-
-ggplot(world) +
-  geom_sf(#fill = "#cbeedb"
-          ) +
-  coord_sf(xlim = c(-15, 90), ylim = c(25,75), expand = FALSE) + 
-  
-  geom_point(data = pl_coord, aes(x = long, y = lat), 
-             size = 2, alpha = 0.9, color = "violetred") + 
-  geom_text_repel(data = pl_coord, 
-                  aes(x = long, y = lat, label = placename),
-                  size = 4, color = "midnightblue")
-
-```
-
-# not used
+# Additional
 
 #### Time: distances based on author birth year
 
@@ -1306,5 +1198,3 @@ rm(dist_summary, dist_t_summary, loc_freq, dist_log, dist_raw)
 ```
 
 For longer distances: everyone except EN and FR are usually below the 5k distances even for longer ones? ru is somewhere inbetween.
-
-# 
