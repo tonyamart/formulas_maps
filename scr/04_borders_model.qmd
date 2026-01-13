@@ -1,0 +1,294 @@
+---
+title: "04_borders_model"
+format: html
+---
+
+## Direction delta's
+
+**!! NB !! will need `formulas_d` dataset`
+
+The idea is to quantify how "structured" are different types of location (are cities really centers? are bodies of water really borders?)
+
+Step 1. Take a location (e.g. Rome). Calculate all *differences* between outgoing directions
+Step 2. Measure "spikiness"/"entropy" of a resulting distribution. This is our estimand E.
+Step 3. Each location has E: we want to ask what influences the structure: does "borderness" depend on the type of the location.
+Step 4. Fit a model: "E ~ type * log(n_occurences) + n_languages"
+
+n_occurences controls for obvious increase in structure with decrease of observations.
+
+```{r}
+library(ineq)
+
+# prepare a list of DF holding all "FROM A" directions
+df_list <- formulas_d %>%
+  filter(from_id %in% from_select$from_id) %>% mutate(diff_entropy = 0,diff_gini=0) %>%  group_by(from_id) %>% group_split()
+
+df_list_to <- formulas_d %>%
+  filter(to_id %in% to_select$to_id) %>% mutate(diff_entropy = 0,diff_gini=0) %>%  group_by(to_id) %>% group_split()
+
+for(i in 1:length(df_list)) {
+  
+  df <- df_list[[i]]
+  ## circular absolute distance between angles
+  circ_dist <- abs(
+    (
+      (outer(df$angle_east_deg, df$angle_east_deg, "-") + 180) %% 360) - 180
+)
+  ## only lower
+  distances <- circ_dist[lower.tri(circ_dist)]
+  
+  ## bin values 
+  bins <- seq(0, 180, by = 5) 
+  hist_vals <- hist(distances, breaks = bins, plot = FALSE)
+  
+  ## probabilities of a differences over binned 0,180 interval
+  p <- hist_vals$counts / sum(hist_vals$counts)
+  
+  ## gini and entropy
+  df <- df %>% mutate(diff_entropy = -sum(p[p > 0] * log(p[p > 0])),
+                      diff_gini = ineq(p, type="Gini"))
+  
+  df_list[[i]] <- df
+  
+
+}
+
+
+formulas_ineq <- df_list %>%
+  bind_rows() %>% 
+  group_by(from_id) %>% 
+  mutate(n = max(row_number()), # number of times a place appears
+         n_langs = length(unique(lang))) %>%  # number of languages referencing the place
+  ungroup() %>% 
+  select(lang, n_langs,n,starts_with("from_"), starts_with("diff_")) %>%
+  filter(!duplicated(from_id)) # table for the model
+
+cor(formulas_ineq$diff_entropy,formulas_ineq$diff_gini)
+
+
+formulas_to_ineq <- df_list_to %>%
+  bind_rows() %>% 
+  group_by(to_id) %>% 
+  mutate(n = max(row_number()), # number of times a place appears
+         n_langs = length(unique(lang))) %>%  # number of languages referencing the place
+  ungroup() %>% 
+  select(lang, n_langs,n,starts_with("to_"), starts_with("diff_")) %>%
+  filter(!duplicated(to_id)) # table for the model
+
+
+```
+
+```{r}
+
+intersection <- intersect(formulas_ineq$from_placename,formulas_to_ineq$to_placename)
+union1 <- union(formulas_ineq$from_placename,formulas_to_ineq$to_placename)
+
+length(intersection)
+length(union1)
+
+top_from <- formulas_ineq %>% filter(n>=8)
+top_to <- formulas_to_ineq %>% filter(n>=6)
+
+## changes in structure?
+top_from %>% 
+  left_join(top_to,by = c("from_id" = "to_id")) %>%
+  filter(from_placename==to_placename) %>% 
+  mutate(delta = diff_entropy.x - diff_entropy.y) %>%
+  select(from_placename,delta) %>%
+  arrange(-abs(delta)) 
+```
+
+
+### Fitting the model
+
+```{r}
+library(brms)
+
+## regularizing priors
+priors <- c(
+  prior(normal(0, 0.5), class = "b"),
+  prior(normal(1, 0.5), class = "Intercept")
+)
+
+## prior predictive check (just make sure it's reasonable enough)
+fit_prior <- brm(
+  diff_entropy ~ from_type_major*log(n) + n_langs,
+  data = formulas_ineq,
+  family = gaussian(),
+  prior = priors,
+  sample_prior = "only"
+)
+
+pp_check(fit_prior)
+
+
+m0m2 <- brm(
+  diff_entropy ~ from_type_major*log(n) + n_langs,
+  data = formulas_ineq,
+  family = gaussian(),
+  chains = 4,
+  cores = 4,
+  prior = priors,
+  iter = 4000,
+  save_model = "m0m2",
+)
+
+saveRDS(m0m2,file="../models/entropy_major_type.rds")
+
+
+m0m2_to <- brm(
+  diff_entropy ~ to_type_major*log(n) + n_langs,
+  data = formulas_to_ineq,
+  family = gaussian(),
+  chains = 4,
+  cores = 4,
+  prior = priors,
+  iter = 4000,
+  save_model = "m0m2_to",
+)
+
+saveRDS(m0m2_to,file="../models/entropy_to_major_type.rds")
+
+
+
+```
+
+```{r}
+m0m2 <- readRDS("../models/entropy_major_type.rds")
+m0m2_to <- readRDS("../models/entropy_to_major_type.rds")
+## from
+pp_check(m0m2)
+conditional_effects(m0m2)
+
+summary(m0m2)
+
+## to
+pp_check(m0m2_to)
+conditional_effects(m0m2_to)
+
+summary(m0m2_to)
+
+```
+
+### Plots
+
+Redrawing conditional effects here:
+
+```{r}
+ce <- conditional_effects(m0m2)
+ce_df <- as_tibble(ce[["n:from_type_major"]])
+
+
+
+p3 <- ggplot(ce_df,aes(x = n, y = estimate__, color = from_type_major, fill = from_type_major)) +
+  geom_line() +
+  geom_ribbon(
+    aes(ymin = lower__, ymax = upper__),
+    alpha = 0.2,
+    color = NA
+  ) +
+  theme_minimal(base_size=12) +
+  labs(
+    x = "Number of occurrences of a location",
+    y = "Predicted entropy"
+  ) +
+  geom_vline(aes(xintercept=10),linetype=2,color="grey40") + 
+  scale_color_manual(values=met.brewer("Cassatt1")[c(2,8)]) +
+  scale_fill_manual(values=met.brewer("Cassatt1")[c(2,8)]) + labs(color="Location type",fill="Location type",title="Interaction between type and number of locations")
+``` 
+
+
+```{r}
+# Get all levels of type
+types <- unique(formulas_ineq$from_type_major)
+
+# Build new data frame
+newdata <- tibble(
+  from_type_major = types,
+  n = 10,
+  n_langs = 3)
+
+
+posterior_draws <- posterior_predict(m0m2, newdata = newdata)
+posterior_means <- posterior_epred(m0m2, newdata = newdata)
+
+
+summary_df <- as_tibble(posterior_means)
+colnames(summary_df) <- types
+
+
+# average diff in means ~0.43 entropy points
+mean(unlist(summary_df[,1] - summary_df[,2]))
+
+pp_diff <- table((summary_df[,1] - summary_df[,2]) > 0)
+# 96% of the time "political" predictions have larger mean
+pp_diff[2]/sum(pp_diff)
+
+means1 <- summary_df %>% 
+  pivot_longer(cols = everything(), names_to = "type", values_to = "pred") %>% 
+  group_by(type) %>% summarize(m1=mean(pred))
+
+p1 <- summary_df %>% 
+  pivot_longer(cols = everything(), names_to = "type", values_to = "pred") %>%
+  ggplot(aes(pred,reorder(type,-pred),color=type,fill=type)) +
+  
+  geom_density_ridges(size=0.5,alpha=0.3,scale=1) + 
+  geom_vline(data=means1, aes(xintercept=m1,color=type),linetype=2) +
+  theme_minimal(base_size = 12) + 
+  scale_color_manual(values=met.brewer("Cassatt1")[c(2,8)]) +
+  scale_fill_manual(values=met.brewer("Cassatt1")[c(2,8)]) + 
+  guides(color="none",fill="none") +
+  labs(x="",y=NULL,title="FROM A locations")
+```
+"To" distances
+
+```{r}
+# Get all levels of type
+types <- unique(formulas_to_ineq$to_type_major)
+
+# Build new data frame
+newdata <- tibble(
+  to_type_major = types,
+  n = 10,
+  n_langs = 3)
+
+
+posterior_draws <- posterior_predict(m0m2_to, newdata = newdata)
+posterior_means <- posterior_epred(m0m2_to, newdata = newdata)
+
+
+summary_df <- as_tibble(posterior_means)
+colnames(summary_df) <- types
+
+
+# average diff in means ~0.3 entropy points
+mean(unlist(summary_df[,1] - summary_df[,2]))
+
+pp_diff <- table((summary_df[,1] - summary_df[,2]) > 0)
+# 95% of the time "political" predictions have larger mean
+pp_diff[2]/sum(pp_diff)
+
+
+means1 <- summary_df %>% 
+  pivot_longer(cols = everything(), names_to = "type", values_to = "pred") %>% 
+  group_by(type) %>% summarize(m1=mean(pred))
+
+p2 <- summary_df %>% 
+  pivot_longer(cols = everything(), names_to = "type", values_to = "pred") %>%
+  ggplot(aes(pred,reorder(type,-pred),color=type,fill=type)) +
+  
+  geom_density_ridges(size=0.5,alpha=0.3,scale=1) + 
+  geom_vline(data=means1, aes(xintercept=m1,color=type),linetype=2) +
+  theme_minimal(base_size = 12) + 
+  labs(x="Predicted marginal entropy",y=NULL,title="TO B locations") +
+  scale_color_manual(values=met.brewer("Cassatt1")[c(2,8)]) +
+  scale_fill_manual(values=met.brewer("Cassatt1")[c(2,8)]) + labs(color="Location type",fill="Location type") + guides(color="none",fill="none")
+
+
+library(patchwork)
+
+(p1 / p2) | p3
+
+ggsave("../plots/Fig_model.png",height = 6,width = 10)
+```
+
