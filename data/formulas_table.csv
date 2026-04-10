@@ -704,7 +704,6 @@ fr,CRB48,Q195958,Q17812,De Tolose à le Guadalété,"CORBIÈRE, Tristan",1845,18
 fr,CRB70,Q6582,Q9427,De Carcassonne à Tombouctou,"CORBIÈRE, Tristan",1845,1875,Carcassonne,43.215833333333,2.3513888888889,castle/fort,castle,Timbuktu,16.773333055556,-2.9994438888889,city,city
 fr,CRO168,Q1479,Q6555,de Bordeaux à Narbonne,"CROS, Charles",1842,1888,Bordeaux,44.837777777778,-0.57944444444444,city,city,Narbonne,43.184722222222,3.0036111111111,city,city
 fr,CRO168,Q1479,Q6555,de le canal de Bordeaux à Narbonne,"CROS, Charles",1842,1888,Bordeaux,44.837777777778,-0.57944444444444,city,city,Narbonne,43.184722222222,3.0036111111111,city,city
-fr,CRO168,Q1479,Q6555,de Bordeaux à Narbonne,"CROS, Charles",1842,1888,Bordeaux,44.837777777778,-0.57944444444444,city,city,Narbonne,43.184722222222,3.0036111111111,city,city
 fr,DAN13,Q10305,Q162615,De Saragosse à Carthagène,"DANTIN, Louis",1865,1945,Zaragoza,41.65,-0.88333333333333,region,region,Cartagena,37.6,-0.98194444444444,city,city
 fr,DAU19,Q1851236,Q330564,de le Temple à la Madeleine,"DAUDET, Alphonse",1840,1897,Boulevard du Temple,48.863288888889,2.3665083333333,city part,city part,La Madeleine,48.87,2.32444444444444,city part,city part
 fr,DLP26,Q1471,Q1469,de la Seine à la Loire,"DELPIT, Albert",1849,1893,Seine,49.434722222222,0.1175,river,river,Loire,47.27,-2.1844444444444,river,river
@@ -877,31 +876,6 @@ fr,VOL44,Q1075988,Q142,"de son Louvre fatal , Médicis à la France","AROUET, Fr
 fr,VOL50,Q14294,Q643,De le Tage à l’ Éridan,"AROUET, François-Marie",1694,1778,Tagus River,38.8525,-9.0137,river,river,Po,44.97,12.546944444444,river,river
 fr,VOL100,Q15,Q419,De l' Afrique à le Pérou,"AROUET, François-Marie",1694,1778,Africa,21.09375,7.1881,continent,continent,Peru,-9.4,-76,country,country
 fr,VOL118,Q64,Q90,de Berlin à Paris,"AROUET, François-Marie",1694,1778,Berlin,52.516666666667,13.383333333333,city,city,Paris,48.8566666666667,2.35222222222222,city,city
-it,bibit000117-5,Q6247,Q14379,da Mantova senza stanchezza a il Lago Maggiore,Guido Gozzano,1883,1916,Mantua,45.156388888889,10.791111111111,city,city,Lake Maggiore,46.0980555555556,8.71472222222222,lake,lake
-it,bibit000118-193,Q1471,Q1286,"da la Senna volano leggeri , E a piè de l' Alpi","Leopardi, Giacomo",1798,1837,Seine,49.434722222222,0.1175,river,river,Alps,46.5780555555556,8.615,mountain,mountain
-it,bibit000131-26,Q683578,Q13712,da Superga rivola a il Tevere,Giosue Carducci,1835,1907,Superga,45.08333333,7.76666667,hill,hilltop,Tiber,41.740555555556,12.233333333333,river,river
-it,bibit000226-14,Q1286,Q2260811,da l' Alpi a Lilibeo,Giuseppe Giusti,1809,1850,Alps,46.5780555555556,8.615,mountain,mountain,Lilibaeum,37.8,12.43333,ancient city,ancient city
-it,bibit000226-41,Q1286,Q2656,da l' Alpi a Palermo,Giuseppe Giusti,1809,1850,Alps,46.5780555555556,8.615,mountain,mountain,Palermo,38.1156580555556,13.3612619444444,city,city
-it,bibit000226-46,Q1286,Q2260811,da l' Alpe a Lilibeo,Giuseppe Giusti,1809,1850,Alps,46.5780555555556,8.615,mountain,mountain,Lilibaeum,37.8,12.43333,ancient city,ancient city
-it,bibit000226-75,Q220,Q13496,da Roma a Brindisi,Giuseppe Giusti,1809,1850,Rome,41.893055555556,12.482777777778,city,city,Brindisi,40.638333333333,17.945833333333,city,city
-it,bibit000521-37,Q565751,Q649217,da ' monti d' Epiro ed allunga sino a Leuca,Giosue Carducci,1835,1907,Epirus,39.23651,20.71472,region,historic region,Santa Maria di Leuca,39.801,18.356944444444,city,city
-it,bibit000695-4,Q5456,Q822,da l' Ande algenti a il Libano,Alessandro Manzoni,1785,1873,Andes,-32.65333333,-70.01166667,mountain,mountain,Lebanon,33.833333,35.766667,country,country
-it,bibit000695-8,Q1286,Q12508,Da l' Alpi a le Piramidi,Alessandro Manzoni,1785,1873,Alps,46.5780555555556,8.615,mountain,mountain,Giza pyramid complex,29.976111,31.132778,ancient site,ancient site
-it,bibit000695-8,Q12508,Q584,"Da l' Alpi a le Piramidi , da il Manzanarre a il Reno",Alessandro Manzoni,1785,1873,Giza pyramid complex,29.976111,31.132778,ancient site,ancient site,Rhine,47.6662,9.1786,river,river
-it,bibit000695-8,Q16512,Q584,da il Manzanarre a il Reno,Alessandro Manzoni,1785,1873,Manzanares,40.30406,-3.539275,river,river,Rhine,47.6662,9.1786,river,river
-it,bibit000698-53,Q643,Q1285,da il Po superbo a l' Appennin,Niccolò Tommaseo,1802,1874,Po,44.97,12.546944444444,river,river,Apennine Mountains,43.281667,12.581944,mountain,mountain
-it,bibit000735-3,Q156882,Q6343,da Samo indarno porta a la sua Cartago,Vincenzo Monti,1754,1828,Samos,37.75,26.8333,island,island,Carthage,36.852558,10.323461,ancient city,ancient city
-it,bibit000850-32,Q3392,Q1171,"da l' Orse a il Nilo , E da Boston a Goa","Leopardi, Giacomo",1798,1837,Nile,31.4653,30.3667,river,river,Goa,15.401944,74.043333,region,region
-it,bibit000850-32,Q100,Q1171,da Boston a Goa,"Leopardi, Giacomo",1798,1837,Boston,42.3602777777778,-71.0577777777778,city,city,Goa,15.401944,74.043333,region,region
-it,bibit000850-32,Q90,Q6454,Da Parigi a Calais,"Leopardi, Giacomo",1798,1837,Paris,48.8566666666667,2.35222222222222,city,city,Calais,50.9475,1.8555555555556,city,city
-it,bibit000850-32,Q6454,Q84,"Da Parigi a Calais , di quivi a Londra","Leopardi, Giacomo",1798,1837,Calais,50.9475,1.8555555555556,city,city,London,51.507222222222,-0.1275,city,city
-it,bibit000850-32,Q84,Q24826,Da Londra a Liverpool,"Leopardi, Giacomo",1798,1837,London,51.507222222222,-0.1275,city,city,Liverpool,53.4075,-2.99194444444444,city,city
-it,bibit000850-32,Q14294,Q6514,Da le foci di il Tago a l' Ellesponto,"Leopardi, Giacomo",1798,1837,Tagus River,38.8525,-9.0137,river,river,Dardanelles,40.2,26.4,strait (water),strait (water)
-it,bibit001172-187,Q10965,Q214874,da l' ispano Ibero a l' indo Idaspe,"Leopardi, Giacomo",1798,1837,Ebro,40.728527124206,0.86929321289062,river,river,Jhelum River,31.17,72.15,river,river
-it,bibit001258-119,Q6514,Q3392,da l' Ellesponto a il Nilo!... O Memfi,Emilio Praga,1839,1875,Dardanelles,40.2,26.4,strait (water),strait (water),Nile,31.4653,30.3667,river,river
-it,bibit001258-129,Q55416,Q4656,da Chioggia a Pola,Emilio Praga,1839,1875,Chioggia,45.21891,12.27854,city,city,Pula,44.8702777777778,13.8455555555556,city,city
-it,bibit001325-101,Q1288,Q171009,da ' monti Carpazi a la Drava,Giosue Carducci,1835,1907,Carpathian Mountains,47,25.5,mountain,mountain,Drava,45.543888888889,18.926666666667,river,river
-it,bibit001471-59,Q19826,Q1061804,Da Palazzo Madama a il Valentino,Guido Gozzano,1883,1916,"Palazzo Madama and Casaforte degli Acaja, Turin",45.07094444,7.68577778,palace,palace,Parco del Valentino,45.054,7.686,city part,city part
 ru,axmat-721,Q167668,Q959,От Либавы до Владивостока,Ahmatova A.A.,1889,1966,Liepāja,56.508333333333,21.011111111111,city,city,Vladivostok,43.116666666667,131.9,city,city
 ru,brius-0786,Q2981,Q41876,"с неба Notre-Dame , Знай : в Реймсе",Brjusov V.Ja.,1873,1924,Notre-Dame de Paris,48.853,2.3498,city part,city part,Reims,49.265277777778,4.0286111111111,city,city
 ru,brius-0784,Q1286,Q12689,От Альп неподвижных до Па-де-Кале,Brjusov V.Ja.,1873,1924,Alps,46.5780555555556,8.615,mountain,mountain,Pas-de-Calais,50.95,1.85,region,region
@@ -972,7 +946,6 @@ ru,volo2-048,Q196786,Q649,из Углича опять Вез в Москву,Vo
 ru,volo2-107,Q5753,Q90,Из Самарканда на запад - - в Париж,Voloshin M.A.,1877,1932,Samarkand,39.6547222222222,66.9758333333333,city,city,Paris,48.8566666666667,2.35222222222222,city,city
 ru,bagrc-013,Q131210,Q156237,От Днестра до Буга,Bagritskij E.G.,1895,1934,Dniester,46.3041,30.2736,river,river,Western Bug,52.5067,21.0844,river,river
 ru,bagrc-091,Q1460,Q490,От Сицилии до Милана,Bagritskij E.G.,1895,1934,Sicily,37.599958333333,14.015377777778,region,region,Milan,45.466944444444,9.19,city,city
-ru,bagrc-089,Q1731,Q64,Из Дрездена недалеко И до Берлина,Bagritskij E.G.,1895,1934,Dresden,51.05,13.74,city,city,Berlin,52.516666666667,13.383333333333,city,city
 ru,bagrc-089,Q1731,Q64,Из Дрездена недалеко И до Берлина,Bagritskij E.G.,1895,1934,Dresden,51.05,13.74,city,city,Berlin,52.516666666667,13.383333333333,city,city
 ru,bagrc-038,Q5428,Q131210,От пасмурной Сибири До ясного Днестра,Bagritskij E.G.,1895,1934,Siberia,60,105,region,region,Dniester,46.3041,30.2736,river,river
 ru,bagrc-094,Q41572,Q194084,От Николаева до Сестрорецка,Bagritskij E.G.,1895,1934,Mykolaiv,46.975,31.995,city,city,Sestroretsk,60.1,29.966666666667,city,city

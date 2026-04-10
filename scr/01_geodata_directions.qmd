@@ -6,9 +6,16 @@ editor: visual
 
 # Explore directions of from_to formula
 
-```{r, warning=F, include=F}
+```{r, echo=TRUE, results = 'hide', warning=F, message=F}
 library(tidyverse)
 
+# maps pckg
+library(sf)
+library(ggspatial)
+library(rnaturalearth)
+library(rnaturalearthdata)
+
+library(ggrepel)
 library(MetBrewer)
 library(cowplot)
 library(kableExtra)
@@ -24,19 +31,6 @@ formulas <- read.csv("../data/formulas_table.csv")
 glimpse(formulas)
 ```
 
-Keep only ONE from-to direction per poem
-
-```{r, include=F, echo=F}
-# formulas %>% 
-#   distinct() %>% nrow()
-# 
-# nrow(formulas)
-
-formulas <- formulas %>% 
-  distinct() %>% 
-  filter(lang != "it") 
-```
-
 N formulas per language
 
 ```{r, include=T, echo=F}
@@ -48,11 +42,11 @@ formulas %>%
 
 Look if most most freq locations also appear in from_to formula
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 # load loc freq data
 loc_freq <- read.csv("../data/locations.csv")
 
-glimpse(loc_freq)
+# glimpse(loc_freq)
 
 loc_freq <- loc_freq %>% 
   # add ranks within groups
@@ -114,7 +108,7 @@ mean(kcor)
 rm(f_long, f_long_from, loc_freq, f_long_t, kcor)
 ```
 
-It's a long table, just some observations:
+Some observations:
 
 -   Czech:
 
@@ -166,32 +160,6 @@ I calculated Haversine (bird/plane flight) distance between the from-\>to coordi
 
 ### calculation
 
-```{r, eval=F, include=F}
-# test on smaller sample
-t <- formulas[1:2,]
-t
-
-# geosphare library
-
-lat_london <- 51.5074
-lon_london <- -0.1278
-lat_paris <- 48.8566
-lon_paris <- 2.3522
-
-distHaversine(c(lon_london, lat_london), c(lon_paris, lat_paris)) / 1000 # div1000 gives km
-
-# same for two first row from formulas
-distHaversine(c(t$from_longitude[1], t$from_latitude[1]), 
-              c(t$to_longitude[1], t$to_latitude[1])) / 1000
-
-# check application to the table:
-t %>% 
-  rowwise() %>% 
-  mutate(dist_haversine = distHaversine(c(from_longitude, from_latitude),
-                                        c(to_longitude, to_latitude)) / 1000) %>% 
-  ungroup()
-```
-
 ```{r, include=T, echo=T}
 # calculate haversine distances between from_to points in current table
 
@@ -209,17 +177,6 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
 ```
 
 # Fig 1: Example
-
-Load pckg for maps
-
-```{r}
-library(sf)
-library(ggspatial)
-
-library(rnaturalearth)
-library(rnaturalearthdata)
-library(ggrepel)
-```
 
 ```{r}
 exmpl <- formulas_d %>% 
