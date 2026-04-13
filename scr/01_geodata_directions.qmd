@@ -40,7 +40,7 @@ formulas %>%
 
 ## Most freq loc vs from_to loc
 
-Look if most most freq locations also appear in from_to formula
+Look if most most freq locations also appear in from_to formula; calculate kendall rank correlation between the most frequent locations in corpus overall and in formulas
 
 ```{r, echo=F}
 # load loc freq data
@@ -108,59 +108,13 @@ mean(kcor)
 rm(f_long, f_long_from, loc_freq, f_long_t, kcor)
 ```
 
-Some observations:
-
--   Czech:
-
-    -   top in both lists (top-20): Bohemian Forest, Prague, Tatra mountains, Danube, Moravia, Vltava, ROME (!) , Czechia, Elbe, Vyšehrad;
-
-    -   many mountains which is not the case for other corpora (Tatra, Giant Mountains, Ural, Sněžka, Alps)
-
--   DE:
-
-    -   top-20 loc in both: Vienna, Rhine, Paris, Berlin
-
-    -   not many instances overall (only Vienna, Rhine and Paris apprear \> 2 times in from-to)
-
--   EN:
-
-    -   England, France, Egypt (!), Nile, River Thames, Rome, Ireland, Spain, India
-
-    -   top-1 is Maine (?)
-
-    -   many frequent distant/non-european locations (china, nile);
-
--   FR:
-
-    -   Paris, Rome, Kythira (wtf);
-
-    -   top-2 locs are very highly cor within lists, overall cor is non-existent; meaning from-to locs are important locs in general (eg Bordeau, Nice, Louvre Palace); some long-distance things in from-to also – Tiber, Ganges, Memphis, Volga, Cairo
-
--   IT:
-
-    -   Alps,
-
-    -   too little data (all from-to freq is 2 or 1)
-
--   RU:
-
-    -   Neva, Moscow, SPb, Volga, Crimea, Msc Kremlin, Caucasus, Kyiv, Rome, Nile, Siberia (21 total rank)
-
-    -   very obvious places mostly within Russia, exceptions: Alps, Caucasus, Kyiv, Rome, Nile, Vistula, Seine;
-
--   SL:
-
-    -   Soča (from-to count: 3, else is 2 or less)
-
-    -   most locs are some within Sl I guess + mostly single counts in from_to
-
 ## Distances
 
 I calculated Haversine (bird/plane flight) distance between the from-\>to coordinates, the distance is in km.
 
 ### calculation
 
-```{r, include=T, echo=T}
+```{r, echo=T}
 # calculate haversine distances between from_to points in current table
 
 formulas_d <- formulas %>% 
@@ -178,7 +132,7 @@ head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_havers
 
 # Fig 1: Example
 
-```{r}
+```{r, echo=T}
 exmpl <- formulas_d %>% 
    filter(str_detect(to_placename, "Rome")) %>% 
    filter(str_detect(author_name, "Whittier")) # specific line in eng
@@ -186,7 +140,7 @@ exmpl <- formulas_d %>%
 # exmpl <- formulas_d %>% 
 #   filter(str_detect(from_placename, "Rhine") & str_detect(to_placename, "Danube"))
 
-exmpl
+# exmpl
 exmpl$text
 
 exmpl$dist_haversine
@@ -205,7 +159,7 @@ exmpl %>%
          x1_0, y1_0, x2_0, y2_0)
 ```
 
-Basic map
+Basic map 1
 
 ```{r, include=F, echo=F}
 world <- ne_countries(scale = "medium", returnclass = "sf")
@@ -414,14 +368,19 @@ map_4
 #        dpi = 300, width = 5, height = 5)
 ```
 
-```{r, eval = F, include = F, echo = F}
+```{r, eval = F}
 plot_grid(map_1, map_2, map_3, map_4,
           nrow = 1,
           labels = c("1", "2", "3", "4"), label_size = 36)
+```
 
-
+```{r, eval=F, echo=F}
 ggsave("../plots/Fig_1.png", plot = last_plot(),
        bg = "white", dpi = 300, width = 20, height = 5)
+```
+
+```{r, include=F}
+rm(exmpl, map_1, map_2, map_3, map_4)
 ```
 
 # Dist distribution
@@ -438,8 +397,6 @@ formulas_d %>%
 ```
 
 Most of the distances are actually very small; but for some traditions there are quite a portion of longer ones.
-
-The problem is the threshold here: would we want to divide into short/long groups based on any corpus-related number (mean/med dist? country size? which country then), or to set an arbitrary baseline like everything less then 1000km is a small distance, and anything longer – is long?
 
 # Fig 2: dist distribution
 
@@ -485,6 +442,10 @@ ggsave("../plots/Fig_2.png", plot = last_plot(),
        bg = "white", dpi = 300, width = 7, height = 4)
 ```
 
+```{r, include=F}
+rm(dist_log, dist_raw)
+```
+
 ### dist summary stats
 
 Calculate mean & median dist for each corpus + 3rd quantile
@@ -509,7 +470,6 @@ totals <- formulas_d %>%
   rename(n_total = n)
 
 formulas_d %>% 
-  filter(lang != "it") %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_long = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
   count(lang, dist_long) %>% 
@@ -521,7 +481,6 @@ formulas_d %>%
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
-  filter(lang != "it") %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_long = ifelse(dist_haversine > 800, "long", "short")) %>% 
   count(lang, dist_long) %>% 
@@ -537,48 +496,6 @@ formulas_d %>%
   head(10) %>% 
   select(lang, text, from_type, to_type, from_placename, to_placename, dist_haversine)
 
-```
-
-```{r, include=F, echo=F, eval = F}
-# Plots based on the groups long / short distances:
-# how these values are distributed, should we divide them in two groups
-
-formulas_d %>% 
-  left_join(dist_summary, by = "lang") %>% 
-  mutate(dist_longer_mean = ifelse(dist_haversine > dist_mean, "yes", "no")
-         #dist_longer_3qu = ifelse(dist_haversine > third_quant, 1, 0)
-         ) %>% 
-  select(lang, dist_haversine, dist_longer_mean) %>% 
-  ungroup() %>% 
-  ggplot(aes(x = lang, y = dist_haversine, fill = dist_longer_mean)) + 
-  geom_boxplot() + 
-  labs(title = "Grouping based on: distances longer than median")
-```
-
-```{r, include=F, echo=F, eval = F}
-formulas_d %>% 
-  left_join(dist_summary, by = "lang") %>% 
-  mutate(dist_longer_3qu = ifelse(dist_haversine > third_quant, "yes", "no")
-         ) %>% 
-  select(lang, dist_haversine, dist_longer_3qu) %>% 
-  ungroup() %>% 
-  ggplot(aes(x = lang, y = dist_haversine, fill = dist_longer_3qu)) + 
-  geom_boxplot() + 
-  labs(title = "Grouping based on: distances longer than 3rd quant limit")
-```
-
-```{r, include=F, echo=F, eval = F}
-# Same grouping method for all: dist is short is < 1000km, long if >1000km
-
-formulas_d %>% 
-  left_join(dist_summary, by = "lang") %>% 
-  mutate(dist_longer_1000 = ifelse(dist_haversine > 1000, "yes", "no")
-         ) %>% 
-  select(lang, dist_haversine, dist_longer_1000) %>% 
-  ungroup() %>% 
-  ggplot(aes(x = lang, y = dist_haversine, fill = dist_longer_1000)) + 
-  geom_boxplot() + 
-  labs(title = "Grouped dist distribution: distances longer than 1000km")
 ```
 
 # Types
@@ -598,7 +515,7 @@ formulas_d %>%
 
 Create larger groups
 
-```{r, include=F, echo=F}
+```{r, echo=T}
 unique(c(formulas_d$from_type, formulas_d$to_type))
 
 types_groups <- tibble(type_original = unique(c(formulas_d$from_type, formulas_d$to_type)),
@@ -635,7 +552,7 @@ formulas_d <- formulas_d %>%
             by = "to_type") 
 ```
 
-```{r, eval = F}
+```{r, echo=F}
 formulas_d %>% count(from_type_group) # pull(n) %>% sum()
 formulas_d %>% count(to_type_group) # %>% pull(n) %>% sum()
 
@@ -643,7 +560,7 @@ formulas_d %>% count(from_type_major) # %>% pull(n) %>% sum()
 formulas_d %>% count(to_type_major) # %>% pull(n) %>% sum()
 ```
 
-```{r, include=T, echo=T}
+```{r, echo=T}
 types_groups
 ```
 
@@ -681,12 +598,10 @@ formulas_d %>%
 
 ```{r, include=T, echo=F}
 x <- formulas_d %>% 
-  filter(lang != "it") %>% 
   mutate(lang_type = paste0(lang, "_", from_type_group)) %>% 
   count(lang_type)
 
 formulas_d %>% 
-  filter(lang != "it") %>% 
   mutate(lang_type = paste0(lang, "_", to_type_group)) %>% 
   count(lang_type) %>% 
   rename(n_x = n) %>% 
@@ -705,7 +620,7 @@ formulas_d %>%
 
 #### dist ranks
 
-The most frequent types of connection for short and long distances (based on the mean)
+The most frequent types of connection for short and long distances (based on the mean); numbers are ranks
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
@@ -733,7 +648,7 @@ formulas_d %>%
   arrange(-desc(long)) %>% head(20)
 ```
 
-Villages distances
+Village –\> village distances
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
@@ -849,73 +764,24 @@ formulas_d %>%
   ungroup() 
 ```
 
-### ancient cities
-
-```{r, include=T, echo=F}
-formulas_d %>% 
-  filter(lang != "it") %>% 
-  filter(str_detect(from_type, "ancient")) %>% 
-  count(lang, from_placename, sort = T)
-
-formulas_d %>% 
-  filter(lang != "it") %>% 
-  filter(str_detect(to_type, "ancient")) %>% 
-  count(lang, to_placename, sort = T)
-
-x <- formulas_d %>% 
-  filter(lang != "it") %>% 
-  filter(str_detect(from_type, "ancient")) %>% 
-  count(lang, from_placename, sort = T) %>% 
-  rename(placename = from_placename)
-
-# grouped from and to placenames & filtered >1
-formulas_d %>% 
-  filter(lang != "it") %>% 
-  filter(str_detect(to_type, "ancient")) %>% 
-  count(lang, to_placename, sort = T) %>% 
-  rename(placename = to_placename) %>% 
-  rbind(x) %>% 
-  group_by(lang, placename) %>% 
-  summarise(total_n = sum(n)) %>% 
-  arrange(desc(total_n)) %>% 
-  arrange(-desc(lang)) %>% 
-  filter(total_n > 1)
-```
-
-There are quite a lot of these ancient things, but they are mostly unique (sampled example)
-
-```{r, include=T, echo=F}
-formulas_d %>% 
-  filter(lang != "it") %>% 
-  mutate(type_pair = paste0(from_type, " --> ", to_type), 
-         dist_type = ifelse(dist_haversine > 1000, "long", "short")) %>% 
-  filter(str_detect(type_pair, "ancient")) %>% 
-  select(lang, type_pair, text, from_placename, to_placename, dist_type, dist_haversine) %>% 
-  sample_n(10)
-```
-
 ### city parts
 
 ```{r, include=T, echo=F}
 formulas_d %>% 
-  filter(lang != "it") %>% 
   filter(str_detect(from_type, "city part")) %>% 
   count(lang, from_placename, sort = T)
 
 formulas_d %>% 
-  filter(lang != "it") %>% 
   filter(str_detect(to_type, "city part")) %>% 
   count(lang, to_placename, sort = T)
 
 # traditions with most city parts present?
 x <- formulas_d %>% 
-  filter(lang != "it") %>% 
   filter(str_detect(from_type, "city part")) %>% 
   select(lang, from_placename) %>% 
   rename(placename = from_placename)
 
 formulas_d %>% 
-  filter(lang != "it") %>% 
   filter(str_detect(to_type, "city part")) %>% 
   select(lang, to_placename) %>% 
   rename(placename = to_placename) %>% 
@@ -1038,120 +904,3 @@ freq_ranks <- formulas_d %>%
 
 freq_ranks
 ```
-
-------------------------------------------------------------------------
-
-# Additional
-
-#### Time: distances based on author birth year
-
-```{r, include = F, echo=F}
-
-# check birth year missing data
-
-totals <- formulas %>% 
-  count(lang) %>% 
-  rename(total_n = n)
-
-formulas_d %>% 
-  select(lang, year_birth, dist_haversine) %>% 
-  filter(!is.na(year_birth)) %>% 
-  count(lang) %>% 
-  left_join(totals, by = "lang")
-```
-
-This is how author's birth years are distributed, if we're only looking in our formulas subset
-
-```{r, include=T, echo=F, warning=FALSE}
-formulas %>% 
-  filter(lang != "it") %>% 
-  select(lang, year_birth) %>% 
-  ggplot(aes(x = year_birth)) + 
-  geom_density(fill = "lightseagreen") + 
-  facet_wrap(~lang) + 
-  geom_vline(xintercept = seq(1600, 1900, 50), 
-             lty = 2, colour = "darkblue") + 
-  labs(title = "Formulas found per 50 years period",
-       subtitle = "Year of author birth is used")
-```
-
-Add time period column & recalculate summary dist metrics: I aggregated based on the half-century periods the author was born. The question here was: do authors born in quite distant times uses different distances when from_to formula appears?
-
-```{r, include=T, echo=F}
-dist_t_summary <- formulas_d %>% 
-  filter(!is.na(year_birth)) %>% 
-  mutate(period_birth = floor(year_birth/50)*50,
-         period_end = period_birth + 49,
-         period = paste0(period_birth, "—", period_end),
-         lang_t = paste0(lang, " ", period)) %>% 
-  group_by(lang_t) %>% 
-  summarise(dist_mean = mean(dist_haversine),
-            dist_median = median(dist_haversine),
-            third_quant = quantile(dist_haversine, 0.75),
-            number_formulas = n()) %>% 
-  ungroup() 
-
-dist_t_summary
-```
-
-```{r, include=T, echo=F, warning=F, message=F}
-dist_t_summary %>% 
-  select(-number_formulas) %>% 
-  pivot_longer(!lang_t) %>% 
-  left_join(dist_t_summary %>% select(lang_t, number_formulas)) %>% 
-  filter(number_formulas > 4) %>% # filter out period if less than [5 formulas found 
-  mutate(lang = str_extract(lang_t, "^.."), 
-         lang_t = str_remove(lang_t, "^..."),
-         lang_t = str_remove(lang_t, "—....$")) %>% 
-  
-  filter(lang != "it") %>% 
-  ggplot(aes(x = lang_t, y = value, group = name, colour = name)) +
-  geom_line(aes(linewidth = number_formulas)) + 
-  geom_hline(yintercept = 2000, lty = 2, colour = "darkblue") + 
-  facet_wrap(~lang, scales = "free_x") + 
-  labs(y = "dist in km",
-       title = "Temporal distribution of distances in from_to formulas",
-       subtitle = "x axis: 50-years chunks based on the author's birth year\n(i.e., 1750: aggregated value for authors born between 1750 and 1799") + 
-  theme(legend.position = "bottom")
-```
-
--   overall: we can see than Czech, German, & Slovenian from_to aggregated(!) distances are usually below 2k km; longest from-to are en, fr, and somewhat ru;
-
--   NB: my 2000 km threshold is absolutely arbitrary; also, I removed periods with less than 5 formulas;
-
--   Peaks details:
-
-    -   DE: peak period 1700-1749 is only 12 formulas, may be a random result
-
-    -   EN: authors born in 1750-1799: 40 formulas found; for 1800-1849 & 1850-1899 even more data (101 & 143 resp.) –\> these dist are really long on average;
-
-    -   FR: low number of formulas for any poet-birth period EXCEPT for 1800-1849;
-
-    -   RU: most formulas come from authors born in 1850-1899 (69); for 18c-authors there are 15 (1700-1749) and 22 (1750-1799) formulas respectively, so it actually can tell us something – like that these from-to mean/median distances are stable high
-
-### short vs long dist
-
-Previous plot was just aggregating all distances based on 50-year period and calculated means etc. Here I did not do any aggregation, but divided the observations in two groups (\> or \<1000km distance). Then I put everything on roughly the same timeline (no aggregation, just formulas + author's year birth)
-
-```{r, include=T, echo=F, warning=F}
-formulas_d %>% 
-  filter(lang != "it") %>% 
-  mutate(dist_longer_1k = ifelse(dist_haversine > 1000, "yes", "no")) %>% 
-  #filter(dist_longer_1k == "no") %>% 
-  ggplot(aes(x = year_birth, y = dist_haversine, group = dist_longer_1k)) + 
-  geom_point(aes(colour = dist_longer_1k), alpha = 0.5) + 
-  facet_wrap(~lang) + 
-  geom_smooth(aes(colour = dist_longer_1k, fill = dist_longer_1k)) + 
-  geom_hline(yintercept = 5000, lty = 2, colour = "darkblue") + 
-  
-  theme(legend.position = "bottom") + 
-  scale_y_continuous(limits = c(-1, 20000)) + 
-  labs(y = "Dist Haversine, km", 
-       x = "Author birth year")
-```
-
-```{r}
-rm(dist_summary, dist_t_summary, loc_freq, dist_log, dist_raw)
-```
-
-For longer distances: everyone except EN and FR are usually below the 5k distances even for longer ones? ru is somewhere inbetween.
