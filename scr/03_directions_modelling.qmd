@@ -1,6 +1,6 @@
 ---
 title: "03_directions_modelling"
-format: html
+format: md
 editor: visual
 ---
 
@@ -22,7 +22,6 @@ formulas <- read.csv("../data/formulas_table.csv")
 glimpse(formulas)
 
 formulas_d <- formulas %>% 
-  filter(lang != "it") %>% 
   rowwise() %>% 
   mutate(dist_haversine = distHaversine(
     c(from_longitude, from_latitude),
@@ -41,7 +40,7 @@ formulas_d <- formulas %>%
          x2_0 = to_longitude - from_longitude,
          y2_0 = to_latitude - from_latitude) 
 
-head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
+# head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
 
 rm(formulas)
 ```
@@ -88,7 +87,7 @@ t %>%
 
 Calculate angles
 
-```{r}
+```{r, echo=T}
 formulas_d <- formulas_d %>% 
   mutate(angle_east_deg = atan2(y2_0, x2_0) * 180 / pi,
          angle_north_deg = (90 - angle_east_deg + 360) %% 360) 
@@ -98,7 +97,7 @@ formulas_d <- formulas_d %>%
 
 Use `case_when`\`for separate into N, NE, E, SE, S, SW, W, NW groups, 45 degrees each.
 
-```{r, include=F, echo=T}
+```{r, echo=T}
 formulas_d <- formulas_d %>% 
   mutate(
     compass = case_when(
@@ -116,7 +115,7 @@ formulas_d <- formulas_d %>%
 
 ### compass viz
 
-```{r, include=F, echo=F}
+```{r, echo=F}
 # factor level order
 formulas_d <- formulas_d %>% 
   mutate(
@@ -162,9 +161,9 @@ x %>% head()
 
 Long distances compasses
 
-```{r}
+```{r, echo=T}
 long_dist_pizza <- x %>% 
-  filter(dist_longer_mean == "long" & lang != "it") %>% 
+  filter(dist_longer_mean == "long") %>% 
   ggplot(aes(x = compass, y = value)) + 
     geom_col(width = 1,
            position = "fill", colour = "white",
@@ -192,9 +191,9 @@ long_dist_pizza
 
 Short distances
 
-```{r}
+```{r, echo=F}
 short_dist_pizza <- x %>% 
-  filter(dist_longer_mean == "short" & lang != "it") %>% 
+  filter(dist_longer_mean == "short") %>% 
   ggplot(aes(x = compass, y = value)) + 
   geom_col(width = 1,
            position = "fill", colour = "white",
