@@ -35,4 +35,6 @@ The paper examines the imaginary geography of the poetic formula "from place\_a 
   
 If you use this code or data, please cite:
 - The paper: *Where Empires End: Geography of the Poetic Formula “From A to B”* (forthcoming)
-- The repository (Zenodo): (forthcoming)
+- The repository (Zenodo): https://doi.org/10.5281/zenodo.19570538
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19570538.svg)](https://doi.org/10.5281/zenodo.19570538)
+
