@@ -20,8 +20,9 @@ The dataset is derived from the [PoeTree corpora](https://versologie.cz/poetree/
 |   ├── 02_compass_plots.qmd      # Compass visualisations
 |   ├── 03_directions_plots.qmd   # Directions visualisations
 |   └── 04_borders_model.qmd      # Statistical models
-├── formulas_maps.Rproj           # R project
-└── renv.lock                     # Dependency lockfile for reproducibility
+├── formulas_maps.Rproj           # R project file
+├── renv.lock                     # Dependency lockfile for reproducibility
+└── renv/                         # Project-local R environment
 ````
 
 
