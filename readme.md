@@ -15,7 +15,7 @@ The dataset is derived from the [PoeTree corpora](https://versologie.cz/poetree/
 │   └── wiki_df.csv               # Formulas' locations coords from Wikidata
 ├── models/                       # Saved model outputs (.Rds)
 ├── plots/                        # Figures used in the paper
-├── scr/                          # Quarto (.qmd) notebooks and rendered .md                   
+├── src/                          # Quarto (.qmd) notebooks and rendered .md                   
 |   ├── 01_dist_analysis.qmd      # Descriptive statistics (distances & types)
 |   ├── 02_compass_plots.qmd      # Compass visualisations
 |   ├── 03_directions_plots.qmd   # Directions visualisations
