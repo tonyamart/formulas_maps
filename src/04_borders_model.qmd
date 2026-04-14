@@ -5,7 +5,7 @@ format: html
 
 ## Direction delta's
 
-**!! NB !!** will need `formulas_d` dataset from `03_directions_modelling.qmd`.
+**!! NB !!** will need `formulas_d` dataset from `03_directions_plot.qmd`.
 
 
 The idea is to quantify how "structured" are different types of location   

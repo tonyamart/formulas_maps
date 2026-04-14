@@ -4,7 +4,19 @@ format: md
 editor: visual
 ---
 
-# Clock / compass plots
+# Direction Analysis and Compass Plots
+
+This notebook generates compass plots and analyses directional patterns in the formulas. To fully reproduce Figures 3 and 4, load the direction plots from the `03_directions_plot.qmd` into the R environment.
+
+-   Calculate Coordinates: Transforms 'from' coordinates to (0,0) and adjusts 'to' coordinates accordingly;
+
+-   Long Distances: Creates six compass plots showing long distances directions across corpora;
+
+-   Short Distances: Produces same kind of plots for short-distance formulas;
+
+-   Figure 5: Prepares background map and compasses used in the Fig. 5.
+
+-   Additional - Rivers: Generate compass plots for additional river coordinates to examine their directional distribution.
 
 ```{r, warning=F, include=F}
 library(tidyverse)
@@ -54,7 +66,7 @@ formulas_d <- formulas_d %>%
   mutate(dist_longer_mean = ifelse(dist_haversine > mean_dist, "long", "short")) 
 ```
 
-## calculate coordinates
+# Calculate coordinates
 
 ```{r}
 formulas_nc <- formulas_d %>% 
@@ -452,9 +464,7 @@ freq_coord %>%
 
 ------------------------------------------------------------------------
 
-## Additional
-
-### Rivers
+# Additional - Rivers
 
 Read the file with additional coordinates for rivers
 
@@ -534,9 +544,12 @@ rivers_mid <- rivers %>%
 fr_mid <- upd_coord(rivers_mid, formulas_d)
 ```
 
-Build the clock plots again (quick fn, not rendered)
+Build the clock plots again
 
 ```{r, echo=F}
+
+# this function created compass plots for long distances, the same as for Fig. 3; rivers are coloured in red
+
 clock_long <- function(formulas_nc) {
   p_main <- formulas_nc %>% 
     mutate(arrow_col = ifelse(from_type == "river" | to_type == "river",
@@ -583,6 +596,9 @@ clock_long <- function(formulas_nc) {
 
   return(p_main)
 }
+
+
+# this function created compass plots for short distances, the same as for Fig. 4; rivers are coloured in red
 
 clock_short <- function(formulas_nc) {
   p_short <- formulas_nc %>% 
@@ -640,6 +656,8 @@ clock_short <- function(formulas_nc) {
 ```
 
 ```{r}
+# the function creates the plot for directions distribution (long distances), same as in 03_directions_plot.qmd; it first assigns each formula to a segment, and then calculate proportion of formulas in each segment.
+
 long_dist_pizza <- function(formulas_d) {
 
   formulas_d <- formulas_d %>% 
@@ -716,6 +734,8 @@ long_dist_pizza <- function(formulas_d) {
 ```
 
 ```{r}
+# the function creates the plot for directions distribution (short distancs), same as in 03_directions_plot.qmd; it first assign each formula to a segment, and then calculate proportion of formulas in each segment.
+
 short_dist_pizza <- function(formulas_d) {
 
   formulas_d <- formulas_d %>% 

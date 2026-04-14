@@ -4,9 +4,13 @@ format: md
 editor: visual
 ---
 
-## Directions modelling
+## Directions Analysis & Plots
 
-The notebook adds compass-like categories as N, NE, E, etc. and create viz to show the prevalent directions
+The notebook assigns each formula to a compass segment (e.g., N, NE, E, etc.), and calculates the proportion of formulas in each segment. The resulting visualisations highlight the prevalent directional patterns in each corpus.
+
+-   Angle Calculation: Assigns each formula to a corpus segment, such as North, South, etc.
+
+-   Figures: Generates Figure 3b and 4b.
 
 ```{r}
 library(tidyverse)

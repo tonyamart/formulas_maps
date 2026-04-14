@@ -1,10 +1,20 @@
 ---
-title: "01 geodata exploration"
+title: "01 distances exploration"
 format: md
 editor: visual
 ---
 
-# Explore directions of from_to formula
+# Exploring the from_to formulas
+
+This notebook provides a basic descriptive analysis of distances in the dataset. It is structured as follows:
+
+-   Most frequent locations: Compares the most frequent locations in the PoeTree corpora overall (all found locations) with those appearing from_to formulas;
+
+-   Distances: Computes Haversine distances for the formulas and analyses their distribution;
+
+-   Location Types: Assigns types of locations (natural / political, etc.) and examines how these types appear in formulas across different corpora and distance types;
+
+-   Place Frequency: Identifies the locations that most frequently occur in the formulas.
 
 ```{r, echo=TRUE, results = 'hide', warning=F, message=F}
 library(tidyverse)
@@ -24,7 +34,7 @@ theme_set(theme_minimal())
 library(geosphere) # distHavestine()
 ```
 
-Read data as a table (flatted, merged, and manually cleaned json-s)
+Read data as a table (flatted, merged, and manually cleaned json outputs from PoeTree API)
 
 ```{r}
 formulas <- read.csv("../data/formulas_table.csv")
@@ -40,7 +50,7 @@ formulas %>%
 
 ## Most freq loc vs from_to loc
 
-Look if most most freq locations also appear in from_to formula; calculate kendall rank correlation between the most frequent locations in corpus overall and in formulas
+Examine if most most freq locations also appear in from_to formula; calculate kendall rank correlation between the most frequent locations in corpus overall and in formulas
 
 ```{r, echo=F}
 # load loc freq data
@@ -108,9 +118,9 @@ mean(kcor)
 rm(f_long, f_long_from, loc_freq, f_long_t, kcor)
 ```
 
-## Distances
+# Distances
 
-I calculated Haversine (bird/plane flight) distance between the from-\>to coordinates, the distance is in km.
+Haversine (bird/plane flight) distance between the from-\>to coordinates, the distance is in km.
 
 ### calculation
 
@@ -130,7 +140,9 @@ formulas_d <- formulas %>%
 head(formulas_d %>% select(lang, text, from_placename, to_placename, dist_haversine))
 ```
 
-# Fig 1: Example
+## Fig 1: Example
+
+Four-parts figure showing how we go from a map to compass
 
 ```{r, echo=T}
 exmpl <- formulas_d %>% 
@@ -383,7 +395,7 @@ ggsave("../plots/Fig_1.png", plot = last_plot(),
 rm(exmpl, map_1, map_2, map_3, map_4)
 ```
 
-# Dist distribution
+## Dist distribution
 
 Poet's mind is often flying not that far away?
 
@@ -398,7 +410,7 @@ formulas_d %>%
 
 Most of the distances are actually very small; but for some traditions there are quite a portion of longer ones.
 
-# Fig 2: dist distribution
+## Fig 2: dist distribution
 
 ```{r, include=T, echo=F}
 dist_raw <- formulas_d %>% 
@@ -566,7 +578,7 @@ types_groups
 
 Count 22 classes
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 x <- formulas_d %>% select(from_type) %>% 
   rename(to_type = from_type)
 
@@ -576,7 +588,7 @@ formulas_d %>%
   count(to_type, sort = T)
 ```
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 x <- formulas_d %>% 
   mutate(lang_type = paste0(lang, "_", from_type_major)) %>% 
   count(lang_type)
@@ -596,7 +608,7 @@ formulas_d %>%
 
 6 classes distribution
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 x <- formulas_d %>% 
   mutate(lang_type = paste0(lang, "_", from_type_group)) %>% 
   count(lang_type)
@@ -622,7 +634,7 @@ formulas_d %>%
 
 The most frequent types of connection for short and long distances (based on the mean); numbers are ranks
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
@@ -650,7 +662,7 @@ formulas_d %>%
 
 Village –\> village distances
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
@@ -670,7 +682,7 @@ formulas_d %>%
 
 ### median and mean distances by top-5 patterns
 
-```{r, include = T, echo = F}
+```{r, echo = F}
 # ranks in short distances types
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
@@ -700,7 +712,7 @@ formulas_d %>%
             med_dist = median(dist_haversine))
 ```
 
-```{r, include = T, echo = F}
+```{r, echo = F}
 # ranks in long distances types
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
@@ -732,7 +744,7 @@ formulas_d %>%
 
 #### by language
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas %>% 
   mutate(type_pair = paste0(from_type, " --> ", to_type)) %>% 
   group_by(lang) %>% 
@@ -752,7 +764,7 @@ formulas %>%
 
 #### longer vs shorter distances
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas_d %>% 
   left_join(dist_summary, by = "lang") %>% 
   mutate(dist_type = ifelse(dist_haversine > dist_mean, "long", "short")) %>% 
@@ -766,7 +778,7 @@ formulas_d %>%
 
 ### city parts
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas_d %>% 
   filter(str_detect(from_type, "city part")) %>% 
   count(lang, from_placename, sort = T)
@@ -802,13 +814,11 @@ formulas_d %>%
   filter(from_placename == "Moscow Kremlin" | to_placename == "Moscow Kremlin")
 ```
 
-## Places frequency
+# Places frequency
 
 ### from-to formulas
 
-Just lists of real places, I'm not sure we need to think about this now (not too many observations also)
-
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas %>% 
   mutate(from_to_pair = paste0(from_placename, " --> ", to_placename)) %>% 
   count(from_to_pair, sort = T) %>% 
@@ -817,7 +827,7 @@ formulas %>%
 
 By language (n \> 1)
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas %>% 
   mutate(from_to_pair = paste0(from_placename, " --> ", to_placename)) %>% 
   group_by(lang) %>% 
@@ -837,7 +847,7 @@ formulas_d %>%
 
 Filter n \> 3 !
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas %>% 
   filter(lang != "it") %>% 
   group_by(lang) %>% 
@@ -846,7 +856,7 @@ formulas %>%
   filter(n > 3)
 ```
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 formulas %>% 
   filter(lang != "it") %>% 
   group_by(lang) %>% 
@@ -859,7 +869,7 @@ formulas %>%
 
 General frequencies (highly dependent on N formulas from a language)
 
-```{r, include=T, echo=F}
+```{r, echo=F}
 x <- formulas %>% 
   select(from_id, from_placename, from_type) %>% 
   rename(id = from_id,
@@ -880,7 +890,7 @@ head(places_freq, 20)
 
 Locations mentioned in the most of corpora (either from or to)
 
-```{r}
+```{r, echo=F}
 x <- formulas_d %>% 
   select(from_id, from_placename, from_type, lang) %>% 
   rename(id = from_id,
