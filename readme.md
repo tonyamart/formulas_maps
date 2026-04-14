@@ -16,10 +16,10 @@ The dataset is derived from the [PoeTree corpora](https://versologie.cz/poetree/
 ├── models/                       # Saved model outputs (.Rds)
 ├── plots/                        # Figures used in the paper
 ├── scr/                          # Quarto (.qmd) notebooks and rendered .md                   
-|   ├── 01_geodata_directions.qmd   # Descriptive statistics (distances & types)
-|   ├── 02_compass_plots.qmd        # Compass visualisations
-|   ├── 03_directions_modelling.qmd # Directions visualisations
-|   └── 04_borders_model.qmd        # Statistical models
+|   ├── 01_dist_analysis.qmd      # Descriptive statistics (distances & types)
+|   ├── 02_compass_plots.qmd      # Compass visualisations
+|   ├── 03_directions_plots.qmd   # Directions visualisations
+|   └── 04_borders_model.qmd      # Statistical models
 ├── formulas_maps.Rproj           # R project
 └── renv.lock                     # Dependency lockfile for reproducibility
 ````
