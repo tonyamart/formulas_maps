@@ -3,25 +3,35 @@ title: "04_borders_model"
 format: html
 ---
 
-## Direction delta's
+## How formula structures places
 
-**!! NB !!** will need `formulas_d` dataset from `03_directions_plot.qmd`.
+**!! NB !!** This script needs `formulas_d` variable from `03_directions_modelling.qmd`.
 
-
-The idea is to quantify how "structured" are different types of location   
+The idea is to quantify how "structured" are different types of location\
 (are cities really centers? are bodies of water really borders?)
 
-Step 1. Take a location (e.g. Rome). Calculate all *differences* between outgoing directions
-Step 2. Measure "spikiness"/"entropy" of a resulting distribution. This is our estimand E.
-Step 3. Each location has E: we want to ask what influences the structure: does "borderness" depend on the type of the location.
-Step 4. Fit a model: "E ~ type * log(n_occurences) + n_languages"
+-   Step 1. Take a location (e.g. Rome). Calculate all *differences* between outgoing directions
+
+-   Step 2. Measure "spikiness"/"entropy" of a resulting distribution. This is our estimand E.
+
+-   Step 3. Each location has E: we want to ask what influences the structure: does "borderness" depend on the type of the location.
+
+-   Step 4. Fit a model: "E \~ type \* log(n_occurences) + n_languages"
 
 n_occurences controls for obvious increase in structure with decrease of observations.
 
+### Preparing data
+
 ```{r}
+##
+## DATA WRANGLING 
+##
 library(ineq)
+
+formulas <- read.csv("../data/formulas_table.csv")
+
 from_select <- formulas %>% count(from_id,sort=T) %>% filter(n>2)
-to_select <- formulas %>% count(from_id,sort=T) %>% filter(n>2)
+to_select <- formulas %>% count(to_id,sort=T) %>% filter(n>2)
 
 unique(c(formulas_d$from_type, formulas_d$to_type))
 
@@ -61,14 +71,27 @@ formulas_d <- formulas_d %>%
 
 # prepare a list of DF holding all "FROM A" directions
 df_list <- formulas_d %>%
-  filter(from_id %in% from_select$from_id) %>% mutate(diff_entropy = 0,diff_gini=0) %>%  group_by(from_id) %>% group_split()
+  filter(from_id %in% from_select$from_id) %>%
+  mutate(diff_entropy = 0,diff_gini=0) %>%
+  group_by(from_id) %>% group_split()
 
+# prepare a list of DF holding all "TO B" directions
 df_list_to <- formulas_d %>%
   filter(to_id %in% to_select$to_id) %>% mutate(diff_entropy = 0,diff_gini=0) %>%  group_by(to_id) %>% group_split()
+```
 
-for(i in 1:length(df_list)) {
+### Entropy over the 'clock' of each location
+
+```{r}
+##
+## Function to calculate entropy on angles
+##
+
+calculate_borderness <- function(x) {
   
-  df <- df_list[[i]]
+for(i in 1:length(x)) {
+  
+  df <- x[[i]]
   ## circular absolute distance between angles
   circ_dist <- abs(
     (
@@ -88,11 +111,17 @@ for(i in 1:length(df_list)) {
   df <- df %>% mutate(diff_entropy = -sum(p[p > 0] * log(p[p > 0])),
                       diff_gini = ineq(p, type="Gini"))
   
-  df_list[[i]] <- df
+  x[[i]] <- df
   
 
 }
+  return(x)
+}
 
+## calculate for FROM / TO separately
+
+df_list <- calculate_borderness(df_list)
+df_list_to <- calculate_borderness(df_list_to)
 
 formulas_ineq <- df_list %>%
   bind_rows() %>% 
@@ -116,6 +145,8 @@ formulas_to_ineq <- df_list_to %>%
   filter(!duplicated(to_id)) # table for the model
 
 
+cor(formulas_to_ineq$diff_entropy,formulas_to_ineq$diff_gini)
+
 ```
 
 ```{r}
@@ -137,7 +168,6 @@ top_from %>%
   select(from_placename,delta) %>%
   arrange(-abs(delta)) 
 ```
-
 
 ### Fitting the model
 
@@ -168,12 +198,12 @@ m0m2 <- brm(
   family = gaussian(),
   chains = 4,
   cores = 4,
+  seed = 1934,
   prior = priors,
   iter = 4000,
-  save_model = "m0m2",
+  file="../models/m0m2",
+  file_refit="on_change"
 )
-
-saveRDS(m0m2,file="../models/entropy_major_type.rds")
 
 
 m0m2_to <- brm(
@@ -182,20 +212,23 @@ m0m2_to <- brm(
   family = gaussian(),
   chains = 4,
   cores = 4,
+  seed = 1934,
   prior = priors,
   iter = 4000,
-  save_model = "m0m2_to",
+  file = "../models/m0m2_to",
+  file_refit="on_change"
 )
-
-saveRDS(m0m2_to,file="../models/entropy_to_major_type.rds")
 
 
 
 ```
 
+#### Posterior checks
+
 ```{r}
-m0m2 <- readRDS("../models/entropy_major_type.rds")
-m0m2_to <- readRDS("../models/entropy_to_major_type.rds")
+#m0m2 <- readRDS("../models/entropy_major_type.rds")
+#m0m2_to <- readRDS("../models/entropy_to_major_type.rds")
+
 ## from
 pp_check(m0m2)
 conditional_effects(m0m2)
@@ -215,6 +248,8 @@ summary(m0m2_to)
 Redrawing conditional effects here:
 
 ```{r}
+library(ggridges)
+
 ce <- conditional_effects(m0m2)
 ce_df <- as_tibble(ce[["n:from_type_major"]])
 
@@ -235,8 +270,7 @@ p3 <- ggplot(ce_df,aes(x = n, y = estimate__, color = from_type_major, fill = fr
   geom_vline(aes(xintercept=10),linetype=2,color="grey40") + 
   scale_color_manual(values=met.brewer("Cassatt1")[c(2,8)]) +
   scale_fill_manual(values=met.brewer("Cassatt1")[c(2,8)]) + labs(color="Location type",fill="Location type",title="Interaction between type and number of locations")
-``` 
-
+```
 
 ```{r}
 # Get all levels of type
@@ -280,6 +314,7 @@ p1 <- summary_df %>%
   guides(color="none",fill="none") +
   labs(x="",y=NULL,title="FROM A locations")
 ```
+
 "To" distances
 
 ```{r}
@@ -329,32 +364,31 @@ library(patchwork)
 
 (p1 / p2) | p3
 
-ggsave("../plots/Fig_model.png",height = 6,width = 10)
+ggsave("../plots/Fig_6_model.png",height = 6,width = 10)
 ```
 
 ## Rivers: robustness check
 
-Here we refit model based on differently coded river coordinates (wikidata api, mouth, delta, "midpoint").  
+Here we refit model based on differently coded river coordinates (Wikidata api, mouth, delta, "midpoint").
 
-1. Each river can be represented by either mouth, delta, or midpoint coordiantes
-2. We calculate angles, clock hands, entropy and Gini based on randomly sampled coord for rivers (in "to" and "from" positions)
-3. Update the model based on new data
-4. Repeat; check posterior effect.
+-   Each river can be represented by either mouth, delta, or midpoint coordinates
+
+-   We calculate angles, clock hands, entropy and Gini based on randomly sampled coordinates for rivers (in "to" and "from" positions)
+
+-   Update the model based on new data
+
+-   Repeat; check posterior effect.
 
 ### Wrangling and Recalculating data
-
 
 ```{r}
 formulas <- read_csv("../data/formulas_table.csv")
 ## river coords
-rivers <- read_csv("../data/working_files/rivers_with_coords.csv") %>% 
+rivers <- read_csv("../data/rivers_with_coords.csv") %>% 
   select(id,source_lat,source_lon, mouth_lat, mouth_lon, mid_lat,mid_lon)
 
-m0m2 <- readRDS("../models/entropy_major_type.rds")
-m0m2_to <- readRDS("../models/entropy_to_major_type.rds")
-
 from_select <- formulas %>% count(from_id,sort=T) %>% filter(n>2)
-to_select <- formulas %>% count(from_id,sort=T) %>% filter(n>2)
+to_select <- formulas %>% count(to_id,sort=T) %>% filter(n>2)
 
 
 types_groups <- tibble(type_original = unique(c(formulas$from_type, formulas$to_type)),
@@ -397,6 +431,11 @@ rivers_long <- bind_rows(
   rivers |> select(id,latitude = mid_lat,    longitude = mid_lon)
 ) %>% arrange(id)
 
+```
+
+### Resampling rivers
+
+```{r}
 ## sample river coordinates
 
 sample_coord_rivers <- function(x=formulas,y=rivers_long) {
@@ -448,7 +487,7 @@ return(formulas_d)
 
 ## gini's 
 
-calculate_borderness_entropy <- function(x) {
+calculate_borderness_full <- function(x) {
 
 for(i in 1:length(x)) {
   
@@ -487,6 +526,11 @@ formulas_ineq <- x %>%
 return(formulas_ineq)
 }
 
+```
+
+### Refitting the model
+
+```{r}
 ### MODEL
 
 fit_model <- function(model=m0m2,x=formulas_ineq) {
@@ -521,8 +565,7 @@ return(c(m,delt))
 
 ```
 
-
-Alright, so all that reproduces the data. Now we just sample river coordinates, do angle/direction calculations, clock hands, entropy, and refit model with each resampling.
+Alright, so all that reproduces the data (very annoyingly). Now we just sample river coordinates, do angle/direction calculations, clock hands, entropy, and refit model with each resampling.
 
 ```{r}
 ### all together
@@ -539,7 +582,7 @@ df_list <- formulas_d %>%
   mutate(diff_entropy = 0,diff_gini=0) %>%
   group_by(from_id) %>% group_split()
 
-x<-calculate_borderness_entropy(df_list)
+x<-calculate_borderness_full(df_list)
 res[[i]] <- fit_model(m0m2,x)
 
 }
@@ -548,12 +591,12 @@ res_df <- map(res, ~tibble(effect = .x[1], diff = .x[2])) |> list_rbind()
 
 res_df %>% ggplot() + geom_histogram(aes(effect)) + 
   geom_vline(aes(xintercept=mean(res_df$effect)),linetype=2,color="grey80") +
-  labs(title="Distribution of posterior difference between 'natural' and 'political' entropy")
+  labs(title="Distribution of posterior difference between 'natural' and 'political' entropy",
+       subtitle="Difference in effect size")
 
 
 res_df %>% ggplot() + geom_histogram(aes(diff)) + 
   geom_vline(aes(xintercept=mean(res_df$diff)),linetype=2,color="grey80") +
-  labs(title="Distribution of posterior differences between 'natural' and 'political' means ")
+  labs(title="Distribution of posterior differences between 'natural' and 'political' means ",
+       subtitle = "% of draws that are different")
 ```
-
-
